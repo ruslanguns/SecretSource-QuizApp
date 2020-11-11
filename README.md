@@ -30,5 +30,5 @@ A simple app so users can play answering questions.
 This project is based on the MIT license
 
 ## Author
-Ruslan Gonzalez
-Twitter: [https://twitter.com/ruslangonzalez](@ruslangonzalez)
+- Ruslan Gonzalez
+- Twitter: [https://twitter.com/ruslangonzalez](@ruslangonzalez)

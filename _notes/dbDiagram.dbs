@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="SecretSourceQuizApp" id="Project_1151" database="MySql" >
+	<schema name="secretsourcequizapp" >
+		<table name="answers" prior="answer" >
+			<column name="id" type="int" jt="4" mandatory="y" autoincrement="y" />
+			<column name="question_id" type="int" jt="4" mandatory="y" />
+			<column name="answer" type="text" jt="-1" mandatory="y" />
+			<index name="pk_answers_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<fk name="fk_answers_questions" to_schema="secretsourcequizapp" to_table="questions" >
+				<fk_column name="question_id" pk="id" />
+			</fk>
+			<options><![CDATA[engine=InnoDB]]></options>
+		</table>
+		<table name="questions" prior="question" >
+			<column name="id" type="int" jt="4" mandatory="y" autoincrement="y" />
+			<column name="question" type="text" jt="-1" mandatory="y" />
+			<column name="status" type="tinyint" length="1" jt="-6" >
+				<defo><![CDATA[1]]></defo>
+			</column>
+			<column name="correct_answer" type="int" jt="4" />
+			<index name="pk_question_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<options><![CDATA[engine=InnoDB]]></options>
+		</table>
+		<table name="users" prior="tbl" >
+			<column name="id" type="int" jt="4" mandatory="y" autoincrement="y" />
+			<column name="username" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="password" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="roles" type="text" jt="-1" mandatory="y" >
+				<comment><![CDATA[ADMIN / PLAYER]]></comment>
+			</column>
+			<index name="pk_users_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<options><![CDATA[engine=InnoDB]]></options>
+		</table>
+	</schema>
+	<layout name="Default Layout" id="Layout_d86" joined_routing="y" show_relation="columns" >
+		<entity schema="secretsourcequizapp" name="answers" color="C1D8EE" x="400" y="176" />
+		<entity schema="secretsourcequizapp" name="questions" color="C1D8EE" x="48" y="144" />
+		<entity schema="secretsourcequizapp" name="users" color="C1D8EE" x="240" y="48" />
+	</layout>
+</project>

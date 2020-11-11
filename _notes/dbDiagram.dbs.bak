@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="SecretSourceQuizApp" id="Project_1151" database="MySql" >
+	<schema name="secretsourcequizapp" />
+	<layout name="Default Layout" id="Layout_d86" show_relation="columns" >
+		<callout x="48" y="48" pointer="Round" >
+			<comment><![CDATA[DbSchema is in offline mode.
+New designed tables will be saved to model file and later can be create in any database.
+Right-click the layout to create new tables. Drop this callout from its context menu.]]></comment>
+		</callout>
+	</layout>
+</project>
