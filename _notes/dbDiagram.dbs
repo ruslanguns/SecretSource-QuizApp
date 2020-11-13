@@ -5,6 +5,9 @@
 			<column name="id" type="int" jt="4" mandatory="y" autoincrement="y" />
 			<column name="question_id" type="int" jt="4" mandatory="y" />
 			<column name="answer" type="text" jt="-1" mandatory="y" />
+			<column name="is_correct" type="tinyint" jt="-6" >
+				<defo><![CDATA[0]]></defo>
+			</column>
 			<index name="pk_answers_id" unique="PRIMARY_KEY" >
 				<column name="id" />
 			</index>
@@ -19,10 +22,33 @@
 			<column name="status" type="tinyint" length="1" jt="-6" >
 				<defo><![CDATA[1]]></defo>
 			</column>
-			<column name="correct_answer" type="int" jt="4" />
+			<column name="category" type="varchar" length="120" jt="12" >
+				<defo><![CDATA[none]]></defo>
+			</column>
+			<column name="created_at" type="date" jt="91" >
+				<defo><![CDATA[CURRENT_DATE]]></defo>
+			</column>
 			<index name="pk_question_id" unique="PRIMARY_KEY" >
 				<column name="id" />
 			</index>
+			<options><![CDATA[engine=InnoDB]]></options>
+		</table>
+		<table name="results" prior="tbl" >
+			<column name="id" type="int" jt="4" mandatory="y" autoincrement="y" />
+			<column name="user_id" type="int" jt="4" />
+			<column name="question_id" type="int" jt="4" mandatory="y" />
+			<column name="answered_at" type="date" jt="91" >
+				<defo><![CDATA[CURRENT_DATE]]></defo>
+			</column>
+			<index name="pk_results_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<fk name="fk_results_users" to_schema="secretsourcequizapp" to_table="users" >
+				<fk_column name="user_id" pk="id" />
+			</fk>
+			<fk name="fk_results_questions" to_schema="secretsourcequizapp" to_table="questions" >
+				<fk_column name="question_id" pk="id" />
+			</fk>
 			<options><![CDATA[engine=InnoDB]]></options>
 		</table>
 		<table name="users" prior="tbl" >
@@ -32,15 +58,19 @@
 			<column name="roles" type="text" jt="-1" mandatory="y" >
 				<comment><![CDATA[ADMIN / PLAYER]]></comment>
 			</column>
+			<column name="created_at" type="date" jt="91" >
+				<defo><![CDATA[CURRENT_DATE]]></defo>
+			</column>
 			<index name="pk_users_id" unique="PRIMARY_KEY" >
 				<column name="id" />
 			</index>
 			<options><![CDATA[engine=InnoDB]]></options>
 		</table>
 	</schema>
-	<layout name="Default Layout" id="Layout_d86" joined_routing="y" show_relation="columns" >
-		<entity schema="secretsourcequizapp" name="answers" color="C1D8EE" x="400" y="176" />
-		<entity schema="secretsourcequizapp" name="questions" color="C1D8EE" x="48" y="144" />
-		<entity schema="secretsourcequizapp" name="users" color="C1D8EE" x="240" y="48" />
+	<layout name="Default Layout" id="Layout_d86" show_column_type="y" show_page_borders="y" show_relation="columns" >
+		<entity schema="secretsourcequizapp" name="answers" color="C1D8EE" x="48" y="240" />
+		<entity schema="secretsourcequizapp" name="questions" color="C1D8EE" x="320" y="256" />
+		<entity schema="secretsourcequizapp" name="results" color="C1D8EE" x="304" y="48" />
+		<entity schema="secretsourcequizapp" name="users" color="C1D8EE" x="64" y="48" />
 	</layout>
 </project>
