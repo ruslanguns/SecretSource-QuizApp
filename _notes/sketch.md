@@ -1,4 +1,7 @@
-# Sketch
+# Sketch and prototype
+
+[Go back to table of contents](README.md)
+
 
 This sketch is based on the idea of the QuizApp:
 

@@ -1,4 +1,6 @@
-# Database schema for this APP
+# Database Diagram Schema
+
+[Go back to table of contents](README.md)
 
 This application is going to have a really simple database for its purpose.
 
