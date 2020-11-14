@@ -16,10 +16,13 @@ In this document I will detail the API Rest Map before starting to code.
 |Method   |Endpoint Path   |Private   |Roles   |Detail  |
 |---|---|---|---|---|
 |POST   |/login   |false   |false   |User sign in   |
-|POST   |/registration   |false   |false   |User sign up, we need to provide in the body the new user credentials  |
 |GET   |/profile   |true   |any   |Get current user profile   |
-|GET   |/questions   |true   |ADMIN   |Get all questions   |
+|POST   |/user/registration   |false   |false   |User sign up, we need to provide in the body the new user credentials  |
+|GET   |/users   |true   |ADMIN   |Get all users   |
+|GET   |/users   |true   |ADMIN   |Get all users   |
 |POST   |/questions   |true   |ADMIN   |Create a new question, we need to provide in the body the question with an array of answers.   |
+|GET   |/questions   |true   |ADMIN   |Get all questions   |
+|GET   |/questions/`:questionId`   |true   |ADMIN   |Get a question by Id   |
 |PUT   |/questions/`:questionId`   |true   |ADMIN   |Edit/Reemplace an existing question   |
 |DELETE   |/questions/`:questionId`   |true   |ADMIN   |Delete an existing question   |
 |POST   |/quiz   |true   |PLAYER   |Submit a quiz answer for the current user, we need to provide in the body questionId and answerId |
