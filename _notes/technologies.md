@@ -4,4 +4,4 @@
 
 Basically this application will use two frameworks, NestJS for the back-end and Angular for the front-end.
 
-![tech slide](images/SecretSourceQuizAppTechnologies.jpg)
+![tech slide](assets/images/SecretSourceQuizAppTechnologies.jpg)

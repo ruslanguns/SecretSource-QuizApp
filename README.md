@@ -29,9 +29,9 @@ A simple app so users can play answering questions.
 
 We are going to build a web application which implements a basic Quiz App flow which allows you to learn german by answering questions. As a player you will be able to answer the quiz in just one opportunity, you will be promped when new question arise and it will store your score and history.
 
-![APPLICATION MAP](_notes/images/SecretSourceQuizAppApplicationMap.jpg)
+![APPLICATION MAP](_notes/assets/images/SecretSourceQuizAppApplicationMap.jpg)
 
-> If you want to see more details about my sketch please [read my notes](_notes/sketch.md)
+There are some sketch that have been made for the purpose of this project read more about in this [document](_notes/sketch.md)
 
 ## Tasks and estimation
 
@@ -43,9 +43,9 @@ We are going to build a web application which implements a basic Quiz App flow w
 |4   |server   |Add authentication with JWT local and strategy  |1 hour   |INCOMPLETE   |
 |5   |server   |Add CRUD for Questions  |1 hour   |INCOMPLETE   |
 |6   |server   |Add Quiz Service / Controller  |1 hour   |INCOMPLETE   |
-|7   |client   |Generate the project scafolding with   |1 hour   |INCOMPLETE   |
+|7   |client   |Generate the project scafolding with Angular CLI   |1 hour   |INCOMPLETE   |
 |8   |client   |Create the folder architecture and basic configuration   |15 min   |INCOMPLETE   |
-|9   |client   |Add NGX bootstrap and bootstrap customization   |30 min   |INCOMPLETE   |
+|9   |client   |Add ngx-bootstrap library and bootstrap customization   |30 min   |INCOMPLETE   |
 |11   |client   |Create NotFoundPage Screen   |10 min   |INCOMPLETE   |
 |12   |client   |Add authentication to Angular App   |1 hour   |INCOMPLETE   |
 |13   |client   |Add user registration page   |30 min   |INCOMPLETE   |
@@ -62,10 +62,14 @@ If you want to see the API Enpoints in the planning feel free to review [this do
 
 For the web application routing we are going to use a routing strategy for navigating throght the application, for more details please checkout [this document](_notes/clientRouting.md)
 
+## Aditional notes about this project
+
+For general notes there is a directory called `_nodes` which host assets files and some markdown files with some good information about how to create these tasks. See more in the [table of contents](_notes/README.md)
+
 ## License
 
 This project is based on the MIT license
 
 ## Author
 - Ruslan Gonzalez
-- Twitter: [https://twitter.com/ruslangonzalez](@ruslangonzalez)
+- Twitter: [@ruslangonzalez](https://twitter.com/ruslangonzalez)

@@ -4,4 +4,4 @@
 
 This application is going to have a really simple database for its purpose.
 
-![basic layout client screen](images/dbschema.png)
+![basic layout client screen](assets/images/dbschema.png)

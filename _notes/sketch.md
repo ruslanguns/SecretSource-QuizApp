@@ -12,11 +12,11 @@ With this application we will learn German by answering the questions of the gam
 
 This is how the application will look broadly:
 
-![basic layout client screen](images/SecretSourceQuizAppApplicationMap.jpg)
+![basic layout client screen](assets/images/SecretSourceQuizAppApplicationMap.jpg)
 
 ## Client screen
 
-![basic layout client screen](images/Prototype_basic-layout-client-side-A.png)
+![basic layout client screen](assets/images/Prototype_basic-layout-client-side-A.png)
 
 > This is when a player is login
 
@@ -26,7 +26,7 @@ The dashboard will show also the last answered and new questions — of course, 
 
 The sidebar will show by capturing the click event in the top left menu icon.
 
-![answering a new quiz](images/Prototype_basic-layout-client-side-B.png)
+![answering a new quiz](assets/images/Prototype_basic-layout-client-side-B.png)
 
 Players will have just one opportunity to answer then the response will be saved for review.
 
@@ -34,11 +34,11 @@ Players will have just one opportunity to answer then the response will be saved
 
 For accessing the admin panel, it's going to be required to be an user with admin roles, and will be accessible using the same LOGIN, however it's very important to understand only players are able to play, and only admins can add questions.
 
-![admin dashboard side a](images/Prototype_basic-layout-admin-side-A.png)
+![admin dashboard side a](assets/images/Prototype_basic-layout-admin-side-A.png)
 > Admin Dashboard 
 In the admin you will have the opportunity to add new question and see last questions published and unpublished.
 
-![admin dashboard side a](images/Prototype_basic-layout-admin-side-B.png)
+![admin dashboard side a](assets/images/Prototype_basic-layout-admin-side-B.png)
 > Adding a question
 
 In case you don't want to just publish the question you could just save draft and this will be stored for review prior to publish.
