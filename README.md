@@ -21,19 +21,25 @@ A simple app so users can play answering questions.
 
 ## Proposed technologies
 
-- **For API**: In this project I am considering to use NestJS as the backend.
-- **For ORM**: I am considering use TypeOrm because I understand its API very well but I am open to use any other.
-- **For Client**: My confidence is Angular 10+.
+- **NestJS for the API**: A progressive Node.js framework for building efficient, reliable and scalable server-side applications..
+- **TypeORM**: TypeORM is an ORM that can run in NodeJS and can be used with TypeScript and JavaScript.
+- **Angular 10+**: Angular is an application design framework and development platform for creating efficient and sophisticated single-page app.
 
-## Application goal
+![tech slide](_notes/assets/images/SecretSourceQuizAppTechnologies.jpg)
+
+> For more information I will try to wrap more details in this [document](_notes/technologies.md)
+
+## Application goal and sketches
 
 We are going to build a web application which implements a basic Quiz App flow which allows you to learn german by answering questions. As a player you will be able to answer the quiz in just one opportunity, you will be promped when new question arise and it will store your score and history.
+
+I have curated some sketches for the application I want to do. Please checkout the images and additional information [in this document](_notes/sketch.md)
 
 ![APPLICATION MAP](_notes/assets/images/SecretSourceQuizAppApplicationMap.jpg)
 
 There are some sketch that have been made for the purpose of this project read more about in this [document](_notes/sketch.md)
 
-## Tasks and estimation
+## Tasks and estimations
 
 |No.   |Environment   |Detail   |Time   |Status   |
 |---|---|---|---|---|
