@@ -1,5 +1,7 @@
 ## Directory for storing notes & ideas
 
+[Go back to main README.md file](README.md)
+
 ### Table of content
 
 1.  Database Diagram Schema [LINK](database.md)

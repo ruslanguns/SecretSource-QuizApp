@@ -2,7 +2,6 @@
 
 [Go back to table of contents](README.md)
 
-
 This sketch is based on the idea of the QuizApp:
 
 We are going to build an application which uses a QuizApp API in its core,the frontend will be used by Admins and Players, the idea is to have mobile first application which reuses its layout for both screens.

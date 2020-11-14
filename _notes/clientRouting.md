@@ -1,5 +1,7 @@
 # Application routing strategy
 
+[Go back to table of contents](README.md)
+
 This file will have the routing strategy for the front-end web application.
 
 |Path   |Route description   |Protected   |Role   |
