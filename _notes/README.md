@@ -6,3 +6,4 @@
 2.  Sketch and prototype [LINK](sketch.md)
 3.  Technologies involved [LINK] (technologies.md)
 4.  Api endpoints [LINK](apiMap.md)
+5.  Application routing strategy [LINK](clientRouting.md)

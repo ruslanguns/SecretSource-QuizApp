@@ -43,10 +43,24 @@ We are going to build a web application which implements a basic Quiz App flow w
 |4   |server   |Add authentication with JWT local and strategy  |1 hour   |INCOMPLETE   |
 |5   |server   |Add CRUD for Questions  |1 hour   |INCOMPLETE   |
 |6   |server   |Add Quiz Service / Controller  |1 hour   |INCOMPLETE   |
+|7   |client   |Generate the project scafolding with   |1 hour   |INCOMPLETE   |
+|8   |client   |Create the folder architecture and basic configuration   |15 min   |INCOMPLETE   |
+|9   |client   |Add NGX bootstrap and bootstrap customization   |30 min   |INCOMPLETE   |
+|11   |client   |Create NotFoundPage Screen   |10 min   |INCOMPLETE   |
+|12   |client   |Add authentication to Angular App   |1 hour   |INCOMPLETE   |
+|13   |client   |Add user registration page   |30 min   |INCOMPLETE   |
+|14   |client   |Create Player & Admin Side Screens   |2 hours   |INCOMPLETE   |
+|15   |client   |Add admin side CRUD functionality for questions/users from API   |2 hours   |INCOMPLETE   |
+|16   |client   |Add resuts and unanswered quizzes screens at player side   |15 min   |INCOMPLETE   |
+
 
 ## API Endpoints
 
-Please checkout the document for API Endpoints planning, [clicking here](_notes/apiMap.md).
+If you want to see the API Enpoints in the planning feel free to review [this document](_notes/apiMap.md).
+
+## Web application routing strategy
+
+For the web application routing we are going to use a routing strategy for navigating throght the application, for more details please checkout [this document](_notes/clientRouting.md)
 
 ## License
 
