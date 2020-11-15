@@ -44,7 +44,7 @@ There are some sketch that have been made for the purpose of this project read m
 |No.   |Environment   |Detail   |Time   |Status   |
 |---|---|---|---|---|
 |1   |server   |Generate the project scafolding with NestJS CLI   |5 min   |COMPLETED   |
-|2   |server   |Create the folder architecture and basic configuration   |15 min   |INCOMPLETE   |
+|2   |server   |Create the folder architecture and basic configuration   |15 min   |COMPLETED   |
 |3   |server   |Add Database MySQL configuration   |10 min   |INCOMPLETE   |
 |4   |server   |Add authentication with JWT local and strategy  |1 hour   |INCOMPLETE   |
 |5   |server   |Add CRUD for Questions  |1 hour   |INCOMPLETE   |
