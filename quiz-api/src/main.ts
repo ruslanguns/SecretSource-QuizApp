@@ -1,6 +1,7 @@
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
+import * as helmet from 'helmet';
 import { AppModule } from './app.module';
 import { SERVER_PORT } from './config';
 
@@ -16,6 +17,7 @@ async function bootstrap() {
     }),
   );
 
+  app.use(helmet());
   app.enableCors({
     credentials: true,
     origin: '*',
