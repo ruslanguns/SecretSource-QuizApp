@@ -12,7 +12,7 @@ function typeormModuleOptions(): TypeOrmModuleOptions {
     database: process.env.MYSQL_DATABASE,
     entities: [join(__dirname, '../**/**/*entity{.ts,.js}')],
     autoLoadEntities: true,
-    synchronize: false,
+    synchronize: true,
   }
 }
 
