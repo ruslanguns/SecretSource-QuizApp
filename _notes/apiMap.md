@@ -21,7 +21,7 @@ In this document I will detail the API Rest Map before starting to code.
 |GET   |/profile   |true   |any   |Get current user profile   |
 |POST   |/user/registration   |false   |false   |User sign up, we need to provide in the body the new user credentials  |
 |GET   |/users   |true   |ADMIN   |Get all users   |
-|GET   |/users   |true   |ADMIN   |Get all users   |
+|DELETE   |/users/`:userId`   |true   |ADMIN   |Delete one users   |
 |POST   |/questions   |true   |ADMIN   |Create a new question, we need to provide in the body the question with an array of answers.   |
 |GET   |/questions   |true   |ADMIN   |Get all questions   |
 |GET   |/questions/`:questionId`   |true   |ADMIN   |Get a question by Id   |
