@@ -43,13 +43,13 @@ There are some sketch that have been made for the purpose of this project read m
 
 |No.   |Environment   |Detail   |Time   |Status   |
 |---|---|---|---|---|
-|1   |server   |Generate the project scafolding with NestJS CLI   |5 min   |INCOMPLETE   |
+|1   |server   |Generate the project scafolding with NestJS CLI   |5 min   |COMPLETED   |
 |2   |server   |Create the folder architecture and basic configuration   |15 min   |INCOMPLETE   |
 |3   |server   |Add Database MySQL configuration   |10 min   |INCOMPLETE   |
 |4   |server   |Add authentication with JWT local and strategy  |1 hour   |INCOMPLETE   |
 |5   |server   |Add CRUD for Questions  |1 hour   |INCOMPLETE   |
 |6   |server   |Add Quiz Service / Controller  |1 hour   |INCOMPLETE   |
-|7   |client   |Generate the project scafolding with Angular CLI   |1 hour   |INCOMPLETE   |
+|7   |client   |Generate the project scafolding with Angular CLI   |5 min   |INCOMPLETE   |
 |8   |client   |Create the folder architecture and basic configuration   |15 min   |INCOMPLETE   |
 |9   |client   |Add ngx-bootstrap library and bootstrap customization   |30 min   |INCOMPLETE   |
 |11   |client   |Create NotFoundPage Screen   |10 min   |INCOMPLETE   |
