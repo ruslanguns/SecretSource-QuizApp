@@ -1,6 +1,7 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { UserRegistrationDTO } from './dto';
 import { User } from './entities';
 
 @Injectable()
@@ -10,6 +11,16 @@ export class UserService {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>
   ) {}
+
+  async registration(dto: UserRegistrationDTO) {
+    const userExists = await this.getByUsername(dto.username);
+    if (userExists) {
+      throw new BadRequestException(`USERNAME ALREADY REGISTERED`);
+    }
+    const newUser = this.userRepository.create(dto)
+    const { password, ...user } = await this.userRepository.save(newUser);
+    return user;
+  }
 
   async getMany(): Promise<User[]> {
     return await this.userRepository.find();
