@@ -16,6 +16,12 @@ async function bootstrap() {
     }),
   );
 
+  app.enableCors({
+    credentials: true,
+    origin: '*',
+    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT']
+  });
+
   await app.listen(port);
 
   logger.verbose(`Server is running on ${await app.getUrl()}`)
