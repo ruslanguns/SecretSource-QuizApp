@@ -5,6 +5,8 @@ import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { databaseConfig, TYPEORM_CONFIG } from './config';
+import { QuestionModule } from './question/question.module';
+import { QuizModule } from './quiz/quiz.module';
 
 @Module({
   imports: [
@@ -19,6 +21,8 @@ import { databaseConfig, TYPEORM_CONFIG } from './config';
     }),
     UserModule,
     AuthModule,
+    QuestionModule,
+    QuizModule,
   ],
   controllers: [],
   providers: [],
