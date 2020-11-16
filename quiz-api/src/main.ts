@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import * as helmet from 'helmet';
 import { AppModule } from './app.module';
+import { initSwagger } from './app.swagger';
 import { SERVER_PORT } from './config';
 
 async function bootstrap() {
@@ -11,12 +12,12 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
   const port = configService.get<number>(SERVER_PORT) || 3000;
 
+  initSwagger(app);
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
     }),
   );
-
   app.use(helmet());
   app.enableCors({
     credentials: true,

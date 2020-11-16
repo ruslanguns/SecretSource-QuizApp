@@ -68,6 +68,13 @@ If you want to see the API Enpoints in the planning feel free to review [this do
 
 For the web application routing we are going to use a routing strategy for navigating throght the application, for more details please checkout [this document](_notes/clientRouting.md)
 
+## Extras added to the project
+
+I have added some extra features in order to provide rich functionality.
+
+* API Documentation with Open Api Specification — Swagger — find the documentation in the `http://<server's URL>/api-docs`
+
+
 ## Aditional notes about this project
 
 For general notes there is a directory called `_nodes` which host assets files and some markdown files with some good information about how to create these tasks. See more in the [table of contents](_notes/README.md)

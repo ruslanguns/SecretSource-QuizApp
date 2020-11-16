@@ -1,8 +1,10 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { UserRegistrationDTO } from './dto';
 import { User } from './entities';
 import { UserService } from './user.service';
 
+@ApiTags(`User's Endpoint`)
 @Controller('user')
 export class UserController {
 
