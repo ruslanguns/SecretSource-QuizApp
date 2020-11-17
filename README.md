@@ -2,6 +2,13 @@
 
 A simple app so users can play answering questions.
 
+## Demo server
+
+I have deploy the back-end in Heroku in order to use it for review and testing.
+
+* Server URL: https://quizapp3.herokuapp.com/
+* Server OpenAPI Documentation: https://quizapp3.herokuapp.com/api-docs
+
 ## Checklist
 
 ### CRUD for both USERS and QUESTIONS
