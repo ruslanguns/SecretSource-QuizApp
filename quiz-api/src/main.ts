@@ -4,6 +4,7 @@ import { NestFactory } from '@nestjs/core';
 import * as helmet from 'helmet';
 import { AppModule } from './app.module';
 import { initSwagger } from './app.swagger';
+import { setAdminUserScript } from './common/scripts';
 import { SERVER_PORT } from './config';
 
 async function bootstrap() {
@@ -22,11 +23,11 @@ async function bootstrap() {
   app.enableCors({
     credentials: true,
     origin: '*',
-    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT']
+    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT'],
   });
-
+  await setAdminUserScript(configService);
   await app.listen(process.env.PORT || port);
 
-  logger.verbose(`Server is running on ${await app.getUrl()}`)
+  logger.verbose(`Server is running on ${await app.getUrl()}`);
 }
 bootstrap();
