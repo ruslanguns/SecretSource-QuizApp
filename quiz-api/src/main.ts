@@ -25,7 +25,7 @@ async function bootstrap() {
     methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT']
   });
 
-  await app.listen(port);
+  await app.listen(process.env.PORT || port);
 
   logger.verbose(`Server is running on ${await app.getUrl()}`)
 }
