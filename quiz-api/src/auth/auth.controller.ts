@@ -1,10 +1,10 @@
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { User } from 'src/common/decorators';
+import { Auth, User } from 'src/common/decorators';
 import { User as UserEntity } from '../user/entities';
 import { AuthService } from './auth.service';
 import { LoginDTO } from './dto';
-import { JwtAuthGuard, LocalAuthGuard } from './guards';
+import { LocalAuthGuard } from './guards';
 
 @ApiTags(`Authentication's Endpoint`)
 @Controller('auth')
@@ -23,7 +23,7 @@ export class AuthController {
     return this.authService.login(user);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @Auth()
   @Get('profile')
   profile(
     @User() user: UserEntity

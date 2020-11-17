@@ -17,7 +17,7 @@ export class UserService {
     if (userExists) {
       throw new BadRequestException(`USERNAME ALREADY REGISTERED`);
     }
-    const newUser = this.userRepository.create(dto)
+    const newUser = this.userRepository.create({...dto, roles: ['PLAYER']})
     const { password, ...user } = await this.userRepository.save(newUser);
     return user;
   }
