@@ -1,6 +1,6 @@
-import { Question } from "src/question/entities";
+import { Answer, Question } from "src/question/entities";
 import { User } from "src/user/entities";
-import { CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { CreateDateColumn, Entity, JoinColumn, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 
 @Entity('results')
@@ -18,4 +18,8 @@ export class Result {
   @ManyToOne(() => Question)
   @JoinColumn({ name: 'question_id' })
   question: Question;
+
+  @ManyToMany(() => Answer)
+  @JoinColumn({ name: 'answer_id' })
+  answer: Answer;
 }

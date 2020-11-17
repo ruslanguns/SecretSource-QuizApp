@@ -7,7 +7,7 @@ export class Answer {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Question)
+  @ManyToOne(() => Question, { cascade: ['remove']})
   @JoinColumn({ name: 'question_id'})
   question: Question;
 
