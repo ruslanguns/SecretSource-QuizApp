@@ -20,13 +20,15 @@ In this document I will detail the API Rest Map before starting to code.
 |POST   |/auth/login   |false   |false   |User sign in   |
 |GET   |/auth/profile   |true   |any   |Get current user profile   |
 |POST   |/user/registration   |false   |false   |User sign up, we need to provide in the body the new user credentials  |
-|GET   |/users   |true   |ADMIN   |Get all users   |
-|DELETE   |/users/`:userId`   |true   |ADMIN   |Delete one user   |
-|POST   |/questions   |true   |ADMIN   |Create a new question, we need to provide in the body the question with an array of answers.   |
-|GET   |/questions   |true   |ADMIN   |Get all questions   |
-|GET   |/questions/`:questionId`   |true   |ADMIN   |Get a question by Id   |
-|PUT   |/questions/`:questionId`   |true   |ADMIN   |Edit/Reemplace an existing question   |
-|DELETE   |/questions/`:questionId`   |true   |ADMIN   |Delete an existing question   |
+|GET   |/user   |true   |ADMIN   |Get all users   |
+|DELETE   |/user/`:userId`   |true   |ADMIN   |Delete one user   |
+|POST   |/question   |true   |ADMIN   |Create a new question, we need to provide in the body the question with an array of answers.   |
+|GET   |/question   |true   |ADMIN   |Get all questions   |
+|POST   |/question/`:questionId`/answer   |true   |ADMIN   |Add answer to question   |
+|PUT   |/question/`:questionId`   |true   |ADMIN   |Edit/Reemplace an existing question   |
+|DELETE   |/question/`:questionId`   |true   |ADMIN   |Delete an existing question   |
+|PUT   |/answer/`:answerId`   |true   |ADMIN   |Update an existing question   |
+|DELETE   |/answer/`:answerId`   |true   |ADMIN   |Delete an existing question   |
 |POST   |/quiz   |true   |PLAYER   |Submit a quiz answer for the current user, we need to provide in the body questionId and answerId |
 |GET   |/quiz/stats   |true   |PLAYER   |Get statistics (No. Correct and Incorrect answers and 5 last answered/unanswered quizzes) for the current user |
 |GET   |/quiz/answered   |true   |PLAYER   |Get history for answered quizzes for the current user  |
