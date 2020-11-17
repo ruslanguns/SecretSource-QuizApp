@@ -20,7 +20,7 @@ export class QuestionController {
 
   @Get()
   async getManyQuestions() {
-    return await this.questionService.getManyQuestions();
+    return await this.questionService.getQuestions();
   }
 
   @Post(':questionId/answer')

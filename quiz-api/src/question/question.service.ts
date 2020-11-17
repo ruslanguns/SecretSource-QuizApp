@@ -24,11 +24,11 @@ export class QuestionService {
     return await this.questionRepository.findOne(savedQuestion.id);
   }
 
-  async getManyQuestions() {
-    return this.questionRepository.find();
+  async getQuestions() {
+    return await this.questionRepository.find();
   }
 
-  async getOneQuestion(id: number) {
+  async getQuestionById(id: number): Promise<Question> {
     const question = await this.questionRepository.findOne(id);
     if (!question) {
       throw new NotFoundException('QUESTION WITH ID DOES NOT EXIST')
@@ -36,7 +36,7 @@ export class QuestionService {
     return question;
   }
 
-  async getOneAnswer(id: number) {
+  async getAnswerById(id: number): Promise<Answer> {
     const answer = await this.answerRepository.findOne(id);
     if (!answer) {
       throw new NotFoundException('ANSWER WITH ID DOES NOT EXIST')
@@ -45,30 +45,30 @@ export class QuestionService {
   }
 
   async addAnswer(questionId: number, dto: CreateAnswerDTO) {
-    const question = await this.getOneQuestion(questionId);
+    const question = await this.getQuestionById(questionId);
     const answer = this.answerRepository.create({...dto, question});
     return await this.answerRepository.save(answer);
   }
 
   async editQuestion(id: number, dto: EditQuestionDTO) {
-    const question = this.getOneQuestion(id);
+    const question = await this.getQuestionById(id);
     const editedQuestion = Object.assign(question, dto);
     return await this.questionRepository.save(editedQuestion);
   }
 
   async editAnswer(id: number, dto: EditAnswerDTO) {
-    const answer = this.getOneAnswer(id);
+    const answer = await this.getAnswerById(id);
     const editedAnswer = Object.assign(answer, dto);
     return await this.answerRepository.save(editedAnswer);
   }
 
   async deleteQuestion(id: number) {
-    const question = await this.getOneQuestion(id);
+    const question = await this.getQuestionById(id);
     return await this.questionRepository.remove(question);
   }
 
   async deleteAnswer(id: number) {
-    const answer = await this.getOneAnswer(id);
+    const answer = await this.getAnswerById(id);
     return await this.answerRepository.remove(answer);
   }
 
