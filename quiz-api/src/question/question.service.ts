@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { FindOneOptions, Repository } from 'typeorm';
 import { CreateQuestionDTO, CreateAnswerDTO, EditQuestionDTO, EditAnswerDTO } from './dto';
 import { Answer, Question } from './entities';
 
@@ -36,8 +36,8 @@ export class QuestionService {
     return question;
   }
 
-  async getAnswerById(id: number): Promise<Answer> {
-    const answer = await this.answerRepository.findOne(id);
+  async getAnswerById(id: number, options?: FindOneOptions<Answer>): Promise<Answer> {
+    const answer = await this.answerRepository.findOne(id, options);
     if (!answer) {
       throw new NotFoundException('ANSWER WITH ID DOES NOT EXIST')
     }

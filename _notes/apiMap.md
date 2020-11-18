@@ -29,7 +29,6 @@ In this document I will detail the API Rest Map before starting to code.
 |DELETE   |/question/`:questionId`   |true   |ADMIN   |Delete an existing question   |
 |PUT   |/answer/`:answerId`   |true   |ADMIN   |Update an existing question   |
 |DELETE   |/answer/`:answerId`   |true   |ADMIN   |Delete an existing question   |
-|POST   |/quiz   |true   |PLAYER   |Submit a quiz answer for the current user, we need to provide in the body questionId and answerId |
-|GET   |/quiz/stats   |true   |PLAYER   |Get statistics (No. Correct and Incorrect answers and 5 last answered/unanswered quizzes) for the current user |
+|POST   |/quiz   |true   |PLAYER   |Submit a quiz answer for the current user, we need to provide in the body the answerId |
 |GET   |/quiz/answered   |true   |PLAYER   |Get history for answered quizzes for the current user  |
 |GET   |/quiz/unanswered   |true   |PLAYER   |Get history for unanswered quizzes for the current user  |
