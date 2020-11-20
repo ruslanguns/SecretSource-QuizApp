@@ -1,10 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Question } from 'src/question/entities';
 import { QuestionService } from 'src/question/question.service';
 import { User } from 'src/user/entities';
-import { getRepository, Repository } from 'typeorm';
-import { QuestionResultsDTO } from './dto';
+import { FindManyOptions, getRepository, In, Not, Repository } from 'typeorm';
 import { Result } from './entities';
 
 @Injectable()
@@ -17,28 +16,33 @@ export class QuizService {
   ) {}
 
   async submitQuizAnswer(user: User, answerId: number) {
-    const { question, ...answer } = await this.questionService.getAnswerById(answerId, { relations: ['question']});
-    const result = this.resultRepository.create({user, question, answer});
+    const {question, ...selectedAnswer} = await this.questionService.getAnswerById(answerId, { relations: ['question']});
+    const alreadyResponded = await this.resultRepository.findOne({user, question})
+    if (alreadyResponded) {
+      throw new BadRequestException(`THIS QUIZ ALREADY RESPONDED`);
+    }
+    const result = this.resultRepository.create({user, selectedAnswer, question});
     return await this.resultRepository.save(result);
   }
 
-  async getAnsweredQuestions(user: User): Promise<QuestionResultsDTO[]> {
-    return await this.resultRepository.find({ user })
-      .then(results => results.map(result => {
-        result.question['answeredAt'] = result.answeredAt;
-        return result.question as QuestionResultsDTO;
-      }))
+  async getAnsweredQuestions(user: User, options?: FindManyOptions<Result>) {
+    return await this.resultRepository.find({
+      where: {
+        user
+      },
+      relations: ['question', 'selectedAnswer'],
+      ...options
+    });
   }
 
   async getUnansweredQuestions(user: User) {
-    const answered = await this.getAnsweredQuestions(user);
-    let answeredIds: number[] = []; 
-    answered.map(({id}) => answeredIds.push(id));
-    
+    const answered = await this.getAnsweredQuestions(user, {
+      loadRelationIds: { relations: ['question']}
+    });
+    const questionIds: number[] = [];
+    answered.map(({question}) => questionIds.push(Number(question)))
+
     return await getRepository<Question>(Question)
-      .createQueryBuilder('question')
-      .where(`question.id NOT IN (:...answeredIds)`, { answeredIds })
-      .innerJoinAndSelect('question.answers', 'answers')
-      .getMany()
+      .find({ where: { id: Not(In(questionIds))}});
   }
 }

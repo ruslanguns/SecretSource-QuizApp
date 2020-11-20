@@ -12,7 +12,7 @@ export class QuestionController {
     private questionService: QuestionService
   ) {}
 
-  @Auth()
+  @Auth('ADMIN')
   @Post()
   async createOneQuestion(
     @Body() dto: CreateQuestionDTO
@@ -20,13 +20,13 @@ export class QuestionController {
     return await this.questionService.createOneQuestion(dto);
   }
 
-  @Auth()
+  @Auth('ADMIN')
   @Get()
   async getManyQuestions() {
     return await this.questionService.getQuestions();
   }
 
-  @Auth()
+  @Auth('ADMIN')
   @Post(':questionId/answer')
   async createAnswer(
     @Param('questionId', ParseIntPipe) id: number,
@@ -35,7 +35,7 @@ export class QuestionController {
     return await this.questionService.addAnswer(id, dto)
   }
 
-  @Auth()
+  @Auth('ADMIN')
   @Put(':questionId')
   async editQuestion(
     @Param('questionId', ParseIntPipe) id: number,
@@ -44,7 +44,7 @@ export class QuestionController {
     return await this.questionService.editQuestion(id, dto);
   }
 
-  @Auth()
+  @Auth('ADMIN')
   @Delete(':questionId')
   async deleteQuestion(
     @Param('questionId', ParseIntPipe) id: number

@@ -12,13 +12,13 @@ export class UserController {
     private readonly userService: UserService
   ) {}
 
-  @Auth()
+  @Auth('ADMIN')
   @Get()
   async getUsers() {
     return await this.userService.getMany();
   }
 
-  @Auth()
+  @Auth('ADMIN')
   @Delete(':userId')
   async deleteUser(
     @Param('userId', ParseIntPipe) userId: number

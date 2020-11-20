@@ -12,7 +12,7 @@ export class AnswerController {
     private readonly questionService: QuestionService
   ) {}
 
-  @Auth()
+  @Auth('ADMIN')
   @Put(':answerId')
   async editQuestionAnswer(
     @Param('answerId', ParseIntPipe) id: number,
@@ -21,7 +21,7 @@ export class AnswerController {
     return await this.questionService.editAnswer(id, dto)
   }
 
-  @Auth()
+  @Auth('ADMIN')
   @Delete(':answerId')
   async deleteAnswer(
     @Param('answerId', ParseIntPipe) id: number,

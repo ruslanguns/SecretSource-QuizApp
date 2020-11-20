@@ -13,7 +13,11 @@ export class QuizController {
     private readonly quizService: QuizService
   ) {}
 
-  @Auth()
+  /**
+   * Select your question.
+   * This endpoint is ONLY for players
+   */
+  @Auth('PLAYER')
   @Post('answer/:answerId')
   async submitAnswer(
     @User() user: UserEntity,
@@ -22,7 +26,11 @@ export class QuizController {
     return await this.quizService.submitQuizAnswer(user, answerId);
   }
 
-  @Auth()
+  /**
+   * Get all answered quizzes.
+   * This endpoint is ONLY for players
+   */
+  @Auth('PLAYER')
   @Get('/answered')
   async getAnswered(
     @User() user: UserEntity,
@@ -30,7 +38,11 @@ export class QuizController {
     return await this.quizService.getAnsweredQuestions(user);
   }
 
-  @Auth()
+  /**
+   * Get all unanswered quizzes.
+   * This endpoint is ONLY for players
+   */
+  @Auth('PLAYER')
   @Get('/unanswered')
   async getUnanswered(
     @User() user: UserEntity,
