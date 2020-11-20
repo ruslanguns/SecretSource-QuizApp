@@ -15,7 +15,7 @@ export class QuizController {
 
   /**
    * Select your question.
-   * This endpoint is ONLY for players
+   * This endpoint is <b>ONLY</b> for players
    */
   @Auth('PLAYER')
   @Post('answer/:answerId')
@@ -28,7 +28,7 @@ export class QuizController {
 
   /**
    * Get all answered quizzes.
-   * This endpoint is ONLY for players
+   * This endpoint is <b>ONLY</b> for players
    */
   @Auth('PLAYER')
   @Get('/answered')
@@ -40,7 +40,7 @@ export class QuizController {
 
   /**
    * Get all unanswered quizzes.
-   * This endpoint is ONLY for players
+   * This endpoint is <b>ONLY</b> for players
    */
   @Auth('PLAYER')
   @Get('/unanswered')

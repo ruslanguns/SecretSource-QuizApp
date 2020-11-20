@@ -12,12 +12,18 @@ export class UserController {
     private readonly userService: UserService
   ) {}
 
+  /**
+   * Get users, This method is <b>ONLY</b> for Admins
+   */
   @Auth('ADMIN')
   @Get()
   async getUsers() {
     return await this.userService.getMany();
   }
 
+  /**
+   * Delete an user, This method is <b>ONLY</b> for Admins
+   */
   @Auth('ADMIN')
   @Delete(':userId')
   async deleteUser(
@@ -26,6 +32,9 @@ export class UserController {
     return await this.userService.deleteOne(userId);
   }
 
+  /**
+   * User register
+   */
   @Post('registration')
   async userRegistration(
     @Body() dto: UserRegistrationDTO
