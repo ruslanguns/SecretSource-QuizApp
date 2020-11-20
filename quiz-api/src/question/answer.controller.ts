@@ -12,6 +12,9 @@ export class AnswerController {
     private readonly questionService: QuestionService
   ) {}
 
+  /**
+   * Edit an answer, This method is <b>ONLY</b> for Admins
+   */
   @Auth('ADMIN')
   @Put(':answerId')
   async editQuestionAnswer(
@@ -21,6 +24,9 @@ export class AnswerController {
     return await this.questionService.editAnswer(id, dto)
   }
 
+  /**
+   * Delete an answer, This method is <b>ONLY</b> for Admins
+   */
   @Auth('ADMIN')
   @Delete(':answerId')
   async deleteAnswer(

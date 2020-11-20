@@ -12,6 +12,9 @@ export class QuestionController {
     private questionService: QuestionService
   ) {}
 
+  /**
+   * Create a question. This method is <b>ONLY</b> for Admins
+   */
   @Auth('ADMIN')
   @Post()
   async createOneQuestion(
@@ -20,12 +23,18 @@ export class QuestionController {
     return await this.questionService.createOneQuestion(dto);
   }
 
+  /**
+   * Get all questions, This method is <b>ONLY</b> for Admins
+   */
   @Auth('ADMIN')
   @Get()
   async getManyQuestions() {
     return await this.questionService.getQuestions();
   }
 
+  /**
+   * Create an answer, This method is <b>ONLY</b> for Admins
+   */
   @Auth('ADMIN')
   @Post(':questionId/answer')
   async createAnswer(
@@ -35,6 +44,9 @@ export class QuestionController {
     return await this.questionService.addAnswer(id, dto)
   }
 
+  /**
+   * Edit a question, This method is <b>ONLY</b> for Admins
+   */
   @Auth('ADMIN')
   @Put(':questionId')
   async editQuestion(
@@ -44,6 +56,9 @@ export class QuestionController {
     return await this.questionService.editQuestion(id, dto);
   }
 
+  /**
+   * Delete a question, This method is <b>ONLY</b> for Admins
+   */
   @Auth('ADMIN')
   @Delete(':questionId')
   async deleteQuestion(

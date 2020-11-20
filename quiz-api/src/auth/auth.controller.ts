@@ -14,6 +14,9 @@ export class AuthController {
     private readonly authService: AuthService
   ) {}
 
+  /**
+   * Sign in 
+   */
   @UseGuards(LocalAuthGuard)
   @Post('login')
   login(
@@ -23,6 +26,9 @@ export class AuthController {
     return this.authService.login(user);
   }
 
+  /**
+   * Get your profile information
+   */
   @Auth()
   @Get('profile')
   profile(
