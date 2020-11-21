@@ -1,0 +1,40 @@
+header {
+  background-color: white;
+  gap: 20px;
+  display: grid;
+  grid-template-columns: 1fr 4fr 1fr;
+  grid-template-areas: 
+    "toggle brandname logout";
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .menu-toggle {
+    grid-area: toggle;
+    margin-left: 1em;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  
+  .menu-brand {
+    grid-area: brandname;
+    font-weight: 600;
+    margin: auto;
+
+    &:hover {
+      cursor: pointer;
+    }
+  } 
+  
+  .menu-logout {
+    grid-area: logout;
+    margin-right: 1em;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
