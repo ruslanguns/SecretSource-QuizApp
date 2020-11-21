@@ -7,11 +7,26 @@ const routes: Routes = [
   { path: '', component: DashboardComponent },
   {
     path: 'auth',
-    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
+    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
+  },
+  {
+    path: 'quizzes',
+    loadChildren: () =>
+      import('./quizzes/quizzes.module').then((m) => m.QuizzesModule),
+  },
+  {
+    path: 'questions',
+    loadChildren: () =>
+      import('./questions/questions.module').then((m) => m.QuestionsModule),
+  },
+  {
+    path: 'users',
+    loadChildren: () =>
+      import('./users/users.module').then((m) => m.UsersModule),
   },
   {
     path: 'error/404',
-    component: Error404Component
+    component: Error404Component,
   },
   { path: '**', redirectTo: 'error/404', pathMatch: 'full' },
 ];
