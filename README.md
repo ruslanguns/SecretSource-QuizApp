@@ -57,7 +57,7 @@ There are some sketch that have been made for the purpose of this project read m
 |5   |server   |Add CRUD for Questions  |1 hour   |**COMPLETED**   |
 |6   |server   |Add Quiz Service / Controller  |1 hour   |**COMPLETED**    |
 |7   |client   |Generate the project scafolding with Angular CLI   |5 min   |**COMPLETED**   |
-|8   |client   |Create the folder architecture and basic configuration   |15 min   |INCOMPLETE   |
+|8   |client   |Create the folder architecture and basic configuration   |1 hour   |**COMPLETED**   |
 |9   |client   |Add ngx-bootstrap library and bootstrap customization   |30 min   |INCOMPLETE   |
 |11   |client   |Create NotFoundPage Screen   |10 min   |INCOMPLETE   |
 |12   |client   |Add authentication to Angular App   |1 hour   |INCOMPLETE   |
