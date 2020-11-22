@@ -24,11 +24,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./users/users.module').then((m) => m.UsersModule),
   },
-  {
-    path: 'error/404',
-    component: Error404Component,
-  },
-  { path: '**', redirectTo: 'error/404', pathMatch: 'full' },
+  { path: '**', component: Error404Component, pathMatch: 'full' },
 ];
 
 @NgModule({
