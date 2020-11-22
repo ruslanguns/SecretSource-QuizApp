@@ -1,38 +1,29 @@
 
 <div class="container">
-  <div class="card-a">
-    <app-card>
-      <h1>A</h1>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum magnam consequuntur amet quos incidunt eveniet
-        libero ducimus saepe laboriosam omnis quibusdam excepturi iste et, architecto inventore iusto repudiandae nihil
-        ipsum?</p>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum magnam consequuntur amet quos incidunt eveniet
-        libero ducimus saepe laboriosam omnis quibusdam excepturi iste et, architecto inventore iusto repudiandae nihil
-        ipsum?</p>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum magnam consequuntur amet quos incidunt eveniet
-        libero ducimus saepe laboriosam omnis quibusdam excepturi iste et, architecto inventore iusto repudiandae nihil
-        ipsum?</p>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum magnam consequuntur amet quos incidunt eveniet
-        libero ducimus saepe laboriosam omnis quibusdam excepturi iste et, architecto inventore iusto repudiandae nihil
-        ipsum?</p>
-    </app-card>
-  </div>
-  
-  <div class="card-b">
-    <app-card>
-      <h1>B</h1>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum magnam consequuntur amet quos incidunt eveniet
-        libero ducimus saepe laboriosam omnis quibusdam excepturi iste et, architecto inventore iusto repudiandae nihil
-        ipsum?</p>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum magnam consequuntur amet quos incidunt eveniet
-        libero ducimus saepe laboriosam omnis quibusdam excepturi iste et, architecto inventore iusto repudiandae nihil
-        ipsum?</p>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum magnam consequuntur amet quos incidunt eveniet
-        libero ducimus saepe laboriosam omnis quibusdam excepturi iste et, architecto inventore iusto repudiandae nihil
-        ipsum?</p>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum magnam consequuntur amet quos incidunt eveniet
-        libero ducimus saepe laboriosam omnis quibusdam excepturi iste et, architecto inventore iusto repudiandae nihil
-        ipsum?</p>
-    </app-card>
-  </div>  
+  <app-card class="stats">
+    <div class="stats__title">
+      Summary
+    </div>
+    <div class="stats_hits">
+      <div class="">
+        <div class="hits__correct">
+          <h1>4</h1>
+        </div>
+        <p>Correct</p>
+      </div>
+      <div class="">
+        <div class="hits__incorrect">
+          <h1>0</h1>
+        </div>
+        <p>Incorrect</p>
+      </div>
+    </div>
+  </app-card> 
+
+  <app-card class="unanswered">
+    last 5 unanswered
+  </app-card>
+  <app-card class="answered">
+    last 5 answered
+  </app-card>
 </div>

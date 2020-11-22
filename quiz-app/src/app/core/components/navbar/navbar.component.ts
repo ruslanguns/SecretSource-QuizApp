@@ -8,8 +8,8 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
   @Output() toggleMenu: EventEmitter<boolean> = new EventEmitter();
-  @Input() isSidenavOpen: boolean = false;
-  @Input() title: string = '';
+  @Input() isSidenavOpen = false;
+  @Input() title = '';
     
   constructor(
     private router: Router

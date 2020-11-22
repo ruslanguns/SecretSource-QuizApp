@@ -8,11 +8,7 @@ import { Component, Input } from '@angular/core';
 export class LayoutComponent {
   @Input() title : string = '';
   showSidenav: boolean = false;
-
-  handShake() {
-    console.log('works!!!!');
-  }
-
+  
   toggleMenu() {
     this.showSidenav = !this.showSidenav;
   }
