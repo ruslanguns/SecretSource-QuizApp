@@ -9,15 +9,10 @@ main {
 }
 
 
-@media all and (max-width: $x-large) {
-  main {
-    margin: 0 15%;
-  }
-}
+@media all and (max-width: $x-large) {}
 @media all and (max-width: $x-medium) {
   main {
     margin: 0 3%;
   }
 }
-@media all and (max-width: $x-small) {
-}
+@media all and (max-width: $x-small) {}
