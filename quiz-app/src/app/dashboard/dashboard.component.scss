@@ -1,3 +1,5 @@
+@import 'src/theme/theme';
+
 .container{
 
   display: grid;
@@ -7,8 +9,9 @@
   margin-top: 1em;
   grid-template-columns: 1fr 1fr;
   grid-template-areas:
-    "first second"
-    ". .";
+    "first second";
+  transition: all 2s;
+  box-sizing: border-box;
 }
 
 .card-a {
@@ -16,4 +19,17 @@
 }
 .card-b {
   grid-area: second;
+}
+
+
+@media all and (max-width: $x-large) {
+}
+@media all and (max-width: $x-medium) {
+}
+@media all and (max-width: $x-small) {
+  .container {
+    grid-template-areas:
+      "first first"
+      "second second";
+  }
 }

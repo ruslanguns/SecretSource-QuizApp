@@ -5,6 +5,7 @@ main {
   margin: 0 15%;
   transition: margin-left .6s;
   transition: background-color .6s;
+  transition: margin .6s;
 }
 
 
@@ -15,11 +16,8 @@ main {
 }
 @media all and (max-width: $x-medium) {
   main {
-    margin: 0 7%;
+    margin: 0 3%;
   }
 }
 @media all and (max-width: $x-small) {
-  main {
-    margin: 0 3%;
-  }
 }
