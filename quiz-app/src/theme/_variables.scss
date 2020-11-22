@@ -1,3 +1,12 @@
 $primary-font: sanserif;
-$bg-color: rgb(241, 243, 245);
+$bg-color: rgb(222, 223, 224);
 $font-color: #333;
+$header-height: 60px;
+
+/* 
+## Breakpoints
+Source: https://medium.com/@uiuxlab/the-most-used-responsive-breakpoints-in-2017-of-mine-9588e9bd3a8a
+*/
+$x-large: 1024px;
+$x-medium: 839px;
+$x-small: 480px;

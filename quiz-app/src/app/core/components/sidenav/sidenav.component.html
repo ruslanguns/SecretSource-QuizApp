@@ -1,0 +1,25 @@
+
+<nav>
+
+  <div
+    *ngIf="show" (click)="onBackgroundClick()"
+    [style.background-color]="show ? 'rgba(0, 0, 0, 0.5' : ''"
+    class="nav-background"></div>
+  
+  <div class="navigation" [style.width]="!show ? '0' : ''">
+    <ul >
+      <li>
+        <a>Dashboard</a>
+      </li>
+      <li class="active" routerLinkActive="active">
+        <a>Results</a>
+      </li>
+      <li>
+        <a>Unanswered</a>
+      </li>
+      <li>
+        <a>Logout</a>
+      </li>
+    </ul>
+  </div> 
+</nav> 

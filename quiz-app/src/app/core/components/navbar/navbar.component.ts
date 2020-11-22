@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,12 +7,19 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-
+  @Output() toggleMenu: EventEmitter<boolean> = new EventEmitter();
+  @Input() isSidenavOpen: boolean = false;
+  @Input() title: string = '';
+    
   constructor(
     private router: Router
   ) { }
 
   ngOnInit(): void {
+  }
+
+  onToggleMenu() {
+    this.toggleMenu.emit()
   }
 
   goToDashboard() {

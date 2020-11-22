@@ -1,24 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { SidenavComponent } from './components/sidenav/sidenav.component';
-
+import { CardComponent } from './components/card/card.component';
 
 const components = [
-  NavbarComponent,
-  SidenavComponent
+  CardComponent
 ];
 
 @NgModule({
   declarations: [
-    ...components
+    ...components,
   ],
   imports: [
     CommonModule
   ],
   exports: [
-    NavbarComponent,
-    CommonModule
+    CommonModule,
+    ...components
   ]
 })
 export class SharedModule { }
