@@ -5,14 +5,14 @@
     list-style-type: none;
     list-style-position: inside;
     padding: 0;
-    border: 1px solid $font-color;
+    border: 1px solid $border-color;
+    font-size: 0.9em;
 
     li {
       padding: 0.5em;
-      border-bottom: 1px solid $font-color;
+      border-bottom: 1px solid $border-color;
 
       &:hover {
-        cursor: pointer;
         background-color: $bg-color;
       }
 
