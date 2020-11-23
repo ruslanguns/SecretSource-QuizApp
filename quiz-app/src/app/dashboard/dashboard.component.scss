@@ -1,9 +1,8 @@
-@import 'src/theme/variables';
+@import "src/theme/variables";
 
 .dashboard {
-
   h4 {
-    margin: 0px;
+    margin: 0;
   }
 
   display: grid;
@@ -16,7 +15,7 @@
     "answered unanswered";
   transition: all 2s;
   box-sizing: border-box;
-  
+
   .dashboard__quick-actions {
     grid-area: actions;
 
@@ -25,13 +24,13 @@
     }
 
     .quick-actions__buttons {
-      margin-top: 0.5em;
+      margin-top: 1em;
       display: flex;
       flex-direction: row;
       justify-content: space-around;
       flex-wrap: wrap;
       text-align: center;
-      
+
       button {
         border: none;
         max-width: 85%;
@@ -44,12 +43,11 @@
 
         &:focus {
           outline: none;
-          background-color:#eaecf0;
+          background-color: #eaecf0;
         }
-        &:hover{
+        &:hover {
           cursor: pointer;
         }
-
       }
     }
   }
@@ -59,62 +57,62 @@
     text-align: center;
 
     .stats_hits {
-      margin-top: 1.5em;
+      margin-top: 1em;
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
       justify-content: space-around;
       align-items: center;
-      
+
       &:nth-child(1n) {
-        .hits__correct, .hits__incorrect {
+        .hits__correct,
+        .hits__incorrect {
           height: 100px;
           min-width: 100px;
           background-color: $bg-color;
           border: 1px solid $border-color;
           outline: 1px solid $border-color;
           outline-offset: 10px;
+          margin: 10px;
           display: flex;
           justify-content: center;
           align-items: center;
-          font-family: 'roboto';
+          font-family: "roboto";
           font-size: 1.2em;
 
-          h1{
+          h1 {
             display: block;
           }
-      }
+        }
       }
     }
-    
   }
-  
+
+  .dashboard__answered {
+    grid-area: answered;
+  }
+
+  .dashboard__unanswered {
+    grid-area: unanswered;
+  }
+
+  .dashboard__unanswered,
   .dashboard__answered {
     h4 {
       text-align: center;
     }
-    grid-area: answered;
-  }
-  
-  .dashboard__unanswered {
-    h4 {
-      text-align: center;
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-    grid-area: unanswered;
   }
 
-
-  li {
-    display: flex;
-    justify-content: space-between;
-  }
   
-
 }
 
-
-
-@media all and (max-width: $x-large) {}
+@media all and (max-width: $x-large) {
+}
 @media all and (max-width: $x-medium) {
   .dashboard {
     grid-template-areas:
@@ -125,5 +123,4 @@
   }
 }
 @media all and (max-width: $x-small) {
-
 }
