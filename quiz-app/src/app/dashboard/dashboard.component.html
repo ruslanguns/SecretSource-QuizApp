@@ -1,12 +1,30 @@
 
-<div class="container">
+<div class="dashboard">
+
+  <!------------------------------------------------->
+  <!--              QUICK ACTIONS                        -->
+  <!------------------------------------------------->
+  <app-card class="dashboard__quick-actions">
+    <div class="quick-actions__title">
+      <h4>Quick actions</h4>
+    </div>
+    
+    <div class="quick-actions__buttons">
+      <div>
+        <button type="button">Add new question</button>
+      </div>
+      <div>
+        <button type="button">Manage users</button>
+      </div>
+    </div>
+  </app-card>
 
   <!------------------------------------------------->
   <!--              SUMMARY                        -->
   <!------------------------------------------------->
-  <app-card class="stats">
+  <app-card class="dashboard__stats">
     <div class="stats__title">
-      Summary
+      <h4>Summary</h4>
     </div>
     <div class="stats_hits">
       <div class="mr-4">
@@ -27,25 +45,25 @@
   <!------------------------------------------------->
   <!--              LAST 5 ANSWERED                -->
   <!------------------------------------------------->
-  <app-card class="answered">
-    Last 5 Answered
+  <app-card class="dashboard__answered">
+    <h4>Last 5 Answered</h4>
 
-    <div class="list">
+    <app-list>
       <ul>
         <li>Uno <span class="badge success">Correct</span></li>
         <li>Dos <span class="badge error">Incorrect</span></li>
         <li>Tres <span class="badge success">Correct</span></li>
         <li>Cuatro <span class="badge success">Correct</span></li>
       </ul>
-    </div>
+    </app-list>
 
   </app-card>
 
   <!------------------------------------------------->
   <!--              LAST 5 UNANSWERED              -->
   <!------------------------------------------------->
-  <app-card class="unanswered">
-    Last 5 Unanswered
+  <app-card class="dashboard__unanswered">
+    <h4>Last 5 Unanswered</h4>
 
     <div class="list">
       <ul>

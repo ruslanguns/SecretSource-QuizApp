@@ -9,6 +9,7 @@ header {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  border-bottom: 1px solid $border-color;
 
   .menu-toggle {
     margin-left: 1.5em;

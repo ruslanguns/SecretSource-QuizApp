@@ -10,3 +10,16 @@ body {
   font-size: 1.1em;
   color: $font-color;
 }
+
+/* Responsive */
+@media all and (max-width: $x-large) {}
+@media all and (max-width: $x-medium) {
+  h1, h2, h3, h4 {
+    font-size: 0.9em;
+  }
+}
+@media all and (max-width: $x-small) {
+  h1, h2, h3, h4 {
+    font-size: 0.9em;
+  }
+}
