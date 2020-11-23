@@ -1,0 +1,24 @@
+@import 'src/theme/variables';
+
+.list {
+  ul {
+    list-style-type: none;
+    list-style-position: inside;
+    padding: 0;
+    border: 1px solid $font-color;
+
+    li {
+      padding: 0.5em;
+      border-bottom: 1px solid $font-color;
+
+      &:hover {
+        cursor: pointer;
+        background-color: $bg-color;
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+}

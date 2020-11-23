@@ -1,29 +1,59 @@
 
 <div class="container">
+
+  <!------------------------------------------------->
+  <!--              SUMMARY                        -->
+  <!------------------------------------------------->
   <app-card class="stats">
     <div class="stats__title">
       Summary
     </div>
     <div class="stats_hits">
-      <div class="">
+      <div class="mr-4">
         <div class="hits__correct">
-          <h1>4</h1>
+          <h1>3</h1>
         </div>
         <p>Correct</p>
       </div>
-      <div class="">
+      <div class="ml-4">
         <div class="hits__incorrect">
-          <h1>0</h1>
+          <h1>1</h1>
         </div>
         <p>Incorrect</p>
       </div>
     </div>
   </app-card> 
 
-  <app-card class="unanswered">
-    last 5 unanswered
-  </app-card>
+  <!------------------------------------------------->
+  <!--              LAST 5 ANSWERED                -->
+  <!------------------------------------------------->
   <app-card class="answered">
-    last 5 answered
+    Last 5 Answered
+
+    <div class="list">
+      <ul>
+        <li>Uno <span class="badge success">Correct</span></li>
+        <li>Dos <span class="badge error">Incorrect</span></li>
+        <li>Tres <span class="badge success">Correct</span></li>
+        <li>Cuatro <span class="badge success">Correct</span></li>
+      </ul>
+    </div>
+
+  </app-card>
+
+  <!------------------------------------------------->
+  <!--              LAST 5 UNANSWERED              -->
+  <!------------------------------------------------->
+  <app-card class="unanswered">
+    Last 5 Unanswered
+
+    <div class="list">
+      <ul>
+        <li>Uno <span class="badge warning">Unanswered</span></li>
+        <li>Dos <span class="badge warning">Unanswered</span></li>
+        <li>Tres <span class="badge warning">Unanswered</span></li>
+        <li>Cuatro <span class="badge warning">Unanswered</span></li>
+      </ul>
+    </div>
   </app-card>
 </div>
