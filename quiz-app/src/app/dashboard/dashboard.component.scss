@@ -2,9 +2,12 @@
 
 .dashboard {
 
+  h4 {
+    margin: 0px;
+  }
+
   display: grid;
   grid-gap: $card-gutter-gap;
-  max-width: 97%;
   margin: 1em auto;
   grid-template-columns: 1fr 1fr;
   grid-template-areas:
@@ -22,19 +25,31 @@
     }
 
     .quick-actions__buttons {
+      margin-top: 0.5em;
       display: flex;
       flex-direction: row;
-      justify-content: center;
-      align-items: center;
+      justify-content: space-around;
       flex-wrap: wrap;
+      text-align: center;
       
       button {
         border: none;
-        margin: 1em;
+        max-width: 85%;
+        margin: 0.5em;
         border: 1px solid $border-color;
         width: 220px;
         height: 70px;
         max-width: 80%;
+        color: $font-color;
+
+        &:focus {
+          outline: none;
+          background-color:#eaecf0;
+        }
+        &:hover{
+          cursor: pointer;
+        }
+
       }
     }
   }
@@ -43,21 +58,18 @@
     grid-area: stats;
     text-align: center;
 
-    .stats__title {
-      width: 100%;
-    }
-
     .stats_hits {
+      margin-top: 1.5em;
       display: flex;
       flex-direction: row;
+      flex-wrap: wrap;
       justify-content: space-around;
       align-items: center;
       
       &:nth-child(1n) {
-        margin-top: 2em;
         .hits__correct, .hits__incorrect {
-          width: 100px;
           height: 100px;
+          min-width: 100px;
           background-color: $bg-color;
           border: 1px solid $border-color;
           outline: 1px solid $border-color;
@@ -66,6 +78,7 @@
           justify-content: center;
           align-items: center;
           font-family: 'roboto';
+          font-size: 1.2em;
 
           h1{
             display: block;
@@ -77,10 +90,16 @@
   }
   
   .dashboard__answered {
+    h4 {
+      text-align: center;
+    }
     grid-area: answered;
   }
   
   .dashboard__unanswered {
+    h4 {
+      text-align: center;
+    }
     grid-area: unanswered;
   }
 
