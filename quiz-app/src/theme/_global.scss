@@ -1,5 +1,8 @@
 @import './variables';
 @import './plugins';
+@import './components/components';
+@import './fonts/fonts';
+@import './helpers/helpers';
 
 body {
   background-color: $bg-color;

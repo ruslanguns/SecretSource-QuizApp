@@ -1,9 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-export interface IMenuItems {
-  title: string;
-  url: string;
-}
 
 @Component({
   selector: 'app-sidenav',
@@ -15,13 +11,6 @@ export class SidenavComponent {
   @Input() show: boolean = false;
   @Output() toggleMenu: EventEmitter<boolean> = new EventEmitter();
 
-  menuItems: IMenuItems[] = [
-    {
-      title: '',
-      url: ''
-    }
-  ];
-
   toggleSidenav() {
     this.show = !this.show;
   }
@@ -31,6 +20,10 @@ export class SidenavComponent {
       this.toggleSidenav();
       this.toggleMenu.emit(this.show);
     }
+  }
+
+  logout() {
+    console.log('logout');
   }
 
 }

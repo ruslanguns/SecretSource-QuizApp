@@ -1,4 +1,9 @@
-@import 'src/theme/theme';
+@import 'src/theme/variables';
+
+li {
+  display: flex;
+  justify-content: space-between;
+}
 
 .container{
 
@@ -31,8 +36,8 @@
       &:nth-child(1n) {
         margin-top: 2em;
         .hits__correct, .hits__incorrect {
-          width: 120px;
-          height: 120px;
+          width: 100px;
+          height: 100px;
           background-color: $bg-color;
           border: 1px solid $font-color;
           outline: 1px solid $font-color;

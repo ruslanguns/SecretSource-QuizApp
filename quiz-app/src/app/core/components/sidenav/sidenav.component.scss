@@ -22,25 +22,33 @@
   ul {
     margin: 1em;
     list-style-type: none;
-    padding: 0;
     padding-bottom: 2em;
 
     li {
       padding: 1em;
       display: block;
-      
+
       a {
         text-decoration: none;
+        color: inherit;
+        
+        &:hover{
+          color: inherit;
+          cursor: pointer;
+          font-weight: 600;
+        }
       }
-      a:hover{
-        cursor: pointer;
-        font-weight: 600;
+
+      &:visited,
+      &:active {
+        outline: none;
       }
-    }
-    li + .active {
-      font-weight: 600;
+      
     }
   }
+}
+.active {
+  font-weight: 600;
 }
 
 

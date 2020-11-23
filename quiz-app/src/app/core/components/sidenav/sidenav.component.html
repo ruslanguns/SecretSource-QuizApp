@@ -9,18 +9,37 @@
   
   <div class="navigation" [style.width]="!show ? '0' : ''">
     <ul >
-      <li>
-        <a>Dashboard</a>
-      </li>
-      <li class="active" routerLinkActive="active">
-        <a>Results</a>
-      </li>
-      <li>
-        <a>Unanswered</a>
-      </li>
-      <li>
-        <a>Logout</a>
-      </li>
+        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          <a routerLink="/">
+            Dashboard
+          </a>
+        </li>
+        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          <a routerLink="/quizzes" [queryParams]="{filter: 'answered'}">
+            Results
+          </a>
+        </li>
+        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          <a routerLink="/quizzes" [queryParams]="{filter: 'unanswered'}">
+            Unanswered
+          </a>
+        </li>
+        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          <a routerLink="/questions">
+            Questions
+          </a>
+        </li>
+        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          <a routerLink="/users">
+            Users
+          </a>
+        </li>
+        <li>
+          <a (click)="logout()">
+            Logout
+          </a>
+        </li>
+
     </ul>
   </div> 
 </nav> 
