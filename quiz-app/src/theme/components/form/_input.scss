@@ -1,0 +1,16 @@
+input[type=text],
+input[type=password] {
+  width: 100%;
+  padding: 0.6em 1em;
+  margin-top: 0.3em;
+  box-sizing: border-box;
+  border: 2px solid $border-color;
+  transition: 0.5s;
+  outline: none;
+  color: $font-color;
+  line-height: 1;
+  
+  &:focus {
+    border: 2px solid $border-color-secondary;
+  }
+}
