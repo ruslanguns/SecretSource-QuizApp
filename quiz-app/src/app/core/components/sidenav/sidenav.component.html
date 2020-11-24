@@ -2,7 +2,7 @@
 <nav>
   <div
     *ngIf="show"
-    (click)="onBackgroundClick()"
+    (click)="emitToggle()"
     [style.background-color]="show ? 'rgba(0, 0, 0, 0.5' : ''"
     class="nav-background">
   </div>
@@ -10,32 +10,32 @@
   <div class="navigation" [style.width]="!show ? '0' : ''">
     <ul >
         <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-          <a routerLink="/">
+          <a (click)="emitToggle()" routerLink="/">
             Dashboard
           </a>
         </li>
         <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-          <a routerLink="/quizzes" [queryParams]="{filter: 'answered'}">
+          <a (click)="emitToggle()" routerLink="/quizzes" [queryParams]="{filter: 'answered'}">
             Results
           </a>
         </li>
         <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-          <a routerLink="/quizzes" [queryParams]="{filter: 'unanswered'}">
+          <a (click)="emitToggle()" routerLink="/quizzes" [queryParams]="{filter: 'unanswered'}">
             Unanswered
           </a>
         </li>
         <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-          <a routerLink="/questions">
+          <a (click)="emitToggle()" routerLink="/questions">
             Questions
           </a>
         </li>
         <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-          <a routerLink="/users">
+          <a (click)="emitToggle()" routerLink="/users">
             Users
           </a>
         </li>
         <li>
-          <a (click)="logout()">
+          <a (click)="logout(); emitToggle()">
             Logout
           </a>
         </li>

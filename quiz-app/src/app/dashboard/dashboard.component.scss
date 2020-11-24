@@ -34,20 +34,11 @@
       button {
         border: none;
         max-width: 85%;
-        margin: 0.5em;
-        border: 1px solid $border-color;
+        margin: 5px;
         width: 220px;
         height: 70px;
         max-width: 80%;
-        color: $font-color;
 
-        &:focus {
-          outline: none;
-          background-color: #eaecf0;
-        }
-        &:hover {
-          cursor: pointer;
-        }
       }
     }
   }
