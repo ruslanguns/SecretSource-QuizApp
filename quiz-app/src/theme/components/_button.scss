@@ -1,0 +1,37 @@
+
+.btn {
+  padding: 0.8em;
+  // background-color: $default;
+  outline: none;
+  color: white;
+  border: none;
+
+  &.success {
+    background-color: $success;
+  }
+  &.warning {
+    background-color: $warning;
+  }
+  &.error {
+    background-color: $error;
+  }
+  &.info {
+    background-color: $info;
+  }
+  &.primary {
+    background-color: $primary;
+  }
+  &.default {
+    background-color: $default;
+  }
+
+  &.block {
+    width: 100%;
+  }
+
+  &:focus,
+  &:hover {
+    cursor: pointer;
+    filter: brightness(1.1);
+  }
+}

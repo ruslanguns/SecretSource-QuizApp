@@ -15,7 +15,7 @@ export class SidenavComponent {
     this.show = !this.show;
   }
 
-  onBackgroundClick() {
+  emitToggle() {
     if (this.show) {
       this.toggleSidenav();
       this.toggleMenu.emit(this.show);

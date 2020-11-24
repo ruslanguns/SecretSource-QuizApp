@@ -1,10 +1,12 @@
-@import 'src/theme/variables';
+@import "src/theme/variables";
 
 .dashboard {
+  h4 {
+    margin: 0;
+  }
 
   display: grid;
   grid-gap: $card-gutter-gap;
-  max-width: 97%;
   margin: 1em auto;
   grid-template-columns: 1fr 1fr;
   grid-template-areas:
@@ -13,7 +15,7 @@
     "answered unanswered";
   transition: all 2s;
   box-sizing: border-box;
-  
+
   .dashboard__quick-actions {
     grid-area: actions;
 
@@ -22,19 +24,21 @@
     }
 
     .quick-actions__buttons {
+      margin-top: 1em;
       display: flex;
       flex-direction: row;
-      justify-content: center;
-      align-items: center;
+      justify-content: space-around;
       flex-wrap: wrap;
-      
+      text-align: center;
+
       button {
         border: none;
-        margin: 1em;
-        border: 1px solid $border-color;
+        max-width: 85%;
+        margin: 5px;
         width: 220px;
         height: 70px;
         max-width: 80%;
+
       }
     }
   }
@@ -43,59 +47,63 @@
     grid-area: stats;
     text-align: center;
 
-    .stats__title {
-      width: 100%;
-    }
-
     .stats_hits {
+      margin-top: 1em;
       display: flex;
       flex-direction: row;
+      flex-wrap: wrap;
       justify-content: space-around;
       align-items: center;
-      
+
       &:nth-child(1n) {
-        margin-top: 2em;
-        .hits__correct, .hits__incorrect {
-          width: 100px;
+        .hits__correct,
+        .hits__incorrect {
           height: 100px;
+          min-width: 100px;
           background-color: $bg-color;
           border: 1px solid $border-color;
           outline: 1px solid $border-color;
           outline-offset: 10px;
+          margin: 10px;
           display: flex;
           justify-content: center;
           align-items: center;
-          font-family: 'roboto';
+          font-family: "roboto";
+          font-size: 1.2em;
 
-          h1{
+          h1 {
             display: block;
           }
-      }
+        }
       }
     }
-    
   }
-  
+
   .dashboard__answered {
     grid-area: answered;
   }
-  
+
   .dashboard__unanswered {
     grid-area: unanswered;
   }
 
-
-  li {
-    display: flex;
-    justify-content: space-between;
+  .dashboard__unanswered,
+  .dashboard__answered {
+    h4 {
+      text-align: center;
+    }
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
   }
-  
 
+  
 }
 
-
-
-@media all and (max-width: $x-large) {}
+@media all and (max-width: $x-large) {
+}
 @media all and (max-width: $x-medium) {
   .dashboard {
     grid-template-areas:
@@ -106,5 +114,4 @@
   }
 }
 @media all and (max-width: $x-small) {
-
 }

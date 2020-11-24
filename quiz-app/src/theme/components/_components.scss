@@ -1,4 +1,10 @@
+/* SHARED COMPONENTS */
 @import './card';
 @import './badge';
 @import './list';
 @import './button';
+@import './form/form';
+
+
+/* VIEW COMPONENTS */
+@import './auth';

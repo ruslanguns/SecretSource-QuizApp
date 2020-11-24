@@ -1,0 +1,32 @@
+.auth {
+  margin: 1em 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 600px;
+  
+  .auth__title {
+    font-size: 1.3em;
+    text-align: center;
+    font-weight: 600;
+  }
+  
+  .auth__form {
+    margin: auto 5px;
+    width: 100%;
+    max-width: 350px;
+
+    form {
+      display: block;
+    }
+    .form__control{
+      margin: 1em 0;
+    }
+  }
+  
+  .auth__info {
+    margin-top: 2em;
+    text-align: center;
+    font-size: 0.9em;
+  }
+}
