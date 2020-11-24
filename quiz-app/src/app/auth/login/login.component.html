@@ -5,26 +5,61 @@
       Sign In
     </div>
     <div class="auth__form">
-      <form>
-        <div class="form__control">
-          <label for="username">Username</label>
-          <input type="text" id="username">
-          <small class="text-error">Este es un mensaje de error</small>
-        </div>
+      <form focusInvalidInput [formGroup]="form" (ngSubmit)="onSubmit()">
+          <label>Username
+            <input 
+              formControlName="username" 
+              type="text"
+              [ngClass]="{
+                'invalid' :
+                  (
+                    (form.get('username')?.touched
+                    || form.get('username')?.dirty)
+                    && !form.get('username')?.valid
+                  )
+              }">
+              <small
+                *ngIf="(
+                  (form.get('username')?.touched
+                  || form.get('username')?.dirty)
+                  && !form.get('username')?.valid
+                )" 
+                class="text-error">
+                Username is required
+              </small>
+          </label>
         
-        <div class="form__control">
-          <label for="password">Password</label>
-          <input type="password" id="password">
-          <small class="text-error">Este es un mensaje de error</small>
-        </div>
+          <label>Password
+            <input 
+              formControlName="password" 
+              type="password"
+              [ngClass]="{
+                'invalid' :
+                  (
+                    (form.get('password')?.touched
+                    || form.get('password')?.dirty)
+                    && !form.get('password')?.valid
+                  )
+              }">
+            <small
+              *ngIf="(
+                (form.get('password')?.touched
+                || form.get('password')?.dirty)
+                && !form.get('password')?.valid
+              )" 
+              class="text-error">
+              Password is required
+            </small>
+          </label>
 
-        <button class="btn success block" type="button">
+        <button class="btn success block" type="submit">
           Login
         </button>
       </form>
     </div>
     <div class="auth__info">
-      <p>Don't have an account yet? <a routerLink="/auth/register">Sign up</a>.
+      <p>
+        Don't have an account yet? <a routerLink="/auth/register">Sign up</a>.
       </p>
     </div>
   </app-card>
