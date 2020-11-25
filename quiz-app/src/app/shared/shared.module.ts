@@ -1,11 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+
 import { CardComponent } from './components/card/card.component';
 import { ListComponent } from './components/list/list.component';
+import { FormDirective } from './directives/form.directive';
 
 const components = [
   CardComponent,
-  ListComponent
+  ListComponent,
+  FormDirective,
 ];
 
 @NgModule({
@@ -13,10 +17,12 @@ const components = [
     ...components,
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule
   ],
   exports: [
     CommonModule,
+    ReactiveFormsModule,
     ...components
   ]
 })

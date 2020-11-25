@@ -9,8 +9,8 @@ input[type=password] {
   outline: none;
   color: $font-color;
   line-height: 1;
-  
-  &:focus {
-    border: 2px solid $border-color-secondary;
+
+  &.invalid {
+    border: 1px solid $error;
   }
 }

@@ -5,33 +5,111 @@
       Sign Up
     </div>
     <div class="auth__form">
-      <form>
-        <div class="form__control">
-          <label for="username">Username</label>
-          <input type="text" id="username">
-          <small class="text-error">Este es un mensaje de error</small>
-        </div>
+      <form focusInvalidInput [formGroup]="form" novalidate (ngSubmit)="onSubmit()">
+          <label>Username
+            <input
+              formControlName="username"
+              type="text"
+              [ngClass]="{
+                'invalid' :
+                  (
+                    (form.get('username')?.touched
+                    || form.get('username')?.dirty)
+                    && !form.get('username')?.valid
+                  )
+              }">
+            <small 
+              *ngIf="(
+                (form.get('username')?.touched
+                || form.get('username')?.dirty)
+                && !form.get('username')?.valid
+              )"
+              class="text-error">
+              Username is required
+            </small>
+          </label>
         
-        <div class="form__control">
-          <label for="password">Password</label>
-          <input type="password" id="password">
-          <small class="text-error">Este es un mensaje de error</small>
-        </div>
+          <ng-container formGroupName="passwordGroup">
+            <label>Password
+              <input
+                formControlName="password"
+                type="password" 
+                [ngClass]="{
+                  'invalid' :
+                    (
+                      (form.get('passwordGroup.password')?.touched
+                      || form.get('passwordGroup.password')?.dirty)
+                      && !form.get('passwordGroup.password')?.valid
+                    )
+                }">
+              <small 
+                *ngIf="(
+                  (form.get('passwordGroup.password')?.touched
+                  || form.get('passwordGroup.password')?.dirty)
+                  && !form.get('passwordGroup.password')?.valid
+                )"
+                class="text-error">
+                
+                <ng-container *ngIf="form.get('passwordGroup.password')?.errors?.required">
+                  Password is required
+                </ng-container>
+  
+                <ng-container
+                  *ngIf="(
+                    form.get('passwordGroup.password')?.errors?.minlength
+                    || form.get('password')?.errors?.maxlength
+                  )">
+                  Password should contain minimum 4 chracters
+                </ng-container>
+  
+              </small>
+            </label>
+  
+            <label>Confirm password
+              <input
+                formControlName="confirmPassword"
+                type="password"
+                [ngClass]="{
+                  'invalid' :
+                    (
+                      ( form.get('passwordGroup.confirmPassword')?.errors
+                      && ( form.get('passwordGroup.confirmPassword')?.touched
+                        || form.get('passwordGroup.confirmPassword')?.dirty
+                      ) || form.get('passwordGroup')?.errors)
+                    )
+                }">
+              
+              <small 
+                *ngIf="(
+                  ( form.get('passwordGroup.confirmPassword')?.errors
+                  && ( form.get('passwordGroup.confirmPassword')?.touched
+                    || form.get('passwordGroup.confirmPassword')?.dirty
+                  ) || form.get('passwordGroup')?.errors)
+                )"
+                class="text-error">
+                <ng-container *ngIf="form.get('passwordGroup.confirmPassword')?.errors?.required">
+                  Confirm password field is required
+                </ng-container>
+                <ng-container
+                  *ngIf="(
+                    form.get('passwordGroup')?.errors?.match
+                    && !form.get('passwordGroup.confirmPassword')?.errors?.required
+                  )">
+                  Please make sure your passwords match
+                </ng-container>
+              </small>
 
-        <div class="form__control">
-          <label for="confirm">Confirm password</label>
-          <input type="password" id="confirm">
-          <small class="text-error">Este es un mensaje de error</small>
-        </div>
-
-        <button class="btn info block" type="button">
+            </label>
+          </ng-container>
+          
+        <button class="btn info block" type="submit">
           Register
         </button>
       </form>
     </div>
     <div class="auth__info">
-      <p>Already have an account? 
-        <a routerLink="/auth/login">Sign In</a>
+      <p>
+        Already have an account? <a routerLink="/auth/login">Sign In</a>
       </p>
     </div>
   </app-card>

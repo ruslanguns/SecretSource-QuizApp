@@ -29,9 +29,19 @@
     width: 100%;
   }
 
+  &:disabled {
+    background-color: lightgray;
+    &:hover {
+      cursor: no-drop;
+      filter: none;
+    }
+  }
+
   &:focus,
   &:hover {
     cursor: pointer;
     filter: brightness(1.1);
   }
+
+  
 }
