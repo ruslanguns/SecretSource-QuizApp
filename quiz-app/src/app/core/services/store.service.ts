@@ -5,9 +5,8 @@ import { IState } from 'src/app/shared/interfaces';
 const initialState: IState = {
   user: null,
   accessToken: localStorage.getItem('accessToken') || undefined,
-  isLoggedIn: false,
-  isLoading: false,
-  errorMessage: null
+  isLoggedIn: !!localStorage.getItem('accessToken'),
+  isLoading: false
 }
 
 export class StoreService {
