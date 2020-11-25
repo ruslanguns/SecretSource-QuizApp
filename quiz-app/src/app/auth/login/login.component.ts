@@ -11,7 +11,8 @@ import { AuthService } from 'src/app/core/services';
 })
 export class LoginComponent {
   form: FormGroup;
-
+  loading = false;
+  
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
@@ -26,15 +27,17 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.form.valid) {
+      this.loading = true;
       const { username, password } = this.form.value;
       this.authService.login(username, password).subscribe(
         () => {
           this.toastr.clear();
+          this.loading = false;
           return this.authService.redirectUrl
             ? this.router.navigate([this.authService.redirectUrl])
             : this.router.navigate(['/'])
         },
-        (error) => this.toastr.error(error)
+        (error) => (this.toastr.error(error), this.loading = false)
       );
     }
   }

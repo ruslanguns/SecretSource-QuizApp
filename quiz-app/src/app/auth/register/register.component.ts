@@ -12,6 +12,7 @@ import { passwordMatcher } from 'src/app/shared/form-validations';
 })
 export class RegisterComponent {
   form: FormGroup;
+  loading = false;
 
   constructor(
     private fb: FormBuilder,
@@ -30,14 +31,16 @@ export class RegisterComponent {
 
   onSubmit() {
     if(this.form.valid) {
+      this.loading = true;
       const { username, passwordGroup: { password }} = this.form.value;
       this.authService.register(username, password).subscribe(
         () => {
           this.toastr.clear();
           this.toastr.success('You are now registered');
+          this.loading = false;
           return this.router.navigate(['/auth/login'])
         },
-        (error) => this.toastr.error(error)
+        (error) => (this.toastr.error(error), this.loading = false)
       );
     }
   }
