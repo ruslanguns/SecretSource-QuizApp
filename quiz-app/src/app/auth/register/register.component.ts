@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { AuthService } from 'src/app/core/services';
 import { passwordMatcher } from 'src/app/shared/form-validations';
 
 @Component({
@@ -8,14 +10,14 @@ import { passwordMatcher } from 'src/app/shared/form-validations';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit {
-  private errorMessageSubject = new Subject<string>();
-  errorMessage$ = this.errorMessageSubject.asObservable();
-  
+export class RegisterComponent {
   form: FormGroup;
 
   constructor(
     private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private toastr: ToastrService
   ) {
     this.form = this.fb.group({
       username: ['', [Validators.required]],
@@ -26,15 +28,17 @@ export class RegisterComponent implements OnInit {
     })
   }
 
-  ngOnInit(): void {
-  }
-
   onSubmit() {
     if(this.form.valid) {
       const { username, passwordGroup: { password }} = this.form.value;
-      console.log({
-        username, password
-      })
+      this.authService.register(username, password).subscribe(
+        () => {
+          this.toastr.clear();
+          this.toastr.success('You are now registered');
+          return this.router.navigate(['/auth/login'])
+        },
+        (error) => this.toastr.error(error)
+      );
     }
   }
 

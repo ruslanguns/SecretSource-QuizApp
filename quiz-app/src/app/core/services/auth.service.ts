@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, take, tap } from 'rxjs/operators';
-import { IAuthLogin } from 'src/app/shared/interfaces';
+import { IAuthLogin, IUser } from 'src/app/shared/interfaces';
 import { environment } from 'src/environments/environment';
 import { StoreService } from './store.service';
 
@@ -16,12 +16,21 @@ export class AuthService {
     private store: StoreService
   ) { }
 
-  login(username: string, password: string) {
+  login(username: string, password: string): Observable<IAuthLogin> {
     const url = `${this.apiUrl}/auth/login`;
     return this.http.post<IAuthLogin>(url, { username, password})
       .pipe(
         take(1),
         tap(data => this.setUserSession(data)),
+        catchError(this.handleError)
+      );
+  }
+
+  register(username: string, password: string) {
+    const url = `${this.apiUrl}/user/registration`;
+    return this.http.post<IUser>(url, { username, password})
+      .pipe(
+        take(1),
         catchError(this.handleError)
       );
   }
