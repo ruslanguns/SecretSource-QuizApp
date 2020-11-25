@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AuthRoutingModule } from '../auth/auth-routing.module';
-import { AuthService } from './services';
+import { AuthService, StoreService } from './services';
 import { LayoutComponent } from './components/layout/layout.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
@@ -20,9 +20,13 @@ const components = [
   ],
   imports: [
     SharedModule,
-    AuthRoutingModule
+    AuthRoutingModule,
+    HttpClientModule
   ],
-  providers: [AuthService],
+  providers: [
+    AuthService,
+    StoreService
+  ],
   exports: [
     ...components
   ]
