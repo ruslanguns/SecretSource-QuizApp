@@ -102,9 +102,17 @@
             </label>
           </ng-container>
           
-        <button [disabled]="loading" class="btn info block" type="submit">
-          Register
-        </button>
+          <button [disabled]="loading" class="btn success block" type="submit">
+            <ng-container *ngIf="!loading; else onLoading">
+              Register
+            </ng-container>
+  
+            <ng-template #onLoading>
+              <i class="fas fa-spinner fa-pulse mr-3"></i>
+              Loading
+            </ng-template>
+  
+          </button>
       </form>
     </div>
     <div class="auth__info">

@@ -53,7 +53,15 @@
           </label>
 
         <button [disabled]="loading" class="btn success block" type="submit">
-          Login
+          <ng-container *ngIf="!loading; else onLoading">
+            Login
+          </ng-container>
+
+          <ng-template #onLoading>
+            <i class="fas fa-spinner fa-pulse mr-3"></i>
+            Loading
+          </ng-template>
+
         </button>
       </form>
     </div>

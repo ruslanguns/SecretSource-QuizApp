@@ -61,8 +61,6 @@
           height: 100px;
           min-width: 100px;
           background-color: $bg-color;
-          border: 1px solid $border-color;
-          outline: 1px solid $border-color;
           outline-offset: 10px;
           margin: 10px;
           display: flex;
@@ -74,7 +72,16 @@
           h1 {
             display: block;
           }
+          &.hits__correct{
+            border: 1px dashed $success;
+            outline: 1px dashed $success;
+          }
+          &.hits__incorrect{
+            border: 1px dashed $error;
+            outline: 1px dashed $error;
+          }
         }
+
       }
     }
   }
