@@ -1,9 +1,10 @@
 
 <nav>
   <div
-    *ngIf="show"
     (click)="emitToggle()"
     [style.background-color]="show ? 'rgba(0, 0, 0, 0.5' : ''"
+    [style.opacity]="show ? 'block' : 'none'"
+    [ngClass]="{'hidden': !show}"
     class="nav-background">
   </div>
   
