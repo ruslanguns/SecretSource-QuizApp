@@ -1,5 +1,8 @@
 <header>
-  <div (click)="onToggleMenu()" class="menu-toggle">
+  <div
+    *ngIf="isLoggedIn$ | async"
+    (click)="onToggleMenu()"
+    class="menu-toggle">
 
     <ng-container *ngIf="!isSidenavOpen; else isClosed">
       <i class="fas fa-bars"></i>
@@ -15,7 +18,7 @@
     <h3>{{ title }}</h3>
   </div>
 
-  <div class="menu-logout" (click)="logout()">
+  <div *ngIf="isLoggedIn$ | async" class="menu-logout" (click)="logout()">
     <i class="fas fa-sign-out-alt"></i>
   </div>
 

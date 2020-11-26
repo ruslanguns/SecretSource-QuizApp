@@ -31,6 +31,7 @@ export class AuthGuard implements CanActivate, CanLoad {
       tap((isLoggedIn) => {
         if (!isLoggedIn || this.authService.isAccessTokenExpired()) {
           this.router.navigate(['/auth/login']);
+          this.authService.logout();
           return of(false);
         }
         this.authService.redirectUrl = state.url;
@@ -45,6 +46,7 @@ export class AuthGuard implements CanActivate, CanLoad {
       tap((isLoggedIn) => {
         if (!isLoggedIn || this.authService.isAccessTokenExpired()) {
           this.router.navigate(['/auth/login']);
+          this.authService.logout();
           return of(false);
         }
         return of(true);

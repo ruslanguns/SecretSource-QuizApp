@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services';
+import { Observable } from 'rxjs';
+import { AuthService, StoreService } from '../../services';
 
 @Component({
   selector: 'app-navbar',
@@ -11,11 +12,16 @@ export class NavbarComponent implements OnInit {
   @Output() toggleMenu: EventEmitter<boolean> = new EventEmitter();
   @Input() isSidenavOpen = false;
   @Input() title = '';
+
+  isLoggedIn$: Observable<boolean>;
     
   constructor(
     private router: Router,
-    private authService: AuthService
-  ) { }
+    private authService: AuthService,
+    private store: StoreService
+  ) {
+    this.isLoggedIn$ = this.store.select<boolean>('isLoggedIn');
+  }
 
   ngOnInit(): void {
   }
