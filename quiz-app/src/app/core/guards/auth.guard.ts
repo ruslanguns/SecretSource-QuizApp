@@ -30,7 +30,7 @@ export class AuthGuard implements CanActivate, CanLoad {
       take(1),
       tap((isLoggedIn) => {
         if (!isLoggedIn || this.authService.isAccessTokenExpired()) {
-          this.router.navigate(['/auth/login']);
+          this.router.navigate(['/auth/login'], { queryParams: { returnUrl: state.url } });
           this.authService.logout();
           return of(false);
         }
