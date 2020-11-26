@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services';
 
 
 @Component({
@@ -10,6 +12,11 @@ export class SidenavComponent {
   
   @Input() show: boolean = false;
   @Output() toggleMenu: EventEmitter<boolean> = new EventEmitter();
+
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   toggleSidenav() {
     this.show = !this.show;
@@ -23,7 +30,8 @@ export class SidenavComponent {
   }
 
   logout() {
-    console.log('logout');
+    this.router.navigate(['/auth/login']);
+    this.authService.logout();
   }
 
 }

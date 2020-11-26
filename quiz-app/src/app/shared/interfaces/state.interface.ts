@@ -5,5 +5,4 @@ export interface IState {
   accessToken: string|undefined;
   isLoggedIn: boolean;
   isLoading: boolean;
-  errorMessage: string|null;
 }
