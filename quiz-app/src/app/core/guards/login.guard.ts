@@ -9,7 +9,7 @@ export class LoginGuard implements CanActivateChild {
   constructor(private store: StoreService, private router: Router) {}
 
   canActivateChild() {
-    return (this.store.value.isLoggedIn)
+    return (this.store.value.isAuthorized)
       ? (this.router.navigate(['/']), false)
       : true;
   }

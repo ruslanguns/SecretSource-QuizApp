@@ -10,6 +10,7 @@ import {
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { take, tap } from 'rxjs/operators';
+import { Role } from 'src/app/shared/enums/role.enum';
 import { AuthService, StoreService } from '../services';
 
 @Injectable({
@@ -26,25 +27,31 @@ export class AuthGuard implements CanActivate, CanLoad {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> {
-    return this.store.select<boolean>('isLoggedIn').pipe(
+    return this.store.select<boolean>('isAuthorized').pipe(
       take(1),
-      tap((isLoggedIn) => {
-        if (!isLoggedIn || this.authService.isAccessTokenExpired()) {
-          this.router.navigate(['/auth/login'], { queryParams: { returnUrl: state.url } });
+      tap((isAuthorized) => {
+        if (!isAuthorized || this.authService.isAccessTokenExpired()) {
+          this.router.navigate(['/auth/login']);
           this.authService.logout();
           return of(false);
         }
-        this.authService.redirectUrl = state.url;
+
+        const roles = route.data.roles as Role[];
+        if (roles && !roles.some(role => this.authService.hasRole(role))) {
+          this.router.navigate(['error', '404']);
+          return of(false);
+        }
+
         return of(true);
       })
     );
   }
 
   canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> {
-    return this.store.select<boolean>('isLoggedIn').pipe(
+    return this.store.select<boolean>('isAuthorized').pipe(
       take(1),
-      tap((isLoggedIn) => {
-        if (!isLoggedIn || this.authService.isAccessTokenExpired()) {
+      tap((isAuthorized) => {
+        if (!isAuthorized || this.authService.isAccessTokenExpired()) {
           this.router.navigate(['/auth/login']);
           this.authService.logout();
           return of(false);

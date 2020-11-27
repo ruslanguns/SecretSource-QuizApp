@@ -13,14 +13,14 @@ export class NavbarComponent implements OnInit {
   @Input() isSidenavOpen = false;
   @Input() title = '';
 
-  isLoggedIn$: Observable<boolean>;
+  isAuthorized$: Observable<boolean>;
     
   constructor(
     private router: Router,
     private authService: AuthService,
     private store: StoreService
   ) {
-    this.isLoggedIn$ = this.store.select<boolean>('isLoggedIn');
+    this.isAuthorized$ = this.store.select<boolean>('isAuthorized');
   }
 
   ngOnInit(): void {

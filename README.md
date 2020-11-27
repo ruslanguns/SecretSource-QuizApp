@@ -15,8 +15,8 @@ I have deployed the back-end in Heroku in order to use it for review and testing
 ### CRUD for both USERS and QUESTIONS
 - ✅ Create Roles for "Admin" & "Player".
 - ⬜ An admin can, create, edit, and delete questions and players.
-- ⬜ An admin can, have access to a single panel page to manage questions.
-- ⬜ A player can, see and answers questions, but can't access to the admin's panel.
+- ✅ An admin can, have access to a single panel page to manage questions.
+- ✅ A player can, see and answers questions, but can't access to the admin's panel.
 - ✅ A player can register and sign in.
 - ⬜ Questions must have the question and at least one correct answer.
 - ⬜ Should have status published/unpublished.
@@ -63,7 +63,7 @@ There are some sketch that have been made for the purpose of this project read m
 |11   |client   |Create NotFoundPage Screen   |10 min   |**COMPLETED**    |
 |12   |client   |Add authentication to Angular App   |1 hour   |**COMPLETED**    |
 |13   |client   |Add user registration page   |30 min   |**COMPLETED**    |
-|14   |client   |Create Player & Admin Side Screens   |2 hours   |INCOMPLETE   |
+|14   |client   |Create Player & Admin Side Screens   |2 hours   |**COMPLETED**   |
 |15   |client   |Add admin side CRUD functionality for questions/users from API   |2 hours   |INCOMPLETE   |
 |16   |client   |Add resuts and unanswered quizzes screens at player side   |15 min   |INCOMPLETE   |
 

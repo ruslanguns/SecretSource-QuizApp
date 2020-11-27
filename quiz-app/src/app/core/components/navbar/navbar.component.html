@@ -1,6 +1,6 @@
 <header>
   <div
-    *ngIf="isLoggedIn$ | async"
+    *appAuthResource
     (click)="onToggleMenu()"
     class="menu-toggle">
 
@@ -18,8 +18,13 @@
     <h3>{{ title }}</h3>
   </div>
 
-  <div *ngIf="isLoggedIn$ | async" class="menu-logout" (click)="logout()">
+  <div
+    *appAuthResource
+    class="menu-logout"
+    (click)="logout()">
+
     <i class="fas fa-sign-out-alt"></i>
+    
   </div>
 
 </header>

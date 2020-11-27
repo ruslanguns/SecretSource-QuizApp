@@ -1,8 +1,8 @@
 import { IUser } from './user.interface';
 
 export interface IState {
-  user: IUser|null;
+  currentUser: IUser|undefined;
   accessToken: string|undefined;
-  isLoggedIn: boolean;
+  isAuthorized: boolean;
   isLoading: boolean;
 }

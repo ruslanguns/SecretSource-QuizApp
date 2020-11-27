@@ -4,7 +4,7 @@
   <!------------------------------------------------->
   <!--              QUICK ACTIONS                        -->
   <!------------------------------------------------->
-  <app-card class="dashboard__quick-actions">
+  <app-card *appUserRole="[ Role.Admin ]" class="dashboard__quick-actions">
     <div class="quick-actions__title">
       <h4>Quick actions</h4>
     </div>
@@ -22,7 +22,7 @@
   <!------------------------------------------------->
   <!--              SUMMARY                        -->
   <!------------------------------------------------->
-  <app-card class="dashboard__stats">
+  <app-card *appUserRole="[ Role.Player ]" class="dashboard__stats">
     <div class="stats__title">
       <h4>Summary</h4>
     </div>
@@ -45,7 +45,7 @@
   <!------------------------------------------------->
   <!--              LAST 5 ANSWERED                -->
   <!------------------------------------------------->
-  <app-card class="dashboard__answered">
+  <app-card *appUserRole="[ Role.Player ]" class="dashboard__answered">
     <h4>Last 5 answered</h4>
 
     <app-list>
@@ -63,7 +63,7 @@
   <!------------------------------------------------->
   <!--              LAST 5 UNANSWERED              -->
   <!------------------------------------------------->
-  <app-card class="dashboard__unanswered">
+  <app-card *appUserRole="[ Role.Player ]" class="dashboard__unanswered">
     <h4>Last 5 unanswered</h4>
 
     <div class="list">
@@ -73,6 +73,23 @@
         <li>Tres <span class="badge warning">Unanswered</span></li>
         <li>Cuatro <span class="badge warning">Unanswered</span></li>
         <li>Cinco <span class="badge warning">Unanswered</span></li>
+      </ul>
+    </div>
+  </app-card>
+
+  <!------------------------------------------------->
+  <!--              LAST 5 QUESTIONS CREATED              -->
+  <!------------------------------------------------->
+  <app-card *appUserRole="[ Role.Admin ]" class="dashboard__questions">
+    <h4>Last 5 questions created</h4>
+
+    <div class="list">
+      <ul>
+        <li>Uno <span class="badge warning">Unpublished</span></li>
+        <li>Dos <span class="badge warning">Unpublished</span></li>
+        <li>Tres <span class="badge warning">Unpublished</span></li>
+        <li>Cuatro <span class="badge warning">Unpublished</span></li>
+        <li>Cinco <span class="badge warning">Unpublished</span></li>
       </ul>
     </div>
   </app-card>

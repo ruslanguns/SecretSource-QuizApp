@@ -1,46 +1,41 @@
-
 <nav>
-  <div
-    (click)="emitToggle()"
-    [style.background-color]="show ? 'rgba(0, 0, 0, 0.5' : ''"
-    [style.opacity]="show ? 'block' : 'none'"
-    [ngClass]="{'hidden': !show}"
-    class="nav-background">
+  <div (click)="emitToggle()" [style.background-color]="show ? 'rgba(0, 0, 0, 0.5' : ''"
+    [style.opacity]="show ? 'block' : 'none'" [ngClass]="{'hidden': !show}" class="nav-background">
   </div>
-  
+
   <div class="navigation" [style.width]="!show ? '0' : ''">
-    <ul >
-        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-          <a (click)="emitToggle()" routerLink="/">
-            Dashboard
-          </a>
-        </li>
-        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-          <a (click)="emitToggle()" routerLink="/quizzes" [queryParams]="{filter: 'answered'}">
-            Results
-          </a>
-        </li>
-        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-          <a (click)="emitToggle()" routerLink="/quizzes" [queryParams]="{filter: 'unanswered'}">
-            Unanswered
-          </a>
-        </li>
-        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-          <a (click)="emitToggle()" routerLink="/questions">
-            Questions
-          </a>
-        </li>
-        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-          <a (click)="emitToggle()" routerLink="/users">
-            Users
-          </a>
-        </li>
-        <li>
-          <a (click)="logout(); emitToggle()">
-            Logout
-          </a>
-        </li>
+    <ul>
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <a (click)="emitToggle()" routerLink="/">
+          Dashboard
+        </a>
+      </li>
+      <li *appUserRole="[ Role.Player ]" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <a (click)="emitToggle()" routerLink="/quizzes" [queryParams]="{filter: 'answered'}">
+          Results
+        </a>
+      </li>
+      <li *appUserRole="[ Role.Player ]" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <a (click)="emitToggle()" routerLink="/quizzes" [queryParams]="{filter: 'unanswered'}">
+          Unanswered
+        </a>
+      </li>
+      <li *appUserRole="[ Role.Admin ]" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <a (click)="emitToggle()" routerLink="/questions">
+          Questions
+        </a>
+      </li>
+      <li *appUserRole="[ Role.Admin ]" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <a (click)="emitToggle()" routerLink="/users">
+          Users
+        </a>
+      </li>
+      <li>
+        <a (click)="logout(); emitToggle()">
+          Logout
+        </a>
+      </li>
 
     </ul>
-  </div> 
-</nav> 
+  </div>
+</nav>

@@ -11,6 +11,7 @@
   grid-template-columns: 1fr 1fr;
   grid-template-areas:
     "actions actions"
+    "last-questions last-questions"
     "stats stats"
     "answered unanswered";
   transition: all 2s;
@@ -86,16 +87,21 @@
     }
   }
 
-  .dashboard__answered {
+  &__answered {
     grid-area: answered;
   }
 
-  .dashboard__unanswered {
+  &__unanswered {
     grid-area: unanswered;
   }
 
-  .dashboard__unanswered,
-  .dashboard__answered {
+  &__questions {
+    grid-area: last-questions;
+  }
+
+  &__unanswered,
+  &__answered,
+  &__questions {
     h4 {
       text-align: center;
     }
@@ -115,6 +121,7 @@
   .dashboard {
     grid-template-areas:
       "actions actions"
+      "last-questions last-questions"
       "stats stats"
       "unanswered unanswered"
       "answered answered";
