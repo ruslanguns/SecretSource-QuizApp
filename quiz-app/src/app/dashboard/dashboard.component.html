@@ -85,11 +85,28 @@
 
     <div class="list">
       <ul>
-        <li>Uno <span class="badge warning">Unpublished</span></li>
-        <li>Dos <span class="badge warning">Unpublished</span></li>
-        <li>Tres <span class="badge warning">Unpublished</span></li>
-        <li>Cuatro <span class="badge warning">Unpublished</span></li>
-        <li>Cinco <span class="badge warning">Unpublished</span></li>
+        <li>Uno <span class="badge info">Unpublished</span></li>
+        <li>Dos <span class="badge info">Unpublished</span></li>
+        <li>Tres <span class="badge info">Unpublished</span></li>
+        <li>Cuatro <span class="badge info">Unpublished</span></li>
+        <li>Cinco <span class="badge info">Unpublished</span></li>
+      </ul>
+    </div>
+  </app-card>
+
+  <!------------------------------------------------->
+  <!--              LAST 5 REGISTERED USERS              -->
+  <!------------------------------------------------->
+  <app-card *appUserRole="[ Role.Admin ]" class="dashboard__users">
+    <h4>Last 5 registered users</h4>
+
+    <div class="list">
+      <ul>
+        <li>Uno</li>
+        <li>Dos</li>
+        <li>Tres</li>
+        <li>Cuatro</li>
+        <li>Cinco</li>
       </ul>
     </div>
   </app-card>
