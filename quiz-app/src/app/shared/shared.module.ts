@@ -6,10 +6,12 @@ import { FormDirective, UserRoleDirective, AuthResourceDirective } from './direc
 
 import { CardComponent } from './components/card/card.component';
 import { ListComponent } from './components/list/list.component';
+import { ModalComponent } from './components/modal/modal.component';
 
 const components = [
   CardComponent,
   ListComponent,
+  ModalComponent,
   FormDirective,
   UserRoleDirective,
   AuthResourceDirective
