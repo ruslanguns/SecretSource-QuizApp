@@ -10,14 +10,11 @@
             <input
               formControlName="username"
               type="text"
-              [ngClass]="{
-                'invalid' :
-                  (
-                    (form.get('username')?.touched
-                    || form.get('username')?.dirty)
-                    && !form.get('username')?.valid
-                  )
-              }">
+              [class.invalid]="(
+                (form.get('username')?.touched
+                || form.get('username')?.dirty)
+                && !form.get('username')?.valid
+              )">
             <small 
               *ngIf="(
                 (form.get('username')?.touched
@@ -33,15 +30,12 @@
             <label>Password
               <input
                 formControlName="password"
-                type="password" 
-                [ngClass]="{
-                  'invalid' :
-                    (
-                      (form.get('passwordGroup.password')?.touched
-                      || form.get('passwordGroup.password')?.dirty)
-                      && !form.get('passwordGroup.password')?.valid
-                    )
-                }">
+                type="password"
+                [class.invalid]="(
+                  (form.get('passwordGroup.password')?.touched
+                  || form.get('passwordGroup.password')?.dirty)
+                  && !form.get('passwordGroup.password')?.valid
+                )">
               <small 
                 *ngIf="(
                   (form.get('passwordGroup.password')?.touched
@@ -69,15 +63,12 @@
               <input
                 formControlName="confirmPassword"
                 type="password"
-                [ngClass]="{
-                  'invalid' :
-                    (
+                [class.invalid]="(
                       ( form.get('passwordGroup.confirmPassword')?.errors
                       && ( form.get('passwordGroup.confirmPassword')?.touched
                         || form.get('passwordGroup.confirmPassword')?.dirty
                       ) || form.get('passwordGroup')?.errors)
-                    )
-                }">
+                    )">
               
               <small 
                 *ngIf="(
@@ -108,7 +99,7 @@
             </ng-container>
   
             <ng-template #onLoading>
-              <i class="fas fa-spinner fa-pulse mr-3"></i>
+              <i class="fas fa-spinner fa-pulse mr-1"></i>
               Loading
             </ng-template>
   

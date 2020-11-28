@@ -1,0 +1,34 @@
+@import "src/theme/variables";
+
+.questions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-areas: 
+    "t t a"
+    "l l l";
+  justify-content: center;
+  align-items: center;
+
+  &__title{
+    grid-area: t;
+  }
+  &__actions {
+    grid-area: a;
+    justify-self: end;
+  }
+  &__list{
+    grid-area: l;
+  }
+}
+@media all and (max-width: $x-medium) {
+  .questions{
+    grid-template-areas:
+      "t t t"
+      "a a a"
+      "l l l";
+    &__actions {
+      grid-area: a;
+      justify-self: center;
+    }
+  }
+}

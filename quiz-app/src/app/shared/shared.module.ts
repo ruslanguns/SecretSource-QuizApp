@@ -2,14 +2,21 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { FormDirective, UserRoleDirective, AuthResourceDirective } from './directives';
+
 import { CardComponent } from './components/card/card.component';
 import { ListComponent } from './components/list/list.component';
-import { FormDirective } from './directives/form.directive';
+import { ModalComponent } from './components/modal/modal.component';
+import { QuestionFormComponent } from './components/question-form/question-form.component';
 
 const components = [
   CardComponent,
   ListComponent,
+  ModalComponent,
+  QuestionFormComponent,
   FormDirective,
+  UserRoleDirective,
+  AuthResourceDirective
 ];
 
 @NgModule({

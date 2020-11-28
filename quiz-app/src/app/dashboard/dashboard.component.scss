@@ -1,22 +1,26 @@
 @import "src/theme/variables";
 
+app-card {
+  margin: 3px;
+}
+
 .dashboard {
   h4 {
     margin: 0;
   }
 
   display: grid;
-  grid-gap: $card-gutter-gap;
   margin: 1em auto;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, 1fr);
   grid-template-areas:
     "actions actions"
+    "questions users"
     "stats stats"
     "answered unanswered";
-  transition: all 2s;
+  transition: width 2s;
   box-sizing: border-box;
 
-  .dashboard__quick-actions {
+  &__quick-actions {
     grid-area: actions;
 
     .quick-actions__title {
@@ -43,7 +47,7 @@
     }
   }
 
-  .dashboard__stats {
+  &__stats {
     grid-area: stats;
     text-align: center;
 
@@ -72,49 +76,55 @@
           h1 {
             display: block;
           }
-          &.hits__correct{
-            border: 1px dashed $success;
-            outline: 1px dashed $success;
-          }
-          &.hits__incorrect{
-            border: 1px dashed $error;
-            outline: 1px dashed $error;
-          }
+        }
+        .hits__correct{
+          border: 1px dashed $success;
+          outline: 1px dashed $success;
+        }
+        .hits__incorrect{
+          border: 1px dashed $error;
+          outline: 1px dashed $error;
         }
 
       }
     }
   }
 
-  .dashboard__answered {
+  &__answered {
     grid-area: answered;
   }
 
-  .dashboard__unanswered {
+  &__unanswered {
     grid-area: unanswered;
   }
 
-  .dashboard__unanswered,
-  .dashboard__answered {
-    h4 {
-      text-align: center;
-    }
-    li {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+  &__questions {
+    grid-area: questions;
+  }
+
+  &__users {
+    grid-area: users;
+  }
+
+  h4 {
+    text-align: center;
+  }
+  li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
   
 }
 
-@media all and (max-width: $x-large) {
-}
+@media all and (max-width: $x-large) {}
 @media all and (max-width: $x-medium) {
   .dashboard {
     grid-template-areas:
       "actions actions"
+      "questions questions"
+      "users users"
       "stats stats"
       "unanswered unanswered"
       "answered answered";

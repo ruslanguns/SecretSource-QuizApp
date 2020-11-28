@@ -10,14 +10,11 @@
             <input 
               formControlName="username" 
               type="text"
-              [ngClass]="{
-                'invalid' :
-                  (
-                    (form.get('username')?.touched
-                    || form.get('username')?.dirty)
-                    && !form.get('username')?.valid
-                  )
-              }">
+              [class.invalid]="(
+                (form.get('username')?.touched
+                || form.get('username')?.dirty)
+                && !form.get('username')?.valid
+              )">
               <small
                 *ngIf="(
                   (form.get('username')?.touched
@@ -33,14 +30,11 @@
             <input 
               formControlName="password" 
               type="password"
-              [ngClass]="{
-                'invalid' :
-                  (
-                    (form.get('password')?.touched
-                    || form.get('password')?.dirty)
-                    && !form.get('password')?.valid
-                  )
-              }">
+              [class.invalid]="(
+                (form.get('password')?.touched
+                || form.get('password')?.dirty)
+                && !form.get('password')?.valid
+              )">
             <small
               *ngIf="(
                 (form.get('password')?.touched
@@ -58,7 +52,7 @@
           </ng-container>
 
           <ng-template #onLoading>
-            <i class="fas fa-spinner fa-pulse mr-3"></i>
+            <i class="fas fa-spinner fa-pulse mr-1"></i>
             Loading
           </ng-template>
 

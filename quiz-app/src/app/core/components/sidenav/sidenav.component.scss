@@ -5,12 +5,13 @@
   width: 100%;
   position: fixed;
   margin: $header-height 0;
-  transition: opacity 0.6s linear;
-  transform:translate(0);
+  background-color: rgba(0, 0, 0, 0.2);
+  transition: opacity 0.6s;
+  transform: translate(0);
   opacity: 1;
 
   &.hidden {  
-    transform:translate(9999px);
+    transform: translate(9999px);
     opacity: 0;  
   }
 }

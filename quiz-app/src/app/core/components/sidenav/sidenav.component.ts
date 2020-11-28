@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { Role } from 'src/app/shared/enums/role.enum';
 import { AuthService } from '../../services';
 
 
@@ -12,6 +13,7 @@ export class SidenavComponent {
   
   @Input() show: boolean = false;
   @Output() toggleMenu: EventEmitter<boolean> = new EventEmitter();
+  Role = Role;
 
   constructor(
     private authService: AuthService,

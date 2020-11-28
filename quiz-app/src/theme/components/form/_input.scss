@@ -1,16 +1,41 @@
 input[type=text],
-input[type=password] {
+input[type=password],
+select,
+textarea {
   width: 100%;
   padding: 0.6em 1em;
   margin-top: 0.3em;
   box-sizing: border-box;
   border: 2px solid $border-color;
-  transition: 0.5s;
   outline: none;
   color: $font-color;
   line-height: 1;
 
   &.invalid {
     border: 1px solid $error;
+  }
+}
+
+.form-inline {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  
+  label {
+    width: 49%;
+  }
+}
+
+@media all and (min-width: $x-medium) {
+  .form-inline {
+    margin-top: 1em;
+  }
+}
+@media all and (max-width: $x-medium) {
+  .form-inline {
+    label {
+      width: 100%;
+    }
   }
 }

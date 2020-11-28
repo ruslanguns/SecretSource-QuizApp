@@ -30,14 +30,14 @@ export class LoginComponent {
       this.loading = true;
       const { username, password } = this.form.value;
       this.authService.login(username, password).subscribe(
-        () => {
-          this.toastr.clear();
-          this.loading = false;
-          return this.authService.redirectUrl
-            ? this.router.navigate([this.authService.redirectUrl])
-            : this.router.navigate(['/'])
-        },
-        (error) => (this.toastr.error(error), this.loading = false)
+        () => (
+          this.toastr.clear(),
+          this.router.navigate(['/'])
+        ),
+        (error) => (
+          this.toastr.error(error),
+          this.loading = false
+        )
       );
     }
   }

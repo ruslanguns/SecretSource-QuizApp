@@ -3,9 +3,9 @@ import { distinctUntilChanged, pluck } from 'rxjs/operators';
 import { IState } from 'src/app/shared/interfaces';
 
 const initialState: IState = {
-  user: null,
+  currentUser: JSON.parse(localStorage.getItem('currentUser') as string),
   accessToken: localStorage.getItem('accessToken') || undefined,
-  isLoggedIn: !!localStorage.getItem('accessToken'),
+  isAuthorized: !!localStorage.getItem('accessToken'),
   isLoading: false
 }
 

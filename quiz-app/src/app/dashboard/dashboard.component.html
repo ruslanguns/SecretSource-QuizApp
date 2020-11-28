@@ -1,28 +1,35 @@
-
 <div class="dashboard">
 
   <!------------------------------------------------->
   <!--              QUICK ACTIONS                        -->
   <!------------------------------------------------->
-  <app-card class="dashboard__quick-actions">
+  <app-card *appUserRole="[ Role.Admin ]" class="dashboard__quick-actions">
     <div class="quick-actions__title">
       <h4>Quick actions</h4>
     </div>
     
     <div class="quick-actions__buttons">
       <div>
-        <button class="btn primary default text-light" type="button">Add new question</button>
+        <button (click)="openQuestionFormModal()" class="btn primary default text-light" type="button">
+          Add new question
+        </button>
       </div>
       <div>
-        <button class="btn default text-light" type="button">Manage users</button>
+        <button routerLink="/users" class="btn default text-light" type="button">
+          Manage users
+        </button>
       </div>
     </div>
   </app-card>
+  <app-modal [initialStatus]="questionFormModal" (onClose)="closeQuestionFormModal()">
+    <h3>Create new question</h3>
+    <app-question-form></app-question-form>
+  </app-modal>
 
   <!------------------------------------------------->
   <!--              SUMMARY                        -->
   <!------------------------------------------------->
-  <app-card class="dashboard__stats">
+  <app-card *appUserRole="[ Role.Player ]" class="dashboard__stats">
     <div class="stats__title">
       <h4>Summary</h4>
     </div>
@@ -45,7 +52,7 @@
   <!------------------------------------------------->
   <!--              LAST 5 ANSWERED                -->
   <!------------------------------------------------->
-  <app-card class="dashboard__answered">
+  <app-card *appUserRole="[ Role.Player ]" class="dashboard__answered">
     <h4>Last 5 answered</h4>
 
     <app-list>
@@ -63,7 +70,7 @@
   <!------------------------------------------------->
   <!--              LAST 5 UNANSWERED              -->
   <!------------------------------------------------->
-  <app-card class="dashboard__unanswered">
+  <app-card *appUserRole="[ Role.Player ]" class="dashboard__unanswered">
     <h4>Last 5 unanswered</h4>
 
     <div class="list">
@@ -73,6 +80,40 @@
         <li>Tres <span class="badge warning">Unanswered</span></li>
         <li>Cuatro <span class="badge warning">Unanswered</span></li>
         <li>Cinco <span class="badge warning">Unanswered</span></li>
+      </ul>
+    </div>
+  </app-card>
+
+  <!------------------------------------------------->
+  <!--              LAST 5 QUESTIONS CREATED              -->
+  <!------------------------------------------------->
+  <app-card *appUserRole="[ Role.Admin ]" class="dashboard__questions">
+    <h4>Last 5 questions created</h4>
+
+    <div class="list">
+      <ul>
+        <li>Uno <span class="badge info">Unpublished</span></li>
+        <li>Dos <span class="badge info">Unpublished</span></li>
+        <li>Tres <span class="badge info">Unpublished</span></li>
+        <li>Cuatro <span class="badge info">Unpublished</span></li>
+        <li>Cinco <span class="badge info">Unpublished</span></li>
+      </ul>
+    </div>
+  </app-card>
+
+  <!------------------------------------------------->
+  <!--              LAST 5 REGISTERED USERS              -->
+  <!------------------------------------------------->
+  <app-card *appUserRole="[ Role.Admin ]" class="dashboard__users">
+    <h4>Last 5 registered users</h4>
+
+    <div class="list">
+      <ul>
+        <li>Uno</li>
+        <li>Dos</li>
+        <li>Tres</li>
+        <li>Cuatro</li>
+        <li>Cinco</li>
       </ul>
     </div>
   </app-card>
