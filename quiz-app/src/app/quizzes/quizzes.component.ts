@@ -3,9 +3,9 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-quizzes',
   template: `
-    <p>
+    <app-card class="m-1">
       quizzes works!
-    </p>
+    </app-card>
   `,
   styles: [
   ]

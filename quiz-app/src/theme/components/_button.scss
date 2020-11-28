@@ -26,10 +26,16 @@
   }
   &.transparent {
     background-color: transparent;
+    color: $font-color
   }
 
   &.block {
     width: 100%;
+  }
+
+  &.small {
+    padding: 0.6em;
+    font-size: 0.7em;
   }
 
   &:disabled {
@@ -39,6 +45,7 @@
       filter: none;
     }
   }
+
 
   &:focus,
   &:hover {
