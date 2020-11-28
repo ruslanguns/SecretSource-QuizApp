@@ -8,5 +8,14 @@ import { Role } from '../shared/enums/role.enum';
 })
 export class DashboardComponent {
   Role = Role;
+  questionFormModal = false;
+
+  openQuestionFormModal() {
+    this.questionFormModal = true;
+  }
+
+  closeQuestionFormModal() {
+    this.questionFormModal = false;
+  }
 
 }

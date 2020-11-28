@@ -7,11 +7,13 @@ import { FormDirective, UserRoleDirective, AuthResourceDirective } from './direc
 import { CardComponent } from './components/card/card.component';
 import { ListComponent } from './components/list/list.component';
 import { ModalComponent } from './components/modal/modal.component';
+import { QuestionFormComponent } from './components/question-form/question-form.component';
 
 const components = [
   CardComponent,
   ListComponent,
   ModalComponent,
+  QuestionFormComponent,
   FormDirective,
   UserRoleDirective,
   AuthResourceDirective

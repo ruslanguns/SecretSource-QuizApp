@@ -24,6 +24,9 @@
   &.default {
     background-color: $default;
   }
+  &.transparent {
+    background-color: transparent;
+  }
 
   &.block {
     width: 100%;
