@@ -20,15 +20,21 @@
     grid-area: l;
   }
 }
-@media all and (max-width: $x-medium) {
+@media all and (max-width: 864px) {
   .questions{
     grid-template-areas:
-      "t t t"
-      "a a a"
+      "t t a"
       "l l l";
     &__actions {
       grid-area: a;
-      justify-self: center;
+      button {
+        span {
+          display: none;
+        }
+        &:after{
+          content: "\002B" + " Add";
+        }
+      }
     }
   }
 }
