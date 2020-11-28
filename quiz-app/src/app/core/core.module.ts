@@ -7,6 +7,7 @@ import { LayoutComponent } from './components/layout/layout.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { SharedModule } from '../shared/shared.module';
+import interceptors from './interceptors';
 
 const components = [
   LayoutComponent,
@@ -25,7 +26,8 @@ const components = [
   ],
   providers: [
     AuthService,
-    StoreService
+    StoreService,
+    interceptors
   ],
   exports: [
     ...components

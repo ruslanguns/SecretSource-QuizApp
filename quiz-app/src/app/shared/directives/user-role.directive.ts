@@ -4,7 +4,6 @@ import { AuthService, StoreService } from 'src/app/core/services';
 import { Role } from '../enums/role.enum';
 
 
-// TODO: make it reactive
 @Directive({
   selector: '[appUserRole]'
 })
