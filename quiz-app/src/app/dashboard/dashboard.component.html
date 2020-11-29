@@ -22,7 +22,7 @@
     </div>
   </app-card>
   <app-modal [initialStatus]="questionFormModal" (onClose)="closeQuestionFormModal()">
-    <h3>Create new question</h3>
+    <h2>Create new question</h2>
     <app-question-form></app-question-form>
   </app-modal>
 
@@ -34,13 +34,13 @@
       <h4>Summary</h4>
     </div>
     <div class="stats_hits">
-      <div class="mr-4">
+      <div>
         <div class="hits__correct text-success">
           <h1>3</h1>
         </div>
         <p>Correct</p>
       </div>
-      <div class="ml-4">
+      <div>
         <div class="hits__incorrect text-error">
           <h1>2</h1>
         </div>
