@@ -1,33 +1,37 @@
 .table {
   overflow-x:auto;
+  font-size: 0.95em;
 
   table,
   td,
   th {
-    border: 1px solid #ddd;
+    border: 1px solid $border-color;
     text-align: left;
   }
-
-  th {
-    background-color: $default;
-    color: white;
-  }
-  
   table {
     border-collapse: collapse;
     width: 100%;
     margin-top: 1em;
   }
-  
-  th, td {
-    padding: 15px;
+  th,
+  td {
+    padding: 10px;
+    &:nth-last-child(1){
+      text-align: center;
+    }
   }
-
+  th {
+    background-color: $default;
+    color: white;
+  }
   td {
     width: 1px;
     white-space: nowrap;
-  
   }
-  
-  
+  tr {
+    transition: 0.1s;
+    &:hover {
+      background-color: $bg-color;
+    }
+  }
 }

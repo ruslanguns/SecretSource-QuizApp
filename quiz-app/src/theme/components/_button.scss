@@ -1,7 +1,5 @@
-
 .btn {
   padding: 0.8em;
-  // background-color: $default;
   outline: none;
   color: white;
   border: none;
@@ -28,16 +26,13 @@
     background-color: transparent;
     color: $font-color
   }
-
   &.block {
     width: 100%;
   }
-
   &.small {
     padding: 0.6em;
     font-size: 0.7em;
   }
-
   &:disabled {
     background-color: lightgray;
     &:hover {
@@ -45,13 +40,9 @@
       filter: none;
     }
   }
-
-
   &:focus,
   &:hover {
     cursor: pointer;
     filter: brightness(1.1);
   }
-
-  
 }
