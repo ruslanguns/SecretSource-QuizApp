@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-users',
   template: `
     <app-card class="m-1">
-      users works!
+      <router-outlet></router-outlet>
     </app-card>
   `,
   styles: [
