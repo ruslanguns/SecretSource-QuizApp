@@ -48,8 +48,8 @@ export class QuestionFormComponent {
 
   onSubmit() {
     this.formSubmitted = true;
+    this.loading = true;
     if (this.form.valid) {
-      this.loading = true;
       
       let trulyAnswers = 0;
       for (const answer of this.form.value.answers) {
@@ -59,6 +59,7 @@ export class QuestionFormComponent {
       }
       if (trulyAnswers === 0) {
         this.toastr.error('Should have at least one truly answer');
+        this.loading = false;
         return;
       }
 
@@ -72,9 +73,12 @@ export class QuestionFormComponent {
           this.toastr.clear(),
           this.toastr.success(`Question created successfully`),
           this.resetForm(),
-          (this.loading = false)
+          this.loading = false
         ),
-        (error) => (this.toastr.error(error), (this.loading = false))
+        (error) => (
+          this.toastr.error(error),
+          this.loading = false
+          )
       );
       this.formSubmitted = false;
     }
