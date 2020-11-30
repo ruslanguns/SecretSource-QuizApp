@@ -29,8 +29,8 @@
     <app-modal [initialStatus]="deleteModal" (onClose)="closeOnDeleteModal()">
       <h2>Are you sure to delete this question?</h2>
       <div class="modal__confirm">
-        <button (click)="selectedQuestion = null; closeOnDeleteModal()" type="button" class="btn default">Cancel</button>
-        <button (click)="deleteQuestion(selectedQuestion?.id)" type="button" class="btn error">Yes, delete it.</button>
+        <button (click)="closeOnDeleteModal()" type="button" class="btn default">Cancel</button>
+        <button (click)="deleteQuestion()" type="button" class="btn error">Yes, delete it.</button>
       </div>
     </app-modal>
 

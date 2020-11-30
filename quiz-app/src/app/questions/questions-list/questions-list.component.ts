@@ -97,10 +97,12 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
     this.selectedQuestion = undefined;
   }
 
-  deleteQuestion(id: number) {
-    const questions = this.store.value.questions.filter(x => x.id !== this.selectedQuestion?.id);
-    this.questionService.deleteQuestion(id).subscribe();
-    this.store.set('questions', questions);
+  deleteQuestion() {
+    if(this.selectedQuestion) {
+      const questions = this.store.value.questions.filter(x => x.id !== this.selectedQuestion?.id);
+      this.questionService.deleteQuestion(this.selectedQuestion.id).subscribe();
+      this.store.set('questions', questions);
+    }
     this.closeOnDeleteModal();
   }
 
