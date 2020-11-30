@@ -1,8 +1,9 @@
 import { TitleCasePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { Subscription } from 'rxjs';
-import { QuestionsService } from 'src/app/core/services';
+import { combineLatest, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { QuestionsService, StoreService } from 'src/app/core/services';
 import { ITableOptions } from 'src/app/shared/components/table-crud/table-crud.component';
 import { IQuestion } from 'src/app/shared/interfaces';
 import { IsPublishedPipe } from 'src/app/shared/pipes';
@@ -40,15 +41,28 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
   questionsSubs?: Subscription;
   loading = false;
 
+  deleteModal = false;
+  selectedQuestion?: IQuestion;
+
   constructor(
     private questionService: QuestionsService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private store: StoreService
   ) { }
 
   
   ngOnInit() {
     this.loading = true;
-    this.questionsSubs = this.questionService.getQuestions()
+    const questionService$ = this.questionService.getQuestions();
+    const questionStore$ = this.store.select<IQuestion[]>('questions');
+    this.questionsSubs = combineLatest([
+      questionService$,
+      questionStore$
+    ]).pipe(
+        map(([service, store]) => {
+          return store;
+        })
+      )
       .subscribe(
         questions => (
           this.dataTable = questions,
@@ -65,12 +79,29 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
     this.questionsSubs?.unsubscribe();
   }
 
-  onEdit(event: any) {
-    console.log(`Editing — ${event?.id}`)
+  onEdit(question: IQuestion) {
+    this.selectedQuestion = question;
   }
   
-  onDelete(event: any) {
-    console.log(`Deleting — ${event?.id}`)
+  onDelete(question: IQuestion) {
+    this.selectedQuestion = question;
+    this.openOnDeleteModal();
+  }
+
+  openOnDeleteModal(){
+    this.deleteModal = true;
+  }
+
+  closeOnDeleteModal(){
+    this.deleteModal = false;
+    this.selectedQuestion = undefined;
+  }
+
+  deleteQuestion(id: number) {
+    const questions = this.store.value.questions.filter(x => x.id !== this.selectedQuestion?.id);
+    this.questionService.deleteQuestion(id).subscribe();
+    this.store.set('questions', questions);
+    this.closeOnDeleteModal();
   }
 
 }

@@ -5,7 +5,7 @@ export interface IAnswer {
 }
 
 export interface IQuestion {
-  id?: number;
+  id: number;
   question: string;
   answers: IAnswer[];
   category: string;

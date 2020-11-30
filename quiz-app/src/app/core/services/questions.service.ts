@@ -34,6 +34,15 @@ export class QuestionsService {
       ) 
   }
 
+  deleteQuestion(id: number) {
+    const url = `${this.apiUrl}/question/${id}`;
+    return this.http.delete<IQuestion>(url)
+      .pipe(
+        take(1),
+        catchError(this.handleError),
+      ) 
+  }
+
   private handleError(err: any): Observable<never> {
     let errorMessage: string;
     err.error instanceof ErrorEvent
