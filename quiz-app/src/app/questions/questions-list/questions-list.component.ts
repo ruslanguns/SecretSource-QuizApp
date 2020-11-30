@@ -1,41 +1,11 @@
-import { TitleCasePipe, UpperCasePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { TitleCasePipe } from '@angular/common';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
+import { QuestionsService } from 'src/app/core/services';
 import { ITableOptions } from 'src/app/shared/components/table-crud/table-crud.component';
+import { IQuestion } from 'src/app/shared/interfaces';
 import { IsPublishedPipe } from 'src/app/shared/pipes';
-
-
-const mock_data_table = [
-  {
-    id: 1,
-    question: 'How to became millonarie?',
-    status: 0,
-    category: 'general'
-  },
-  {
-    id: 2,
-    question: 'How to became millonarie?',
-    status: 0,
-    category: 'general'
-  },
-  {
-    id: 3,
-    question: 'How to became millonarie?',
-    status: 0,
-    category: 'general'
-  },
-  {
-    id: 4,
-    question: 'How to became millonarie?',
-    status: 0,
-    category: 'general'
-  },
-  {
-    id: 5,
-    question: 'How to became millonarie?',
-    status: 0,
-    category: 'general'
-  }
-];
 
 
 @Component({
@@ -43,8 +13,8 @@ const mock_data_table = [
   templateUrl: './questions-list.component.html',
   styleUrls: ['./questions-list.component.scss']
 })
-export class QuestionsListComponent implements OnInit {
-  dataTable = mock_data_table;
+export class QuestionsListComponent implements OnInit, OnDestroy {
+  dataTable: IQuestion[] = [];
   tableOptions: ITableOptions = {
     id: {
       name: 'Id',
@@ -67,9 +37,32 @@ export class QuestionsListComponent implements OnInit {
     }
   };
 
-  constructor() { }
+  questionsSubs?: Subscription;
+  loading = false;
 
-  ngOnInit(): void {
+  constructor(
+    private questionService: QuestionsService,
+    private toastr: ToastrService
+  ) { }
+
+  
+  ngOnInit() {
+    this.loading = true;
+    this.questionsSubs = this.questionService.getQuestions()
+      .subscribe(
+        questions => (
+          this.dataTable = questions,
+          this.loading = false
+        ),
+        error => (
+          this.toastr.error(error),
+          this.loading = false
+        )
+      );
+  }
+  
+  ngOnDestroy() {
+    this.questionsSubs?.unsubscribe();
   }
 
   onEdit(event: any) {

@@ -6,6 +6,7 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { distinctUntilChanged } from 'rxjs/operators';
 import { StoreService } from 'src/app/core/services';
 
 @Directive({
@@ -23,6 +24,7 @@ export class AuthResourceDirective implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscription = this.store
       .select<boolean>('isAuthorized')
+      .pipe(distinctUntilChanged())
       .subscribe((hasAccess) => {
         hasAccess
           ? this.viewContainer.createEmbeddedView(this.templateRef)

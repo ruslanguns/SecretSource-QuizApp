@@ -11,6 +11,7 @@ import { QuestionFormComponent } from './components/question-form/question-form.
 import { TableCrudComponent } from './components/table-crud/table-crud.component';
 import { UsePipeComponent } from './components/use-pipe/use-pipe.component';
 import { IsPublishedPipe } from './pipes/is-published.pipe';
+import { LoadingComponent } from './components/loading/loading.component';
 
 
 const components = [
@@ -20,6 +21,7 @@ const components = [
   QuestionFormComponent,
   UsePipeComponent,
   TableCrudComponent,
+  LoadingComponent,
   FormDirective,
   UserRoleDirective,
   AuthResourceDirective,

@@ -10,4 +10,5 @@ export interface IQuestion {
   answers: IAnswer[];
   category: string;
   status?: boolean;
+  createdAt?: Date
 }

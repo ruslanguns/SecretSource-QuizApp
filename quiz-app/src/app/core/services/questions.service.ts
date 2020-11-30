@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, shareReplay, take, tap } from 'rxjs/operators';
 import { IQuestion } from 'src/app/shared/interfaces';
 import { environment } from 'src/environments/environment';
+import { StoreService } from './store.service';
 
 @Injectable()
 export class QuestionsService {
@@ -12,17 +13,26 @@ export class QuestionsService {
 
   constructor(
     private http: HttpClient,
+    private store: StoreService
   ) { }
 
   createQuestion(question: IQuestion) {
     const url = `${this.apiUrl}/question`;
     return this.http.post(url, question)
       .pipe(
-        tap(console.log),
         catchError(this.handleError)
       )
   }
 
+  getQuestions() {
+    const url = `${this.apiUrl}/question`;
+    return this.http.get<IQuestion[]>(url)
+      .pipe(
+        take(1),
+        tap(questions => this.store.set('questions', questions)),
+        catchError(this.handleError),
+      ) 
+  }
 
   private handleError(err: any): Observable<never> {
     let errorMessage: string;

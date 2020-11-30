@@ -15,11 +15,16 @@
   <div class="questions__list">
 
     <app-table-crud
+      *ngIf="!loading; else onLoading"
       [dataTable]="dataTable"
       [tableOptions]="tableOptions"
       (onEdit)="onEdit($event)"
       (onDelete)="onDelete($event)">
     </app-table-crud>
+
+    <ng-template #onLoading>
+      <app-loading></app-loading>
+    </ng-template>
 
   </div>
 </div>
