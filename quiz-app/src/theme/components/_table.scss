@@ -16,7 +16,8 @@
   th,
   td {
     padding: 10px;
-    &:nth-last-child(1){
+    &:nth-child(1),
+    &:nth-last-child(1) {
       text-align: center;
     }
   }
