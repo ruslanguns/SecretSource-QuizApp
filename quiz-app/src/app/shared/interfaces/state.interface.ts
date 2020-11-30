@@ -1,3 +1,4 @@
+import { IQuestion } from './question.interface';
 import { IUser } from './user.interface';
 
 export interface IState {
@@ -5,4 +6,5 @@ export interface IState {
   accessToken: string|undefined;
   isAuthorized: boolean;
   isLoading: boolean;
+  questions: IQuestion[];
 }

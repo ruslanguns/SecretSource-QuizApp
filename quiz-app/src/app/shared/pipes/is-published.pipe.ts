@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class IsPublishedPipe implements PipeTransform {
 
   transform(value: unknown, ...args: unknown[]): unknown {
-    return value === 0 ? 'Unpublished' : value === 1 ? 'published' : 'Unknown'
+    return !value ? 'Unpublished' : value === 1 ? 'published' : 'Unknown'
   }
 
 }

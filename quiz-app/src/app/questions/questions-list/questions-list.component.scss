@@ -21,6 +21,17 @@
   }
 }
 
+.modal__confirm {
+  display: flex;
+  justify-content: space-around;
+  button:nth-child(1),
+  button:nth-child(2) {
+    width: 50%;
+    margin: 1em;
+    display: block;
+  }
+}
+
 @media all and (max-width: 864px) {
   .questions{
     grid-template-areas:

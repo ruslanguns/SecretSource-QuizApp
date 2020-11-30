@@ -15,7 +15,6 @@ export class ModalComponent {
   }
 
   close() {
-    console.log('Deberia desaparecer el modal')
     this.initialStatus = false;
     this.onClose.emit(false);
   }

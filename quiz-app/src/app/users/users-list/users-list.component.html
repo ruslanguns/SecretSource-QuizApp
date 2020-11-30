@@ -1,0 +1,16 @@
+<div class="users">
+  <div class="users__title">
+    <h2>Users</h2>
+  </div>
+
+  <div class="users__list">
+
+    <app-table-crud
+      [dataTable]="dataTable"
+      [tableOptions]="tableOptions"
+      (onEdit)="onEdit($event)"
+      (onDelete)="onDelete($event)">
+    </app-table-crud>
+
+  </div>
+</div>

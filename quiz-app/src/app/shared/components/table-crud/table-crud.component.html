@@ -2,35 +2,41 @@
   <table>
     <thead>
       <tr>
-        <th *ngFor="let column of columnKeys">
-          <ng-container *ngIf="tableOptions; else NoOptionsProvided">
-            {{ tableOptions[column]?.name }}
+        <ng-container *ngIf="tableOptions; else NoOptionsProvided">
+          <ng-container *ngFor="let column of columnKeys">
+            <th *ngIf="tableOptions[column]?.name">
+              <span>
+                {{ tableOptions[column]?.name }}
+              </span>
+            </th>
           </ng-container>
-          <ng-template #NoOptionsProvided>
-            {{ column | titlecase }}
-          </ng-template>
-        </th>
+        </ng-container>
+        <ng-template #NoOptionsProvided>
+          <th *ngFor="let column of columnKeys">
+              {{ column | titlecase }}
+          </th>
+        </ng-template>
         <th>Actions</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let row of dataTable">
-        <td *ngFor="let column of columnKeys">
-
+        <ng-container *ngFor="let column of columnKeys">
           <ng-container *ngIf="tableOptions; else NoOptionsProvided">
-            <span [class]="tableOptions[column]?.styleClass">
+            <td *ngIf="tableOptions[column]?.name">
               <app-use-pipe
-                  [pipeProvider]="tableOptions[column]?.transformOptions?.usePipe"
-                  [pipeArgs]="tableOptions[column]?.transformOptions?.pipeArgs"
-                  [textToFormat]="row[column]">
+                [class]="tableOptions[column]?.styleClass"
+                [pipeProvider]="tableOptions[column]?.transformOptions?.usePipe"
+                [pipeArgs]="tableOptions[column]?.transformOptions?.pipeArgs"
+                [textToFormat]="row[column]">
               </app-use-pipe>
-            </span>
-            </ng-container>
-            <ng-template #NoOptionsProvided>
-              {{ row[column] }}
-            </ng-template>
+            </td>
+          </ng-container>
+          <ng-template #NoOptionsProvided>
+            <td>{{ row[column] }}</td>
+          </ng-template>
+        </ng-container>
 
-        </td>
         <td>
           <button (click)="onEditClick(row)" class="btn small default mr-1">Edit</button>
           <button (click)="onDeleteClick(row)" class="btn small error">Delete</button>

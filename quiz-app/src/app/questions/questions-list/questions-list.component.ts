@@ -1,41 +1,12 @@
-import { TitleCasePipe, UpperCasePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { TitleCasePipe } from '@angular/common';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+import { combineLatest, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { QuestionsService, StoreService } from 'src/app/core/services';
 import { ITableOptions } from 'src/app/shared/components/table-crud/table-crud.component';
+import { IQuestion } from 'src/app/shared/interfaces';
 import { IsPublishedPipe } from 'src/app/shared/pipes';
-
-
-const mock_data_table = [
-  {
-    id: 1,
-    question: 'How to became millonarie?',
-    status: 0,
-    category: 'general'
-  },
-  {
-    id: 2,
-    question: 'How to became millonarie?',
-    status: 0,
-    category: 'general'
-  },
-  {
-    id: 3,
-    question: 'How to became millonarie?',
-    status: 0,
-    category: 'general'
-  },
-  {
-    id: 4,
-    question: 'How to became millonarie?',
-    status: 0,
-    category: 'general'
-  },
-  {
-    id: 5,
-    question: 'How to became millonarie?',
-    status: 0,
-    category: 'general'
-  }
-];
 
 
 @Component({
@@ -43,8 +14,8 @@ const mock_data_table = [
   templateUrl: './questions-list.component.html',
   styleUrls: ['./questions-list.component.scss']
 })
-export class QuestionsListComponent implements OnInit {
-  dataTable = mock_data_table;
+export class QuestionsListComponent implements OnInit, OnDestroy {
+  dataTable: IQuestion[] = [];
   tableOptions: ITableOptions = {
     id: {
       name: 'Id',
@@ -67,17 +38,72 @@ export class QuestionsListComponent implements OnInit {
     }
   };
 
-  constructor() { }
+  questionsSubs?: Subscription;
+  loading = false;
 
-  ngOnInit(): void {
-  }
+  deleteModal = false;
+  selectedQuestion?: IQuestion;
 
-  onEdit(event: any) {
-    console.log(`Editing — ${event?.id}`)
+  constructor(
+    private questionService: QuestionsService,
+    private toastr: ToastrService,
+    private store: StoreService
+  ) { }
+
+  
+  ngOnInit() {
+    this.loading = true;
+    const questionService$ = this.questionService.getQuestions();
+    const questionStore$ = this.store.select<IQuestion[]>('questions');
+    this.questionsSubs = combineLatest([
+      questionService$,
+      questionStore$
+    ]).pipe(
+        map(([service, store]) => {
+          return store;
+        })
+      )
+      .subscribe(
+        questions => (
+          this.dataTable = questions,
+          this.loading = false
+        ),
+        error => (
+          this.toastr.error(error),
+          this.loading = false
+        )
+      );
   }
   
-  onDelete(event: any) {
-    console.log(`Deleting — ${event?.id}`)
+  ngOnDestroy() {
+    this.questionsSubs?.unsubscribe();
+  }
+
+  onEdit(question: IQuestion) {
+    this.selectedQuestion = question;
+  }
+  
+  onDelete(question: IQuestion) {
+    this.selectedQuestion = question;
+    this.openOnDeleteModal();
+  }
+
+  openOnDeleteModal(){
+    this.deleteModal = true;
+  }
+
+  closeOnDeleteModal(){
+    this.deleteModal = false;
+    this.selectedQuestion = undefined;
+  }
+
+  deleteQuestion() {
+    if(this.selectedQuestion) {
+      const questions = this.store.value.questions.filter(x => x.id !== this.selectedQuestion?.id);
+      this.questionService.deleteQuestion(this.selectedQuestion.id).subscribe();
+      this.store.set('questions', questions);
+    }
+    this.closeOnDeleteModal();
   }
 
 }

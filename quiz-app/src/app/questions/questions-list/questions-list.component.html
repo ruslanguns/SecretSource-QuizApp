@@ -15,11 +15,24 @@
   <div class="questions__list">
 
     <app-table-crud
+      *ngIf="!loading; else onLoading"
       [dataTable]="dataTable"
       [tableOptions]="tableOptions"
       (onEdit)="onEdit($event)"
       (onDelete)="onDelete($event)">
     </app-table-crud>
+
+    <ng-template #onLoading>
+      <app-loading></app-loading>
+    </ng-template>
+
+    <app-modal [initialStatus]="deleteModal" (onClose)="closeOnDeleteModal()">
+      <h2>Are you sure to delete this question?</h2>
+      <div class="modal__confirm">
+        <button (click)="closeOnDeleteModal()" type="button" class="btn default">Cancel</button>
+        <button (click)="deleteQuestion()" type="button" class="btn error">Yes, delete it.</button>
+      </div>
+    </app-modal>
 
   </div>
 </div>

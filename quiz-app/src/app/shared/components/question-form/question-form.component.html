@@ -101,15 +101,24 @@
             && !form.get('status')?.valid
           )">
 
-          <option value="0">Unpublished</option>
-          <option value="1">Published</option>
+          <option [value]="0">Unpublished</option>
+          <option [value]="1">Published</option>
 
         </select>
       </label>
       
     </div>
 
-    <button class="btn success block mt-1" type="submit">Submit</button>
+    <button [disabled]="loading" class="btn success block mt-1" type="submit">
+      <ng-container *ngIf="!loading; else onLoading">
+        Login
+      </ng-container>
+
+      <ng-template #onLoading>
+        <i class="fas fa-spinner fa-pulse mr-1"></i>
+        Loading
+      </ng-template>
+    </button>
     
   </form>
 </div>
