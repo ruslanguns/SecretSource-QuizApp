@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AuthRoutingModule } from '../auth/auth-routing.module';
-import { AuthService, StoreService } from './services';
+import { AuthService, QuestionsService, StoreService } from './services';
 import { LayoutComponent } from './components/layout/layout.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
@@ -27,7 +27,8 @@ const components = [
   providers: [
     AuthService,
     StoreService,
-    interceptors
+    QuestionsService,
+    interceptors,
   ],
   exports: [
     ...components
