@@ -8,20 +8,27 @@ import { CardComponent } from './components/card/card.component';
 import { ListComponent } from './components/list/list.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { QuestionFormComponent } from './components/question-form/question-form.component';
+import { TableCrudComponent } from './components/table-crud/table-crud.component';
+import { UsePipeComponent } from './components/use-pipe/use-pipe.component';
+import { IsPublishedPipe } from './pipes/is-published.pipe';
+
 
 const components = [
   CardComponent,
   ListComponent,
   ModalComponent,
   QuestionFormComponent,
+  UsePipeComponent,
+  TableCrudComponent,
   FormDirective,
   UserRoleDirective,
-  AuthResourceDirective
+  AuthResourceDirective,
+  IsPublishedPipe
 ];
 
 @NgModule({
   declarations: [
-    ...components,
+    ...components
   ],
   imports: [
     CommonModule,
@@ -31,6 +38,6 @@ const components = [
     CommonModule,
     ReactiveFormsModule,
     ...components
-  ]
+  ],
 })
 export class SharedModule { }
