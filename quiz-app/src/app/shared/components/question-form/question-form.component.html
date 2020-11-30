@@ -61,8 +61,9 @@
       
       <div class="answers__add-btn">
         <button (click)="addAnswer()" type="button" class="btn primary">Add answer</button>
-        <small *ngIf="(answers.length < 2) && formSubmitted"
-          class="text-dark ml-2">
+        <small
+          *ngIf="(answers.length < 2) && formSubmitted"
+          class="text-dark">
           You must add at least two answers, {{ 2 - answers.length}} more left.
         </small>
       </div>

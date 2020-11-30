@@ -48,8 +48,8 @@ export class QuestionFormComponent {
 
   onSubmit() {
     this.formSubmitted = true;
-    this.loading = true;
     if (this.form.valid) {
+      this.loading = true;
       
       let trulyAnswers = 0;
       for (const answer of this.form.value.answers) {

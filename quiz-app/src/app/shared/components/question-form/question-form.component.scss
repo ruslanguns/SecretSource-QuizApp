@@ -1,6 +1,9 @@
 .answers {
   &__add-btn {
     margin-bottom: 1em;
+    small{
+      margin-left: 2em;
+    }
   }
 
   &__answer-item {
@@ -46,6 +49,24 @@
         "t t t";
 
       }
+    }
+  }
+}
+
+@media all and (max-width: 480px ) {
+  .answers__add-btn {
+    button,
+    small {
+      margin-left: auto;
+      margin-right: auto;
+      text-align: left;
+      display: block;
+    }
+    small{
+      text-align: center;
+      margin-top: 1em;
+      margin-left: 0em;
+      font-size: 0.8em;
     }
   }
 }
