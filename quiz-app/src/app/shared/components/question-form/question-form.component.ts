@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { QuestionsService } from 'src/app/core/services';
 import { minLengthArray } from '../../form-validations';
@@ -12,19 +13,26 @@ import { minLengthArray } from '../../form-validations';
 export class QuestionFormComponent {
   form: FormGroup;
   formSubmitted = false;
-  loading: boolean = false;
+  loading = false;
+  isEdit?: boolean;
 
   constructor(
     private fb: FormBuilder,
     private questionService: QuestionsService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private activatedRoute: ActivatedRoute
   ) {
+    this.activatedRoute.params
+      .subscribe(({ id }) => (isNaN(id) || parseInt(id, 10) === 0) ? this.isEdit = false : this.isEdit = true)
+
     this.form = this.fb.group({
       question: ['', Validators.required],
       category: ['', Validators.required],
       status: 0,
       answers: this.fb.array([], minLengthArray(2)),
     });
+
+    console.log('Is edit =>>>>>', this.isEdit);
   }
 
   buildAnswerForm() {
