@@ -4,25 +4,26 @@ A simple app so users can play answering questions.
 
 ## Demo server
 
-I have deploy the back-end in Heroku in order to use it for review and testing.
+I have deployed the back-end in Heroku in order to use it for review and testing.
 
 * Server URL: https://quizapp3.herokuapp.com/
 * Server OpenAPI Documentation: https://quizapp3.herokuapp.com/api-docs
+* Web application: https://quizapp3.netlify.app/
 
 ## Checklist
 
 ### CRUD for both USERS and QUESTIONS
-- ⬜ Create Roles for "Admin" & "Player".
+- ✅ Create Roles for "Admin" & "Player".
 - ⬜ An admin can, create, edit, and delete questions and players.
-- ⬜ An admin can, have access to a single panel page to manage questions.
-- ⬜ A player can, see and answers questions, but can't access to the admin's panel.
-- ⬜ A player can register and sign in.
+- ✅ An admin can, have access to a single panel page to manage questions.
+- ✅ A player can, see and answers questions, but can't access to the admin's panel.
+- ✅ A player can register and sign in.
 - ⬜ Questions must have the question and at least one correct answer.
 - ⬜ Should have status published/unpublished.
   
 ### Views
 
-- ⬜ Register and login functionality - Only players can be registered.
+- ✅ Register and login functionality - Only players can be registered.
 - ⬜ Landing page with the "published" questions.
 - ⬜ Admin panel to manage questions and players.
 
@@ -57,12 +58,12 @@ There are some sketch that have been made for the purpose of this project read m
 |5   |server   |Add CRUD for Questions  |1 hour   |**COMPLETED**   |
 |6   |server   |Add Quiz Service / Controller  |1 hour   |**COMPLETED**    |
 |7   |client   |Generate the project scafolding with Angular CLI   |5 min   |**COMPLETED**   |
-|8   |client   |Create the folder architecture and basic configuration   |15 min   |INCOMPLETE   |
-|9   |client   |Add ngx-bootstrap library and bootstrap customization   |30 min   |INCOMPLETE   |
-|11   |client   |Create NotFoundPage Screen   |10 min   |INCOMPLETE   |
-|12   |client   |Add authentication to Angular App   |1 hour   |INCOMPLETE   |
-|13   |client   |Add user registration page   |30 min   |INCOMPLETE   |
-|14   |client   |Create Player & Admin Side Screens   |2 hours   |INCOMPLETE   |
+|8   |client   |Create the folder architecture and basic configuration   |1 hour   |**COMPLETED**   |
+|9   |client   |Added layout and business case customization   |4 hours   |**COMPLETED**    |
+|11   |client   |Create NotFoundPage Screen   |10 min   |**COMPLETED**    |
+|12   |client   |Add authentication to Angular App   |1 hour   |**COMPLETED**    |
+|13   |client   |Add user registration page   |30 min   |**COMPLETED**    |
+|14   |client   |Create Player & Admin Side Screens   |2 hours   |**COMPLETED**   |
 |15   |client   |Add admin side CRUD functionality for questions/users from API   |2 hours   |INCOMPLETE   |
 |16   |client   |Add resuts and unanswered quizzes screens at player side   |15 min   |INCOMPLETE   |
 

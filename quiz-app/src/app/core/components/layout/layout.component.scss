@@ -1,0 +1,18 @@
+@import 'src/theme/variables';
+
+main {
+  padding-top: $header-height;
+  margin: 0 15%;
+  transition: margin-left .6s;
+  transition: background-color .6s;
+  transition: margin .6s;
+}
+
+
+@media all and (max-width: $x-large) {}
+@media all and (max-width: $x-medium) {
+  main {
+    margin: 0 3%;
+  }
+}
+@media all and (max-width: $x-small) {}

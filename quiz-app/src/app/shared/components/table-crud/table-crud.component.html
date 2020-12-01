@@ -1,0 +1,54 @@
+<div *ngIf="dataTable.length; else emptyDataTable" class="table">
+  <table>
+    <thead>
+      <tr>
+        <ng-container *ngIf="tableOptions; else NoOptionsProvided">
+          <ng-container *ngFor="let column of columnKeys">
+            <th *ngIf="tableOptions[column]?.name">
+              <span>
+                {{ tableOptions[column]?.name }}
+              </span>
+            </th>
+          </ng-container>
+        </ng-container>
+        <ng-template #NoOptionsProvided>
+          <th *ngFor="let column of columnKeys">
+              {{ column | titlecase }}
+          </th>
+        </ng-template>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of dataTable">
+        <ng-container *ngFor="let column of columnKeys">
+          <ng-container *ngIf="tableOptions; else NoOptionsProvided">
+            <td *ngIf="tableOptions[column]?.name">
+              <app-use-pipe
+                [class]="tableOptions[column]?.styleClass"
+                [pipeProvider]="tableOptions[column]?.transformOptions?.usePipe"
+                [pipeArgs]="tableOptions[column]?.transformOptions?.pipeArgs"
+                [textToFormat]="row[column]">
+              </app-use-pipe>
+            </td>
+          </ng-container>
+          <ng-template #NoOptionsProvided>
+            <td>{{ row[column] }}</td>
+          </ng-template>
+        </ng-container>
+
+        <td>
+          <button (click)="onEditClick(row)" class="btn small default mr-1">Edit</button>
+          <button (click)="onDeleteClick(row)" class="btn small error">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+</div>
+
+<ng-template #emptyDataTable>
+  <div class="error-data">
+    No data to show
+  </div>
+</ng-template>

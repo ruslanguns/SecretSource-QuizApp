@@ -1,0 +1,26 @@
+
+.badge {
+  border-radius: 3px;
+  font-size: 0.8em;
+  padding: 5px;
+  color: white;
+  
+  &.success {
+    background-color: $success;
+  }
+  &.warning {
+    background-color: $warning;
+  }
+  &.info {
+    background-color: $info;
+  }
+  &.primary {
+    background-color: $primary;
+  }
+  &.default {
+    background-color: $default;
+  }
+  &.error {
+    background-color: $error;
+  }
+}

@@ -1,0 +1,62 @@
+@import 'src/theme/variables';
+
+.nav-background {
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  margin: $header-height 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  transition: opacity 0.6s;
+  transform: translate(0);
+  opacity: 1;
+
+  &.hidden {  
+    transform: translate(9999px);
+    opacity: 0;  
+  }
+}
+
+.navigation {
+  height: 100%;
+  width: 300px;
+  margin: $header-height 0;
+  max-width: 80%;
+  position: fixed;
+  z-index: 1;
+  overflow-x: hidden;
+  background-color: white;
+  transition: 0.3s;
+
+  ul {
+    margin: 1em;
+    list-style-type: none;
+    padding-bottom: 2em;
+
+    li {
+      padding: 1em;
+      display: block;
+
+      a {
+        text-decoration: none;
+        color: inherit;
+        
+        &:hover{
+          color: inherit;
+          cursor: pointer;
+          font-weight: 600;
+        }
+      }
+
+      &:visited,
+      &:active {
+        outline: none;
+      }
+      
+    }
+  }
+}
+.active {
+  font-weight: 600;
+}
+
+

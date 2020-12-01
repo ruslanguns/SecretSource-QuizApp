@@ -1,0 +1,18 @@
+@import "src/theme/variables";
+
+.users {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-areas: 
+    "t t t"
+    "l l l";
+  justify-content: center;
+  align-items: center;
+
+  &__title{
+    grid-area: t;
+  }
+  &__list{
+    grid-area: l;
+  }
+}

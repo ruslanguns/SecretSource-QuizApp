@@ -1,0 +1,140 @@
+@import "src/theme/variables";
+
+app-card {
+  margin: 3px;
+}
+
+app-modal {
+  h2 {
+    margin-top: 0;
+  }
+}
+
+.dashboard {
+  h4 {
+    margin: 0;
+  }
+
+  display: grid;
+  margin: 1em auto;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-areas:
+    "actions actions"
+    "questions users"
+    "stats stats"
+    "answered unanswered";
+  transition: width 2s;
+  box-sizing: border-box;
+
+  &__quick-actions {
+    grid-area: actions;
+
+    .quick-actions__title {
+      text-align: center;
+    }
+
+    .quick-actions__buttons {
+      margin-top: 1em;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      text-align: center;
+
+      button {
+        border: none;
+        max-width: 85%;
+        margin: 5px;
+        width: 220px;
+        height: 70px;
+        max-width: 80%;
+
+      }
+    }
+  }
+
+  &__stats {
+    grid-area: stats;
+    text-align: center;
+
+    .stats_hits {
+      margin-top: 1em;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      align-items: center;
+
+      &:nth-child(1n) {
+        .hits__correct,
+        .hits__incorrect {
+          height: 100px;
+          min-width: 100px;
+          background-color: $bg-color;
+          outline-offset: 10px;
+          margin: 10px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-family: "roboto";
+          font-size: 1.2em;
+
+          h1 {
+            display: block;
+          }
+        }
+        .hits__correct{
+          border: 1px dashed $success;
+          outline: 1px dashed $success;
+        }
+        .hits__incorrect{
+          border: 1px dashed $error;
+          outline: 1px dashed $error;
+        }
+
+      }
+    }
+  }
+
+  &__answered {
+    grid-area: answered;
+  }
+
+  &__unanswered {
+    grid-area: unanswered;
+  }
+
+  &__questions {
+    grid-area: questions;
+  }
+
+  &__users {
+    grid-area: users;
+  }
+
+  h4 {
+    text-align: center;
+  }
+  li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  
+}
+
+@media all and (max-width: $x-large) {}
+@media all and (max-width: $x-medium) {
+  .dashboard {
+    grid-template-areas:
+      "actions actions"
+      "questions questions"
+      "users users"
+      "stats stats"
+      "unanswered unanswered"
+      "answered answered";
+  }
+}
+@media all and (max-width: $x-small) {
+}
