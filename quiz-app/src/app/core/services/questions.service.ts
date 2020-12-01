@@ -10,11 +10,14 @@ import { StoreService } from './store.service';
 export class QuestionsService {
   
   apiUrl = environment.apiUrl;
+  questions$ = this.store.select<IQuestion[]>('questions');
 
   constructor(
     private http: HttpClient,
-    private store: StoreService
-  ) { }
+    private store: StoreService,
+  ) {
+    this.getQuestions().subscribe();
+  }
 
   createQuestion(question: IQuestion) {
     const url = `${this.apiUrl}/question`;

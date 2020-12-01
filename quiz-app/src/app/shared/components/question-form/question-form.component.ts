@@ -1,29 +1,48 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { QuestionsService } from 'src/app/core/services';
+import { Subscription } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
+import { QuestionsService, StoreService } from 'src/app/core/services';
 import { minLengthArray } from '../../form-validations';
+import { IQuestion } from '../../interfaces';
 
 @Component({
   selector: 'app-question-form',
   templateUrl: './question-form.component.html',
   styleUrls: ['./question-form.component.scss'],
 })
-export class QuestionFormComponent {
+export class QuestionFormComponent implements OnDestroy {
   form: FormGroup;
   formSubmitted = false;
   loading = false;
-  isEdit?: boolean;
+
+  isEdit = false;
+  questionId = 0;
+  questionSelected?: IQuestion;
+  questionSelectedObs$ = this.store
+    .select<IQuestion[]>('questions')
+    .pipe(
+      map(questions => // Find question by ID
+        questions.filter(question => question.id === this.questionId)[0]),
+      tap(question =>
+        this.questionSelected = question)
+    )
+  questionSelectedSubs?: Subscription;
 
   constructor(
     private fb: FormBuilder,
     private questionService: QuestionsService,
     private toastr: ToastrService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private store: StoreService
   ) {
-    this.activatedRoute.params
-      .subscribe(({ id }) => (isNaN(id) || parseInt(id, 10) === 0) ? this.isEdit = false : this.isEdit = true)
+    this.activatedRoute.params.subscribe(({ id }) =>
+      isNaN(id) || parseInt(id, 10) === 0
+        ? (this.isEdit = false)
+        : (this.isEdit = true, this.questionId = parseInt(id, 10))
+    );
 
     this.form = this.fb.group({
       question: ['', Validators.required],
@@ -32,7 +51,13 @@ export class QuestionFormComponent {
       answers: this.fb.array([], minLengthArray(2)),
     });
 
-    console.log('Is edit =>>>>>', this.isEdit);
+    if (this.isEdit) {
+      this.questionSelectedSubs = this.questionSelectedObs$.subscribe()
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.questionSelectedSubs?.unsubscribe;
   }
 
   buildAnswerForm() {
@@ -58,7 +83,7 @@ export class QuestionFormComponent {
     this.formSubmitted = true;
     if (this.form.valid) {
       this.loading = true;
-      
+
       let trulyAnswers = 0;
       for (const answer of this.form.value.answers) {
         if (answer.isCorrect) {
@@ -81,20 +106,17 @@ export class QuestionFormComponent {
           this.toastr.clear(),
           this.toastr.success(`Question created successfully`),
           this.resetForm(),
-          this.loading = false
+          (this.loading = false)
         ),
-        (error) => (
-          this.toastr.error(error),
-          this.loading = false
-          )
+        (error) => (this.toastr.error(error), (this.loading = false))
       );
       this.formSubmitted = false;
     }
   }
 
   resetForm() {
-    this.form.reset()
-    while(this.answers.length !== 0) {
+    this.form.reset();
+    while (this.answers.length !== 0) {
       this.answers.removeAt(0);
     }
   }
