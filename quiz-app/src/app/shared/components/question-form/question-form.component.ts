@@ -2,8 +2,8 @@ import { Component, EventEmitter, OnDestroy, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { combineLatest, Observable, Subscription } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { combineLatest, Observable, Subject, Subscription } from 'rxjs';
+import { map, takeUntil, tap } from 'rxjs/operators';
 import { minLengthArray } from '../../form-validations';
 import { IAnswer, IQuestion } from '../../interfaces';
 import {
@@ -21,6 +21,8 @@ import { QuestionCategories } from '../../enums/categories';
 export class QuestionFormComponent implements OnDestroy {
 
   @Output() onSubmit: EventEmitter<void> = new EventEmitter();
+  private onDestroy = new Subject<void>();
+
   categories = QuestionCategories;
   form: FormGroup;
   formSubmitted = false;
@@ -42,6 +44,7 @@ export class QuestionFormComponent implements OnDestroy {
       }),
       tap((question) => {
         if (question) {
+          console.log(question);
           this.questionSelected = question;
           this.form.patchValue(question);
           if (!this.answers.length) {
@@ -63,11 +66,6 @@ export class QuestionFormComponent implements OnDestroy {
     private store: StoreService,
     private answerService: AnswersService,
   ) {
-    this.activatedRoute.params.subscribe(({ id }) =>
-      isNaN(id) || parseInt(id, 10) === 0
-        ? (this.isEdit = false)
-        : ((this.isEdit = true), (this.questionId = parseInt(id, 10)))
-    );
 
     this.form = this.fb.group({
       id: 0,
@@ -77,13 +75,21 @@ export class QuestionFormComponent implements OnDestroy {
       answers: this.fb.array([], minLengthArray(2)),
     });
 
-    if (this.isEdit) {
-      this.questionSelectedSubs = this.questionSelectedObs$.subscribe();
-    }
+    this.questionService.getQuestions().pipe(takeUntil(this.onDestroy)).subscribe()
+
+    this.activatedRoute.params.subscribe(({ id }) =>
+      isNaN(id) || parseInt(id, 10) === 0
+        ? (this.isEdit = false)
+        : ((this.isEdit = true),
+          (this.questionId = parseInt(id, 10)),
+          this.questionSelectedObs$.pipe(takeUntil(this.onDestroy)).subscribe())
+    );
+
   }
 
   ngOnDestroy(): void {
-    this.questionSelectedSubs?.unsubscribe;
+    this.onDestroy.next()
+    this.onDestroy.complete();
   }
 
   buildAnswerForm() {
@@ -135,16 +141,18 @@ export class QuestionFormComponent implements OnDestroy {
   }
 
   private createNewQuestion(questionForm: IQuestion) {
-    this.questionService.createQuestion(questionForm).subscribe(
-      () => (
-        this.toastr.clear(),
-        this.toastr.success(`Question created successfully`),
-        (this.loading = false),
-        this.onSubmit.emit(),
-        this.resetForm()
-      ),
-      (error) => (this.toastr.error(error), (this.loading = false))
-    );
+    this.questionService.createQuestion(questionForm)
+      .pipe(takeUntil(this.onDestroy))
+      .subscribe(
+        () => (
+          this.toastr.clear(),
+          this.toastr.success(`Question created successfully`),
+          (this.loading = false),
+          this.onSubmit.emit(),
+          this.resetForm()
+        ),
+        (error) => (this.toastr.error(error), (this.loading = false))
+      );
   }
 
   private editQuestion(questionForm: IQuestion) {
@@ -177,6 +185,7 @@ export class QuestionFormComponent implements OnDestroy {
       ...answersToRemoveObsArray,
       ...answerToCreateObsArray,
     ]).pipe(
+        takeUntil(this.onDestroy),
         map(([_question, ..._answers]) => {
           const { answers, ...questionEdited }: any = _question;
           this.form.patchValue(questionEdited);

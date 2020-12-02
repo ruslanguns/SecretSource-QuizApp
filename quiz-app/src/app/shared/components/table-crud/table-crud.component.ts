@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Input, Output, PipeTransform, ViewEncapsulation } from '@angular/core';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 export interface ITableData {
   [key: string]: any;

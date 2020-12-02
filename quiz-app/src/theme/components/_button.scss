@@ -91,6 +91,16 @@
         color: white;
       }
     }
+    &.dark {
+      background-color: transparent;
+      border-color: $font-color;
+      color: $font-color;
+
+      &:hover {
+        background-color: $default;
+        color: white;
+      }
+    }
     &.transparent {
       background-color: transparent;
       color: $font-color

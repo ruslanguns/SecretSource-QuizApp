@@ -1,10 +1,10 @@
 import { TitleCasePipe } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { combineLatest, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { QuestionsService, StoreService } from 'src/app/core/services';
+import { EMPTY, Observable } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
+import { QuestionsService } from 'src/app/core/services';
 import { ITableOptions } from 'src/app/shared/components/table-crud/table-crud.component';
 import { IQuestion } from 'src/app/shared/interfaces';
 import { IsPublishedPipe, TruncatePipe } from 'src/app/shared/pipes';
@@ -13,100 +13,82 @@ import { IsPublishedPipe, TruncatePipe } from 'src/app/shared/pipes';
 @Component({
   selector: 'app-questions-list',
   templateUrl: './questions-list.component.html',
-  styleUrls: ['./questions-list.component.scss']
+  styleUrls: ['./questions-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class QuestionsListComponent implements OnInit, OnDestroy {
+export class QuestionsListComponent {
   dataTable: IQuestion[] = [];
   tableOptions: ITableOptions = {
     question: {
       name: 'Question',
       transformOptions: {
-        usePipe: new TruncatePipe()
-      }
+        usePipe: new TruncatePipe(),
+      },
     },
     status: {
       name: 'Status',
       transformOptions: {
-        usePipe: new IsPublishedPipe()
+        usePipe: new IsPublishedPipe(),
       },
-      styleClass: 'badge info'
+      styleClass: 'badge info',
     },
     category: {
       name: 'Category',
       transformOptions: {
-        usePipe: new TitleCasePipe()
-      }
-    }
+        usePipe: new TitleCasePipe(),
+      },
+    },
   };
 
-  questionsSubs?: Subscription;
-  loading = false;
-
+  questions$: Observable<IQuestion[]>;
+  loading: boolean = false;
   deleteModal = false;
   selectedQuestion?: IQuestion;
 
   constructor(
     private questionService: QuestionsService,
     private toastr: ToastrService,
-    private store: StoreService,
     private router: Router
-  ) { }
-
-  
-  ngOnInit() {
+  ) {
     this.loading = true;
-    const questionService$ = this.questionService.getQuestions();
-    const questionStore$ = this.store.select<IQuestion[]>('questions');
-    this.questionsSubs = combineLatest([
-      questionService$,
-      questionStore$
-    ]).pipe(
-        map(([service, store]) => {
-          return store;
-        })
-      )
-      .subscribe(
-        questions => (
-          this.dataTable = questions,
-          this.loading = false
-        ),
-        error => (
-          this.toastr.error(error),
-          this.loading = false
-        )
-      );
+    this.questions$ = this.questionService.getQuestions();
+    this.questions$.pipe(
+      tap(() => this.loading = false),
+      catchError((error) => {
+        this.toastr.error(error);
+        return EMPTY;
+      })
+    );
   }
-  
-  ngOnDestroy() {
-    this.questionsSubs?.unsubscribe();
+
+  refreshQuestions() {
+    this.loading = true;
+    this.questions$ = this.questionService.refreshQuestions();
   }
 
   onEdit(question: IQuestion) {
     this.selectedQuestion = question;
-    this.router.navigate(['questions', question.id ])
+    this.router.navigate(['questions', question.id]);
   }
-  
+
   onDelete(question: IQuestion) {
     this.selectedQuestion = question;
     this.openOnDeleteModal();
   }
 
-  openOnDeleteModal(){
+  openOnDeleteModal() {
     this.deleteModal = true;
   }
 
-  closeOnDeleteModal(){
+  closeOnDeleteModal() {
     this.deleteModal = false;
     this.selectedQuestion = undefined;
   }
 
   deleteQuestion() {
-    if(this.selectedQuestion) {
-      const questions = this.store.value.questions.filter(x => x.id !== this.selectedQuestion?.id);
+    if (this.selectedQuestion) {
       this.questionService.deleteQuestion(this.selectedQuestion.id).subscribe();
-      this.store.set('questions', questions);
     }
     this.closeOnDeleteModal();
   }
-
 }

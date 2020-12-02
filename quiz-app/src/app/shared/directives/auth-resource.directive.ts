@@ -5,27 +5,29 @@ import {
   TemplateRef,
   ViewContainerRef,
 } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { distinctUntilChanged } from 'rxjs/operators';
-import { StoreService } from 'src/app/core/services';
+import { Subject, Subscription } from 'rxjs';
+import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import { QuestionsService, StoreService } from 'src/app/core/services';
 
 @Directive({
   selector: '[appAuthResource]',
 })
 export class AuthResourceDirective implements OnInit, OnDestroy {
-  subscription: Subscription | undefined;
+  private onDestroy = new Subject();
 
   constructor(
     private store: StoreService,
     private templateRef: TemplateRef<any>,
-    private viewContainer: ViewContainerRef
+    private viewContainer: ViewContainerRef,
   ) {}
 
   ngOnInit() {
-    this.subscription = this.store
+    this.store
       .select<boolean>('isAuthorized')
-      .pipe(distinctUntilChanged())
-      .subscribe((hasAccess) => {
+      .pipe(
+        takeUntil(this.onDestroy),
+        distinctUntilChanged()
+      ).subscribe((hasAccess) => {
         hasAccess
           ? this.viewContainer.createEmbeddedView(this.templateRef)
           : this.viewContainer.clear();
@@ -33,6 +35,7 @@ export class AuthResourceDirective implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription?.unsubscribe();
+    this.onDestroy.next();
+    this.onDestroy.complete();
   }
 }
