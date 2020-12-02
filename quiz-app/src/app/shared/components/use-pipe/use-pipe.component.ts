@@ -5,7 +5,7 @@ import { Component, Input, PipeTransform } from '@angular/core';
 @Component({
   selector: 'app-use-pipe',
   template: `
-    {{ transformedText() }}
+    <span [innerHTML]="transformedText()"></span>
   `
 })
 export class UsePipeComponent {

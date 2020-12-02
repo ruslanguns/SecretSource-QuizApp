@@ -23,7 +23,7 @@
       <tr *ngFor="let row of dataTable">
         <ng-container *ngFor="let column of columnKeys">
           <ng-container *ngIf="tableOptions; else NoOptionsProvided">
-            <td *ngIf="tableOptions[column]?.name">
+            <td [title]="row[column]" *ngIf="tableOptions[column]?.name">
               <app-use-pipe
                 [class]="tableOptions[column]?.styleClass"
                 [pipeProvider]="tableOptions[column]?.transformOptions?.usePipe"
@@ -33,7 +33,7 @@
             </td>
           </ng-container>
           <ng-template #NoOptionsProvided>
-            <td>{{ row[column] }}</td>
+            <td [innerHTML]="row[column]"></td>
           </ng-template>
         </ng-container>
 

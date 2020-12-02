@@ -1,5 +1,5 @@
 export interface IAnswer {
-  id?: number;
+  id: number;
   answer: string;
   isCorrect?: boolean;
 }
