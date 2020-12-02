@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnDestroy, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { combineLatest, Observable, Subscription } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
@@ -62,7 +62,6 @@ export class QuestionFormComponent implements OnDestroy {
     private activatedRoute: ActivatedRoute,
     private store: StoreService,
     private answerService: AnswersService,
-    private router: Router
   ) {
     this.activatedRoute.params.subscribe(({ id }) =>
       isNaN(id) || parseInt(id, 10) === 0
@@ -140,9 +139,9 @@ export class QuestionFormComponent implements OnDestroy {
       () => (
         this.toastr.clear(),
         this.toastr.success(`Question created successfully`),
-        this.router.navigate(['questions']),
         (this.loading = false),
-        this.onSubmit.emit()
+        this.onSubmit.emit(),
+        this.resetForm()
       ),
       (error) => (this.toastr.error(error), (this.loading = false))
     );
@@ -215,6 +214,13 @@ export class QuestionFormComponent implements OnDestroy {
       ? (questionForm.status = true)
       : (questionForm.status = false);
     return questionForm as IQuestion;
+  }
+
+  private resetForm() {
+    this.form.reset();
+    while (this.answers.length !== 0) {
+      this.answers.removeAt(0);
+    }
   }
 
 }
