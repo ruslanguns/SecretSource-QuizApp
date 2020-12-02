@@ -12,6 +12,7 @@ import { TableCrudComponent } from './components/table-crud/table-crud.component
 import { UsePipeComponent } from './components/use-pipe/use-pipe.component';
 import { IsPublishedPipe } from './pipes/is-published.pipe';
 import { LoadingComponent } from './components/loading/loading.component';
+import { TruncatePipe } from './pipes/truncate.pipe';
 
 
 const components = [
@@ -25,12 +26,13 @@ const components = [
   FormDirective,
   UserRoleDirective,
   AuthResourceDirective,
-  IsPublishedPipe
+  IsPublishedPipe,
+  TruncatePipe
 ];
 
 @NgModule({
   declarations: [
-    ...components
+    ...components,
   ],
   imports: [
     CommonModule,

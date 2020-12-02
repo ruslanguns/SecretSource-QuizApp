@@ -1,12 +1,13 @@
 import { TitleCasePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { combineLatest, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { QuestionsService, StoreService } from 'src/app/core/services';
 import { ITableOptions } from 'src/app/shared/components/table-crud/table-crud.component';
 import { IQuestion } from 'src/app/shared/interfaces';
-import { IsPublishedPipe } from 'src/app/shared/pipes';
+import { IsPublishedPipe, TruncatePipe } from 'src/app/shared/pipes';
 
 
 @Component({
@@ -17,11 +18,11 @@ import { IsPublishedPipe } from 'src/app/shared/pipes';
 export class QuestionsListComponent implements OnInit, OnDestroy {
   dataTable: IQuestion[] = [];
   tableOptions: ITableOptions = {
-    id: {
-      name: 'Id',
-    },
     question: {
       name: 'Question',
+      transformOptions: {
+        usePipe: new TruncatePipe()
+      }
     },
     status: {
       name: 'Status',
@@ -47,7 +48,8 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
   constructor(
     private questionService: QuestionsService,
     private toastr: ToastrService,
-    private store: StoreService
+    private store: StoreService,
+    private router: Router
   ) { }
 
   
@@ -81,6 +83,7 @@ export class QuestionsListComponent implements OnInit, OnDestroy {
 
   onEdit(question: IQuestion) {
     this.selectedQuestion = question;
+    this.router.navigate(['questions', question.id ])
   }
   
   onDelete(question: IQuestion) {
