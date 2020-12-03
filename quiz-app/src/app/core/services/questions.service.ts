@@ -22,8 +22,8 @@ export class QuestionsService {
     return this.http.post<IQuestion>(url, question).pipe(
       tap((newQuestion) => {
         const questions = this.store.value.questions;
-        questions.push(question);
-        this.store.set('questions', newQuestion);
+        questions.push(newQuestion);
+        this.store.set('questions', questions);
       }),
       catchError(this.handleError)
     );
@@ -31,8 +31,7 @@ export class QuestionsService {
 
   getQuestions(): Observable<IQuestion[]> {
     const url = `${this.apiUrl}/question`;
-    const questionsCached = this.store.value.questions.length;
-    
+    const questionsCached = this.store.value.questions.length;    
     return !questionsCached
       ? this.http.get<IQuestion[]>(url).pipe(
           take(1),
