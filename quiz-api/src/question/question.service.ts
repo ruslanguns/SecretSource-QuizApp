@@ -59,8 +59,8 @@ export class QuestionService {
     const connection = getConnection();
     const queryRunner = connection.createQueryRunner();
 
-    const questionsToEditOrCreate: Answer[] = [];
-    const questionsToDelete: Answer[] = [];
+    const answersToEditOrCreate: Answer[] = [];
+    const answersToDelete: Answer[] = [];
 
     // Answers edited or ereated
     const taskAnswersToEditOrCreate = answers.map(async ({ id, ...a}) => {
@@ -69,15 +69,15 @@ export class QuestionService {
       (answer)
         ?  answerToSave = Object.assign(answer, { id, ...a })
         : answerToSave = this.answerRepository.create({ ...a, question })
-      answerToSave && questionsToEditOrCreate.push(answerToSave);
+      answerToSave && answersToEditOrCreate.push(answerToSave);
     });
     await Promise.all(taskAnswersToEditOrCreate)
 
     // Answers deleted
-    const answersToDelete = getDifferenceBetweenTwoArrayOfObjects(question.answers, answers);
-    const taskAnswersToDelete = answersToDelete.map(async (a) => {
+    const answersNotIncluded = getDifferenceBetweenTwoArrayOfObjects(question.answers, answers);
+    const taskAnswersToDelete = answersNotIncluded.map(async (a) => {
       const answer = await this.answerRepository.findOne({ id: a.id });
-      questionsToDelete.push(answer);
+      answersToDelete.push(answer);
     });
     await Promise.all(taskAnswersToDelete)
 
@@ -90,8 +90,8 @@ export class QuestionService {
     try {
       
       await queryRunner.manager.save(questionToEdit)
-      await queryRunner.manager.save(questionsToEditOrCreate)
-      await queryRunner.manager.remove(questionsToDelete)
+      await queryRunner.manager.save(answersToEditOrCreate)
+      await queryRunner.manager.remove(answersToDelete)
 
       await queryRunner.commitTransaction();
 
