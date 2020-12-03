@@ -1,6 +1,11 @@
 import { DatePipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+import { EMPTY, Observable } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
+import { StoreService, UsersService } from 'src/app/core/services';
 import { ITableOptions } from 'src/app/shared/components/table-crud/table-crud.component';
+import { IUser } from 'src/app/shared/interfaces';
 
 const mock_data_table = [
   {
@@ -96,10 +101,10 @@ const mock_data_table = [
 @Component({
   selector: 'app-users-list',
   templateUrl: './users-list.component.html',
-  styleUrls: ['./users-list.component.scss']
+  styleUrls: ['./users-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UsersListComponent {
-  dataTable = mock_data_table;
   tableOptions: ITableOptions = {
     id: {
       name: 'Id'
@@ -108,23 +113,68 @@ export class UsersListComponent {
       name: 'Username'
     },
     roles: {
-      name: 'Roles'
+      name: 'Roles',
+      styleClass: 'badge success',
     },
     createdAt: {
-      name: 'Created at',
+      name: 'Registered at',
       transformOptions: {
         usePipe: new DatePipe('en_EN')
       }
     }
   };
-  
 
-  onEdit(event: any) {
-    console.log(`Editing — ${event?.id}`)
+  users$: Observable<IUser[]> = this.store.select('users');
+  loading = true;
+  deleteModal = false;
+  onDeletingProcess: boolean = false;
+  selectedUser?: IUser;
+
+  constructor(
+    private usersService: UsersService,
+    private store: StoreService,
+    private toastr: ToastrService,
+  ) {
+    this.usersService.getUsers().subscribe();
+    this.users$.pipe(
+      tap(() => this.loading = false),
+      catchError((error) => {
+        this.toastr.error(error);
+        return EMPTY;
+      })
+    );
   }
   
-  onDelete(event: any) {
-    console.log(`Deleting — ${event?.id}`)
+  refreshUsers() {
+    this.users$ = this.usersService.refreshUsers();
+  }
+
+  onEdit(user: IUser) {
+  }
+  
+  onDelete(user: IUser) {
+    this.selectedUser = user;
+    this.openOnDeleteModal();
+  }
+
+  openOnDeleteModal() {
+    this.deleteModal = true;
+  }
+
+  closeOnDeleteModal() {
+    this.deleteModal = false;
+    this.selectedUser = undefined;
+  }
+
+  deleteQuestion() {
+    if (this.selectedUser) {
+      this.onDeletingProcess = true;
+      this.usersService.deleteUser(this.selectedUser.id)
+        .subscribe(
+          () => (this.onDeletingProcess = false, this.closeOnDeleteModal()),
+          error => (this.toastr.error(error), (this.onDeletingProcess = false))
+        );
+    }
   }
 
 }

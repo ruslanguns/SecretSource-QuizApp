@@ -24,6 +24,10 @@
       (onDelete)="onDelete($event)">
     </app-table-crud>
 
+    <ng-template #onLoading>
+      <app-loading></app-loading>
+    </ng-template>
+
     <app-modal [initialStatus]="deleteModal" (onClose)="closeOnDeleteModal()">
       <h2>Are you sure to delete this question?</h2>
       <div class="modal__confirm">
@@ -40,8 +44,5 @@
       </div>
     </app-modal>
 
-    <ng-template #onLoading>
-      <app-loading></app-loading>
-    </ng-template>
   </div>
 </div>

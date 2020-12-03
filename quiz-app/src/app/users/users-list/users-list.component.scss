@@ -16,3 +16,26 @@
     grid-area: l;
   }
 }
+
+app-modal {
+  h2 {
+    margin-top: 0;
+    text-align: center;
+  }
+}
+.modal__confirm {
+  display: flex;
+  justify-content: space-around;
+  button:nth-child(1),
+  button:nth-child(2) {
+    width: 50%;
+    margin: 1em;
+    display: block;
+  }
+}
+
+@media all and (max-width: 864px) {
+  app-modal {
+    font-size: 0.8em;
+  }
+}

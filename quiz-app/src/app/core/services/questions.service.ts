@@ -35,9 +35,7 @@ export class QuestionsService {
     return !questionsCached.length
       ? this.http.get<IQuestion[]>(url).pipe(
           take(1),
-          tap((questions) => (
-            this.store.set('questions', questions)
-          )),
+          tap((questions) => (this.store.set('questions', questions))),
           catchError(this.handleError)
         )
       : this.store.select<IQuestion[]>('questions')

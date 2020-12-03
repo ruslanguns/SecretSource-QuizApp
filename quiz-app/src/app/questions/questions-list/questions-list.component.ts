@@ -17,7 +17,6 @@ import { IsPublishedPipe, TruncatePipe } from 'src/app/shared/pipes';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class QuestionsListComponent {
-  dataTable: IQuestion[] = [];
   tableOptions: ITableOptions = {
     question: {
       name: 'Question',
@@ -41,7 +40,7 @@ export class QuestionsListComponent {
   };
 
   questions$: Observable<IQuestion[]> = this.store.select('questions');
-  loading: boolean = true;
+  loading = true;
   deleteModal = false;
   onDeletingProcess: boolean = false;
   selectedQuestion?: IQuestion;
@@ -63,7 +62,6 @@ export class QuestionsListComponent {
   }
 
   refreshQuestions() {
-    this.loading = true;
     this.questions$ = this.questionService.refreshQuestions();
   }
 

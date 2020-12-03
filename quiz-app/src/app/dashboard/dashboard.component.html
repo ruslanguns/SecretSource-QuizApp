@@ -93,12 +93,12 @@
       <div class="list__title">
         <h4>Last 5 questions created</h4>
       </div>
-      <ul *ngIf="questions.length; else NoData">
+      <ul *ngIf="questions.length; else NoQuestionsData">
         <li *ngFor="let question of questions" [title]="question.question">
           {{ question.question | truncate:20 }} <span class="badge info">{{ question.status | isPublished }}</span>
         </li>
       </ul>
-      <ng-template #NoData>
+      <ng-template #NoQuestionsData>
         <div class="list__no-data">
           No questions created, <a (click)="openQuestionFormModal()">add a new question</a>
         </div>
@@ -111,17 +111,18 @@
   <!--              LAST 5 REGISTERED USERS              -->
   <!------------------------------------------------->
   <app-card *appUserRole="[ Role.Admin ]" class="dashboard__users">
-    <div class="list">
+    <div class="list"  *ngIf="(latestUsers$ | async) as users">
       <div class="list__title">
         <h4>Last 5 registered users</h4>
       </div>
-      <ul>
-        <li>Uno</li>
-        <li>Dos</li>
-        <li>Tres</li>
-        <li>Cuatro</li>
-        <li>Cinco</li>
+      <ul *ngIf="users.length; else OnLoadingUsers">
+        <li *ngFor="let user of users" [title]="user.username">
+          {{ user.username | truncate:20 }} <span class="badge success">{{ user.roles }}</span>
+        </li>
       </ul>
+      <ng-template #OnLoadingUsers>
+        <app-loading></app-loading>
+      </ng-template>
     </div>
     <button routerLink="/users" type="button"  class="btn outline info block">Open users section</button>
   </app-card>
