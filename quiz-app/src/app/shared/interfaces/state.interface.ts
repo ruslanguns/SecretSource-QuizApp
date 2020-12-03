@@ -7,4 +7,5 @@ export interface IState {
   isAuthorized: boolean;
   isLoading: boolean;
   questions: IQuestion[];
+  users: IUser[];
 }

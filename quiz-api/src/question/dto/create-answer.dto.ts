@@ -1,7 +1,12 @@
-import { IsString, MaxLength, IsOptional, IsBoolean } from "class-validator";
+import { IsString, MaxLength, IsOptional, IsBoolean, IsNumber } from "class-validator";
 
 
 export class CreateAnswerDTO {
+
+  @IsOptional()
+  @IsNumber()
+  id?: number;
+
   @IsString()
   @MaxLength(255)
   answer: string;

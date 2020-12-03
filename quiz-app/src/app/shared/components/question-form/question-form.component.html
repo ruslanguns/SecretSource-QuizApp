@@ -1,5 +1,5 @@
 <div class="quest ion-item__form">
-  <form focusInvalidInput [formGroup]="form" (ngSubmit)="onSubmit()">
+  <form focusInvalidInput [formGroup]="form" (ngSubmit)="submitForm()">
 
     <label>
       Question
@@ -72,14 +72,16 @@
     <div class="form-inline mb-1">
       <label>
         Category
-        <input
-          formControlName="category"
-          type="text"
-          [class.invalid]="(
-            (form.get('category')?.touched
-            || form.get('category')?.dirty)
-            && !form.get('category')?.valid
-          )">
+          <select
+            formControlName="category"
+            [class.invalid]="(
+              (form.get('category')?.touched
+              || form.get('category')?.dirty)
+              && !form.get('category')?.valid
+            )">
+            <option [value]="" [selected]="true" disabled="disabled">Select one</option>
+            <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+          </select>
         <small
           *ngIf="(
             (form.get('question')?.touched
@@ -102,8 +104,8 @@
             && !form.get('status')?.valid
           )">
 
-          <option [value]="0">Unpublished</option>
-          <option [value]="1">Published</option>
+          <option [value]="false">Unpublished</option>
+          <option [value]="true">Published</option>
 
         </select>
       </label>
@@ -112,7 +114,7 @@
 
     <button [disabled]="loading" class="btn success block mt-1" type="submit">
       <ng-container *ngIf="!loading; else onLoading">
-        Login
+        Submit
       </ng-container>
 
       <ng-template #onLoading>

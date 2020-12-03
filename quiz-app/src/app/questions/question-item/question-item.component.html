@@ -1,8 +1,10 @@
 <h2>Edit / Create Question</h2>
-<app-question-form></app-question-form>
+
+<app-question-form (onSubmit)="onSubmit()"></app-question-form>
+
 <button
   (click)="goBack()"
   type="button"
-  class="btn block transparent mt-1">
+  class="btn block outline dark mt-1">
   Go back
 </button>

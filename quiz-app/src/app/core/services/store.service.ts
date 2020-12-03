@@ -7,7 +7,8 @@ const initialState: IState = {
   accessToken: localStorage.getItem('accessToken') || undefined,
   isAuthorized: !!localStorage.getItem('accessToken'),
   isLoading: false,
-  questions: []
+  questions: [],
+  users: []
 }
 
 export class StoreService {
