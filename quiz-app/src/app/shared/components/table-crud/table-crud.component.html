@@ -38,8 +38,8 @@
         </ng-container>
 
         <td>
-          <button (click)="onEditClick(row)" class="btn small default mr-1">Edit</button>
-          <button (click)="onDeleteClick(row)" class="btn small error">Delete</button>
+          <button *ngIf="!disableEdit" (click)="onEditClick(row)" class="btn small default mr-1">Edit</button>
+          <button *ngIf="!disableDelete" (click)="onDeleteClick(row)" class="btn small error">Delete</button>
         </td>
       </tr>
     </tbody>

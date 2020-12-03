@@ -57,6 +57,10 @@ export class AuthGuard implements CanActivate, CanLoad, CanActivateChild {
           this.authService.logout();
           return of(false);
         }
+        const roles = route.data?.roles as Role[];
+        if (roles && !roles.some(role => this.authService.hasRole(role))) {
+          return of(false);
+        }
         return of(true);
       })
     );

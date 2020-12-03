@@ -39,7 +39,7 @@ export interface ITableOptions {
      * Use css classes to transform the cell content
      */
     styleClass?: string
-  }
+  },
 }
 
 @Component({
@@ -50,6 +50,8 @@ export interface ITableOptions {
 })
 export class TableCrudComponent {
 
+  @Input() disableEdit: boolean = false;
+  @Input() disableDelete: boolean = false;
   @Output() onEdit: EventEmitter<any> = new EventEmitter();
   @Output() onDelete: EventEmitter<any> = new EventEmitter();
 
@@ -58,6 +60,7 @@ export class TableCrudComponent {
     return Object.keys(this.dataTable[0]);
   }
   @Input() tableOptions?: ITableOptions;
+
 
   constructor() {}
 
