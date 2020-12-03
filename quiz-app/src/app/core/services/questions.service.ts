@@ -10,9 +10,7 @@ import { StoreService } from './store.service';
 @Injectable()
 export class QuestionsService {
   apiUrl = environment.apiUrl;
-  private loading = new BehaviorSubject(false);
-  loading$ = this.loading.asObservable();
-
+  
   constructor(
     private http: HttpClient,
     private store: StoreService,
@@ -59,14 +57,18 @@ export class QuestionsService {
     )
   }
 
-  editQuestions(
-    id: number,
-    question: Partial<IQuestion>
-  ): Observable<IQuestion> {
+  editQuestion(id: number, question: Partial<IQuestion>): Observable<IQuestion> {
     const url = `${this.apiUrl}/question/${id}`;
-    return this.http
-      .put<IQuestion>(url, question)
-      .pipe(take(1), catchError(this.handleError));
+    return this.http.put<IQuestion>(url, question)
+      .pipe(
+        take(1),
+        tap(question => {
+          const questions = this.store.value.questions.filter(x => x.id !== question.id);
+          questions.push(question)
+          this.store.set('questions', questions);
+        }),
+        catchError(this.handleError)
+      );
   }
 
   deleteQuestion(id: number) {
@@ -79,13 +81,6 @@ export class QuestionsService {
       take(1),
       catchError(this.handleError)
     );
-  }
-
-  addAnswerToQuestion(questionId: number, answer: IAnswer) {
-    const url = `${this.apiUrl}/question/${questionId}/answer`;
-    return this.http
-      .post<IQuestion>(url, answer)
-      .pipe(take(1), catchError(this.handleError));
   }
 
   private handleError(err: any): Observable<never> {
