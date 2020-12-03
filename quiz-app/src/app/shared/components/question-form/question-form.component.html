@@ -79,7 +79,7 @@
               || form.get('category')?.dirty)
               && !form.get('category')?.valid
             )">
-            <option [value]="" [selected]="true" disabled="disabled">Select one</option>
+            <option [selected]="true" disabled="disabled" value="">Select one</option>
             <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
           </select>
         <small

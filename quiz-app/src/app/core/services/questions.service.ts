@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { BehaviorSubject, Observable, Subject, Subscription, throwError } from 'rxjs';
-import { catchError, shareReplay, take, tap } from 'rxjs/operators';
-import { IAnswer, IQuestion } from 'src/app/shared/interfaces';
+import { Observable, throwError } from 'rxjs';
+import { catchError, take, tap } from 'rxjs/operators';
+import { IQuestion } from 'src/app/shared/interfaces';
 import { environment } from 'src/environments/environment';
 import { StoreService } from './store.service';
 
@@ -31,8 +31,8 @@ export class QuestionsService {
 
   getQuestions(): Observable<IQuestion[]> {
     const url = `${this.apiUrl}/question`;
-    const questionsCached = this.store.value.questions.length;    
-    return !questionsCached
+    const questionsCached = this.store.value.questions;    
+    return !questionsCached.length
       ? this.http.get<IQuestion[]>(url).pipe(
           take(1),
           tap((questions) => (

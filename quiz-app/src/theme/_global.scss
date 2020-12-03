@@ -11,6 +11,11 @@ body {
   color: $font-color;
 }
 
+a {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 /* Responsive */
 @media all and (max-width: $x-large) {}
 

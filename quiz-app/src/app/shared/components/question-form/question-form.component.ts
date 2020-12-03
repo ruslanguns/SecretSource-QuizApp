@@ -1,11 +1,11 @@
-import { Component, EventEmitter, OnDestroy, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Subject, Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
 import { map, takeUntil, tap } from 'rxjs/operators';
 import { minLengthArray } from '../../form-validations';
-import { IAnswer, IQuestion } from '../../interfaces';
+import { IQuestion } from '../../interfaces';
 import {
   QuestionsService,
   StoreService,
@@ -18,9 +18,10 @@ import { QuestionCategories } from '../../enums/categories';
   styleUrls: ['./question-form.component.scss'],
 })
 export class QuestionFormComponent implements OnDestroy {
-
-  @Output() onSubmit: EventEmitter<void> = new EventEmitter();
+  
   private onDestroy = new Subject<void>();
+  @Output() onSubmit: EventEmitter<void> = new EventEmitter();
+  @Input() resetFormOnSubmit?: boolean;
 
   categories = QuestionCategories;
   form: FormGroup;
@@ -29,6 +30,7 @@ export class QuestionFormComponent implements OnDestroy {
   loading = false;
   questionId = 0;
   questionSelected?: IQuestion;
+  isFormValid?: boolean = true;
   questionSelectedObs$ = this.store.select<IQuestion[]>('questions')
     .pipe(
       map((questions) =>
@@ -107,13 +109,13 @@ export class QuestionFormComponent implements OnDestroy {
 
     if (this.form.valid) {
       this.loading = true;
-      this.validateAtLeastOneTrulyAnswer();
+      const isValid = this.validateAtLeastOneTrulyAnswer();
       const questionForm = this.convertFormWithStatusAsBooleans();
 
       if (this.isEdit && this.questionSelected) {
-        this.editQuestion(questionForm);
+        isValid && this.editQuestion(questionForm);
       } else {
-        this.createNewQuestion(questionForm);
+        isValid && this.createNewQuestion(questionForm);
       }
       this.formSubmitted = false;
     }
@@ -123,10 +125,11 @@ export class QuestionFormComponent implements OnDestroy {
     this.questionService.createQuestion(questionForm)
       .pipe(takeUntil(this.onDestroy))
       .subscribe(
-        () => (
+        (question) => (
           this.toastr.clear(),
           this.toastr.success(`Question created successfully`),
           (this.loading = false),
+          (this.resetFormOnSubmit && this.resetForm()),
           this.onSubmit.emit()
         ),
         (error) => (this.toastr.error(error), (this.loading = false))
@@ -155,7 +158,9 @@ export class QuestionFormComponent implements OnDestroy {
     if (trulyAnswers === 0) {
       this.toastr.error('Should have at least one truly answer');
       this.loading = false;
-      throw new Error('Should have at least one truly answer');
+      return false;
+    } else {
+      return true;
     }
   }
  
@@ -167,4 +172,10 @@ export class QuestionFormComponent implements OnDestroy {
     return questionForm as IQuestion;
   }
 
+  private resetForm() {
+    this.form.reset();
+    while (this.answers.length !== 0) {
+      this.answers.removeAt(0);
+    }
+  }
 }
