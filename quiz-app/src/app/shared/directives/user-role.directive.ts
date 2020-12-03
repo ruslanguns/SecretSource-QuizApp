@@ -1,6 +1,6 @@
 import { Directive, Input, OnDestroy, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { distinctUntilChanged } from 'rxjs/operators';
+import { Subject, Subscription } from 'rxjs';
+import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { AuthService, StoreService } from 'src/app/core/services';
 import { Role } from '../enums/role.enum';
 
@@ -11,7 +11,7 @@ import { Role } from '../enums/role.enum';
 export class UserRoleDirective implements OnInit, OnDestroy {
 
   userRoles: Role[] = [];
-  subscription: Subscription | undefined;
+  private onDestroy = new Subject();
 
   @Input()
   set appUserRole(roles: Role[]) {
@@ -29,8 +29,11 @@ export class UserRoleDirective implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.subscription = this.store.select('isAuthorized')
-      .pipe(distinctUntilChanged())
+    this.store.select('isAuthorized')
+      .pipe(
+        takeUntil(this.onDestroy),
+        distinctUntilChanged()
+      )
       .subscribe(hasAccess => {
         if (hasAccess && this.userRoles) {
           hasAccess = this.userRoles.some((role) => this.authService.hasRole(role));
@@ -42,7 +45,8 @@ export class UserRoleDirective implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription?.unsubscribe();
+    this.onDestroy.next();
+    this.onDestroy.complete();
   }
 
 }

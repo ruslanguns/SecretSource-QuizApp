@@ -10,6 +10,8 @@
     li {
       padding: 0.5em;
       border-bottom: 1px solid $border-color;
+      min-height: 1.3em;
+      height: auto;
 
       &:hover {
         background-color: $bg-color;
