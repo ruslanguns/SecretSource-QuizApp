@@ -30,86 +30,58 @@
   <!--              SUMMARY                        -->
   <!------------------------------------------------->
   <app-card *appUserRole="[ Role.Player ]" class="dashboard__stats">
-    <app-loading *ngIf="loading$ | async"></app-loading>
-    <ng-container *ngIf="(quizzesStats$ | async) as quizzesStats">
-      <div class="stats__title">
-        <h4>Summary</h4>
-      </div>
-      <div class="stats_hits">
-        <div>
-          <div class="hits__correct text-success">
-            <h1>{{ quizzesStats.correct }}</h1>
-          </div>
-          <p>Correct</p>
+    <div class="stats__title">
+      <h4>Summary</h4>
+    </div>
+    <div class="stats_hits">
+      <div>
+        <div class="hits__correct text-success">
+          <h1>3</h1>
         </div>
-        <div>
-          <div class="hits__incorrect text-error">
-            <h1>{{ quizzesStats.incorrect }}</h1>
-          </div>
-          <p>Incorrect</p>
-        </div>
+        <p>Correct</p>
       </div>
-    </ng-container>
-
-    <!-- MODAL FOR PLAYING A QUIZ -->
-    <app-quiz-modal></app-quiz-modal>
+      <div>
+        <div class="hits__incorrect text-error">
+          <h1>2</h1>
+        </div>
+        <p>Incorrect</p>
+      </div>
+    </div>
   </app-card> 
-  
+
   <!------------------------------------------------->
-  <!--              LAST 5 UNANSWERED                -->
+  <!--              LAST 5 ANSWERED                -->
   <!------------------------------------------------->
   <app-card *appUserRole="[ Role.Player ]" class="dashboard__answered">
-    <app-loading *ngIf="loading$ | async"></app-loading>
-    <div class="list" *ngIf="(unansweredQuizzes$ | async) as unanswered">
-      <div class="list__title">
-        <h4>Last 5 unanswered</h4>
-      </div>
-      <ul *ngIf="unanswered.length; else NoUnansweredData">
-        <li *ngFor="let quiz of unanswered" [title]="quiz.question" (click)="onSelectedQuiz(quiz)">
-          {{ quiz?.question | truncate:20 }}
-          <span class="badge info">{{ quiz?.createdAt | date }}
-          </span>
-        </li>
+    <h4>Last 5 answered</h4>
+
+    <app-list>
+      <ul>
+        <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat eius, ducimus quam perferendis enim corrupti praesentium aliquam, ad unde at esse incidunt illum possimus nesciunt eum quae dolore in alias. <span class="badge success">Correct</span></li>
+        <li>Dos <span class="badge error">Incorrect</span></li>
+        <li>Tres <span class="badge success">Correct</span></li>
+        <li>Cuatro <span class="badge success">Correct</span></li>
+        <li>Cinco <span class="badge error">Correct</span></li>
       </ul>
-      <ng-template #NoUnansweredData>
-        <div class="list__no-data">
-          No more quizzes yet
-        </div>
-      </ng-template>
-      <button routerLink="/quizzes" [queryParams]="{filter: 'unanswered'}" type="button" class="btn outline info block">
-        All unanswered quizzes
-      </button>
-    </div>
+    </app-list>
+
   </app-card>
 
   <!------------------------------------------------->
-  <!--              LAST 5 ANSWERED              -->
+  <!--              LAST 5 UNANSWERED              -->
   <!------------------------------------------------->
-  <app-card *appUserRole="[ Role.Player ]" class="dashboard__unanswered" >
-    <app-loading *ngIf="loading$ | async"></app-loading>
-    <div class="list" *ngIf="(answeredQuizzes$ | async) as answered">
+  <app-card *appUserRole="[ Role.Player ]" class="dashboard__unanswered">
+     <div class="list">
       <div class="list__title">
-        <h4>Last 5 answered</h4>
+        <h4>Last 5 unanswered</h4>
       </div>
-      <ul *ngIf="answered.length; else NoAnsweredData">
-        <li *ngFor="let answer of answered" [title]="answer?.quiz?.question" (click)="onSelectedQuiz(answer)" >
-          {{ answer?.quiz?.question| truncate:20 }}
-          <span
-            [class.success]="answer?.selectedAnswer?.isCorrect"
-            [class.error]="!answer?.selectedAnswer?.isCorrect"
-            class="badge">
-            {{ answer.selectedAnswer?.isCorrect ? 'Correct' : 'Incorrect' }}
-          </span>
-        </li>
+      <ul>
+        <li>Uno <span class="badge warning">Unanswered</span></li>
+        <li>Dos <span class="badge warning">Unanswered</span></li>
+        <li>Tres <span class="badge warning">Unanswered</span></li>
+        <li>Cuatro <span class="badge warning">Unanswered</span></li>
+        <li>Cinco <span class="badge warning">Unanswered</span></li>
       </ul>
-      <ng-template #NoAnsweredData>
-        <div class="list__no-data">
-          No quizzes made, start your learning!
-        </div>
-      </ng-template>
-      <button routerLink="/quizzes" [queryParams]="{filter: 'answered'}" type="button" class="btn outline info block">
-        All answered quizzes
-      </button>
     </div>
   </app-card>
 
@@ -117,13 +89,12 @@
   <!--              LAST 5 QUESTIONS CREATED              -->
   <!------------------------------------------------->
   <app-card *appUserRole="[ Role.Admin ]" class="dashboard__questions">
-    <app-loading *ngIf="loading$ | async"></app-loading>
     <div class="list" *ngIf="(latestQuestions$ | async) as questions">
       <div class="list__title">
         <h4>Last 5 questions created</h4>
       </div>
       <ul *ngIf="questions.length; else NoQuestionsData">
-        <li *ngFor="let question of questions" [title]="question.question" [routerLink]="['questions', question.id]">
+        <li *ngFor="let question of questions" [title]="question.question">
           {{ question.question | truncate:20 }} <span class="badge info">{{ question.status | isPublished }}</span>
         </li>
       </ul>
@@ -132,9 +103,7 @@
           No questions created, <a (click)="openQuestionFormModal()">add a new question</a>
         </div>
       </ng-template>
-      <button routerLink="/questions" type="button" class="btn outline info block">
-        Open questions section
-      </button>
+      <button routerLink="/questions" type="button" class="btn outline info block">Open questions section</button>
     </div>
   </app-card>
 
@@ -142,7 +111,6 @@
   <!--              LAST 5 REGISTERED USERS              -->
   <!------------------------------------------------->
   <app-card *appUserRole="[ Role.Admin ]" class="dashboard__users">
-    <app-loading *ngIf="loading$ | async"></app-loading>
     <div class="list"  *ngIf="(latestUsers$ | async) as users">
       <div class="list__title">
         <h4>Last 5 registered users</h4>

@@ -8,17 +8,17 @@ export class Result {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => User, { onDelete: 'CASCADE'})
+  @ManyToOne(() => User)
   @JoinColumn({ name: 'user_id'})
   user: User;
   
-  @ManyToOne(() => Answer, { onDelete: 'CASCADE', eager: true })
+  @ManyToOne(() => Answer)
   @JoinColumn({ name: 'selected_answer_id'})
   selectedAnswer: Answer;
 
-  @ManyToOne(() => Question, { onDelete: 'CASCADE', eager: true})
+  @ManyToOne(() => Question)
   @JoinColumn({ name: 'question_id'})
-  quiz: Question;
+  question: Question;
  
   @CreateDateColumn({ name: 'answered_at', type: 'timestamp' })
   answeredAt: Date;

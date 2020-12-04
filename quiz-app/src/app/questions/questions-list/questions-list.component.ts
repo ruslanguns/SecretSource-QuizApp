@@ -3,8 +3,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { EMPTY, Observable } from 'rxjs';
-import { catchError, delay } from 'rxjs/operators';
-import { LoadingService, QuestionsService } from 'src/app/core/services';
+import { catchError, tap } from 'rxjs/operators';
+import { QuestionsService, StoreService } from 'src/app/core/services';
 import { ITableOptions } from 'src/app/shared/components/table-crud/table-crud.component';
 import { IQuestion } from 'src/app/shared/interfaces';
 import { IsPublishedPipe, TruncatePipe } from 'src/app/shared/pipes';
@@ -39,18 +39,21 @@ export class QuestionsListComponent {
     },
   };
 
-  questions$: Observable<IQuestion[]> = this.questionService.getQuestions();
-  loading$ = this.loadingService.loadingSub.pipe(delay(0));
+  questions$: Observable<IQuestion[]> = this.store.select('questions');
+  loading = true;
   deleteModal = false;
+  onDeletingProcess: boolean = false;
   selectedQuestion?: IQuestion;
 
   constructor(
     private questionService: QuestionsService,
     private toastr: ToastrService,
     private router: Router,
-    private loadingService: LoadingService
+    private store: StoreService
   ) {
+    this.questionService.getQuestions().subscribe();
     this.questions$.pipe(
+      tap(() => this.loading = false),
       catchError((error) => {
         this.toastr.error(error);
         return EMPTY;
@@ -83,10 +86,11 @@ export class QuestionsListComponent {
 
   deleteQuestion() {
     if (this.selectedQuestion) {
+      this.onDeletingProcess = true;
       this.questionService.deleteQuestion(this.selectedQuestion.id)
         .subscribe(
-          () => (this.closeOnDeleteModal()),
-          error => (this.toastr.error(error))
+          () => (this.onDeletingProcess = false, this.closeOnDeleteModal()),
+          error => (this.toastr.error(error), (this.onDeletingProcess = false))
         );
     }
   }

@@ -1,25 +1,19 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { QuizzesComponent } from './quizzes.component';
 import { AuthGuard } from '../core/guards';
-import { QuizzesListComponent } from './quizzes-list/quizzes-list.component';
 
 const routes: Routes = [
   {
     path: '',
     canActivate: [AuthGuard],
-    canActivateChild: [AuthGuard],
-    component: QuizzesComponent,
-    children: [
-      {
-        path: '',
-        component: QuizzesListComponent
-      }
-    ]
+    component: QuizzesComponent
   }
 ];
 
 @NgModule({
+  declarations: [],
   imports: [
     RouterModule.forChild(routes),
   ],
@@ -27,7 +21,6 @@ const routes: Routes = [
 })
 export class QuizzesRoutingModule {
   static components = [
-    QuizzesComponent,
-    QuizzesListComponent
+    QuizzesComponent
   ];
 }

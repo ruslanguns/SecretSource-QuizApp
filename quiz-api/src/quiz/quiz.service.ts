@@ -15,45 +15,34 @@ export class QuizService {
     private readonly questionService: QuestionService
   ) {}
 
-  async submitQuizAnswer(user: User, answerId: number): Promise<Result> {
+  async submitQuizAnswer(user: User, answerId: number) {
     const {question, ...selectedAnswer} = await this.questionService.getAnswerById(answerId, { relations: ['question']});
-    const alreadyResponded = await this.resultRepository.findOne({user, quiz: question})
+    const alreadyResponded = await this.resultRepository.findOne({user, question})
     if (alreadyResponded) {
       throw new BadRequestException(`THIS QUIZ ALREADY RESPONDED`);
     }
-    const newResult = this.resultRepository.create({user, selectedAnswer, quiz: question});
-    const result = await this.resultRepository.save(newResult);
-
-    return await this.resultRepository
-      .createQueryBuilder('result')
-        .where({ id: result.id })
-        .leftJoinAndSelect('result.quiz', 'quiz')
-        .leftJoinAndSelect('result.selectedAnswer', 'selectedAnswer')
-        .leftJoinAndSelect('quiz.answers', 'answers')
-        .addSelect('answers.isCorrect')
-        .addSelect('selectedAnswer.isCorrect')
-        .getOne();    
+    const result = this.resultRepository.create({user, selectedAnswer, question});
+    return await this.resultRepository.save(result);
   }
 
-  async getAnsweredQuestions(user: User) {
-    return await this.resultRepository
-      .createQueryBuilder('result')
-      .where({user})
-      .leftJoinAndSelect('result.quiz', 'quiz')
-      .leftJoinAndSelect('result.selectedAnswer', 'selectedAnswer')
-      .leftJoinAndSelect('quiz.answers', 'answers')
-      .addSelect('answers.isCorrect')
-      .addSelect('selectedAnswer.isCorrect')
-      .getMany()
+  async getAnsweredQuestions(user: User, options?: FindManyOptions<Result>) {
+    return await this.resultRepository.find({
+      where: {
+        user
+      },
+      relations: ['question', 'selectedAnswer'],
+      ...options
+    });
   }
 
-  async getUnansweredQuestions(user: User): Promise<Question[]> {
-    const questions = await getRepository<Question>(Question).find();
-    const answered = await this.getAnsweredQuestions(user);
-    const answeredQuestions: Question[] = []
-    
-    answered && answered.map(x => answeredQuestions.push(x.quiz));
+  async getUnansweredQuestions(user: User) {
+    const answered = await this.getAnsweredQuestions(user, {
+      loadRelationIds: { relations: ['question']}
+    });
+    const questionIds: number[] = [];
+    answered.map(({question}) => questionIds.push(Number(question)))
 
-    return questions.filter((x) => !!x.status && !answeredQuestions.some((y) => y.id === x.id));
+    return await getRepository<Question>(Question)
+      .find({ where: { id: Not(In(questionIds))}});
   }
 }
