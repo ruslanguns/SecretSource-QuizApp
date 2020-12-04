@@ -1,5 +1,4 @@
 <h2>{{ (filter$ | async) | titlecase }} quizzes</h2>
-
 <app-loading *ngIf="loading$ | async"></app-loading>
 <div *ngIf="quizzesVM$ | async as quizzes">
   <div *ngIf="!(loading$ | async)" class="table">
@@ -14,15 +13,15 @@
       </thead>
       <tbody>
         <tr *ngFor="let quiz of quizzes">
-          <td>{{ quiz.question | truncate:35 }}</td>
-          <td>{{ (quiz.answeredAt || quiz.createdAt) | date}}</td>
+          <td>{{ (quiz?.quiz?.question || quiz.question) | truncate:35 }}</td>
+          <td>{{ (quiz?.answeredAt || quiz?.createdAt) | date}}</td>
           <td>
             <ng-container *ngIf="quiz?.selectedAnswer; else unansweredQuiz">
               <span
-                [class.success]="quiz?.selectedAnswer.isCorrect"
-                [class.error]="!quiz?.selectedAnswer.isCorrect"
+                [class.success]="quiz?.selectedAnswer?.isCorrect"
+                [class.error]="!quiz?.selectedAnswer?.isCorrect"
                 class="badge">
-                {{ quiz?.selectedAnswer.isCorrect ? 'Correct' : 'Incorrect'}}
+                {{ quiz?.selectedAnswer?.isCorrect ? 'Correct' : 'Incorrect'}}
               </span>
             </ng-container>
             <ng-template #unansweredQuiz>
@@ -30,11 +29,13 @@
             </ng-template>
           </td>
           <td>
-            <button class="btn small default mr-1">Open</button>
+            <button (click)="onSelectedQuiz(quiz)" class="btn small default mr-1">Open</button>
           </td>
         </tr>
       </tbody>
     </table>
+
+    <app-quiz-modal></app-quiz-modal>
     
   </div>
   <ng-container *ngIf="!quizzes.length">

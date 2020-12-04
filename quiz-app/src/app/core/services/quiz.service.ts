@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, throwError } from 'rxjs';
 import { catchError, take, tap } from 'rxjs/operators';
-import { IQuestion, IQuizAnswered } from 'src/app/shared/interfaces';
+import { IQuestion, IQuiz } from 'src/app/shared/interfaces';
 import { environment } from 'src/environments/environment';
 import { StoreService } from './store.service';
 
@@ -17,35 +17,38 @@ export class QuizService {
     private toastr: ToastrService
   ) {}
 
-  doQuiz(answerId: number): Observable<IQuizAnswered> {
+  doQuiz(answerId: number): Observable<IQuiz> {
     const url = `${this.apiUrl}/quiz/answer/${answerId}`;
-    return this.http.post<IQuizAnswered>(url, {}).pipe(
+    return this.http.post<IQuiz>(url, {}).pipe(
       take(1),
       tap((answeredQuiz) => {
+        const unansweredQuizzes = this.store.value.unansweredQuizzes.filter(x => (x.id !== answeredQuiz.quiz?.id));
         const answeredQuizzes = this.store.value.answeredQuizzes;
         answeredQuizzes.push(answeredQuiz);
+        this.store.set('unansweredQuizzes', unansweredQuizzes);
+        this.store.set('answeredQuizzes', answeredQuizzes);
       }),
       catchError(this.handleError)
     );
   }
 
-  getAnsweredQuizzes(): Observable<IQuizAnswered[]> {
+  getAnsweredQuizzes(): Observable<IQuiz[]> {
     const url = `${this.apiUrl}/quiz/answered`;
-    const answeredQuizzesCached = this.store.value.unansweredQuizzes;
+    const answeredQuizzesCached = this.store.value.answeredQuizzes;
     return !answeredQuizzesCached.length
-      ? this.http.get<IQuizAnswered[]>(url).pipe(
+      ? this.http.get<IQuiz[]>(url).pipe(
           take(1),
           tap((answeredQuizzes) =>
             this.store.set('answeredQuizzes', answeredQuizzes)
           ),
           catchError(this.handleError)
         )
-      : this.store.select<IQuizAnswered[]>('answeredQuizzes');
+      : this.store.select<IQuiz[]>('answeredQuizzes');
   }
 
-  refreshAnsweredQuizzes(): Observable<IQuizAnswered[]> {
+  refreshAnsweredQuizzes(): Observable<IQuiz[]> {
     const url = `${this.apiUrl}/quiz/answered`;
-    return this.http.get<IQuizAnswered[]>(url).pipe(
+    return this.http.get<IQuiz[]>(url).pipe(
       take(1),
       tap((answeredQuizzes) => {
         this.store.set('answeredQuizzes', answeredQuizzes),
@@ -55,18 +58,18 @@ export class QuizService {
     );
   }
 
-  getUnansweredQuizzes(): Observable<IQuestion[]> {
+  getUnansweredQuizzes(): Observable<IQuiz[]> {
     const url = `${this.apiUrl}/quiz/unanswered`;
     const unansweredQuizzesCached = this.store.value.unansweredQuizzes;
     return !unansweredQuizzesCached.length
-      ? this.http.get<IQuestion[]>(url).pipe(
+      ? this.http.get<IQuiz[]>(url).pipe(
           take(1),
           tap((unansweredQuizzes) =>
             this.store.set('unansweredQuizzes', unansweredQuizzes)
           ),
           catchError(this.handleError)
         )
-      : this.store.select<IQuestion[]>('unansweredQuizzes');
+      : this.store.select<IQuiz[]>('unansweredQuizzes');
   }
 
   refreshUnansweredQuizzes(): Observable<IQuestion[]> {
