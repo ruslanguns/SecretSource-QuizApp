@@ -1,0 +1,14 @@
+<app-navbar
+  [title]="title" 
+  [isSidenavOpen]="showSidenav"
+  (toggleMenu)="toggleMenu()">
+</app-navbar>
+
+<app-sidenav
+  (toggleMenu)="toggleMenu()"
+  [show]="showSidenav">
+</app-sidenav>
+
+<main>
+  <ng-content></ng-content>
+</main>

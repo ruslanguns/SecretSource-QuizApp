@@ -7,19 +7,10 @@ import {
   IsOptional,
   IsString,
   MaxLength,
-  MinLength,
   ValidateNested,
 } from 'class-validator';
+import { CreateAnswerDTO } from './create-answer.dto';
 
-class AnswerDTO {
-  @IsString()
-  @MaxLength(255)
-  answer: string;
-
-  @IsOptional()
-  @IsBoolean()
-  isCorrect?: boolean;
-}
 
 export class CreateQuestionDTO {
   @IsString()
@@ -30,8 +21,8 @@ export class CreateQuestionDTO {
   @ArrayMinSize(2)
   @ArrayMaxSize(6)
   @ValidateNested()
-  @Type((type) => AnswerDTO)
-  answers: AnswerDTO[];
+  @Type((type) => CreateAnswerDTO)
+  answers: CreateAnswerDTO[];
 
   @IsOptional()
   @IsString()

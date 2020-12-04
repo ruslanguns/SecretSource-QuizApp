@@ -7,13 +7,13 @@ export class Answer {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Question)
+  @ManyToOne(() => Question, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'question_id'})
   question: Question;
 
   @Column({ type: 'text'})
   answer: string;
 
-  @Column({ name: 'is_correct', type: 'bool', default: false })
+  @Column({ name: 'is_correct', type: 'bool', default: false, select: false })
   isCorrect: boolean;
 }

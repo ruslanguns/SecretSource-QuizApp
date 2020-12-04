@@ -1,0 +1,17 @@
+
+<div *ngIf="open" class="modal">
+  
+  <div class="modal__background" (click)="close()"></div>
+  <div class="modal__container">
+
+    <div class="modal__close-btn" (click)="close()">
+      <i class="fas fa-times"></i>
+    </div>
+
+    <div class="modal__content">
+      <ng-content></ng-content>
+    </div>
+
+  </div>
+
+</div>

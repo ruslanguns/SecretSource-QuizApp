@@ -1,0 +1,30 @@
+<header>
+  <div
+    *appAuthResource
+    (click)="onToggleMenu()"
+    class="menu-toggle">
+
+    <ng-container *ngIf="!isSidenavOpen; else isClosed">
+      <i class="fas fa-bars"></i>
+    </ng-container>
+    
+    <ng-template #isClosed>
+      <i class="fas fa-times"></i>
+    </ng-template>
+    
+  </div>
+
+  <div class="menu-brand" (click)="goToDashboard()">
+    <h3>{{ title }}</h3>
+  </div>
+
+  <div
+    *appAuthResource
+    class="menu-logout"
+    (click)="logout()">
+
+    <i class="fas fa-sign-out-alt"></i>
+    
+  </div>
+
+</header>

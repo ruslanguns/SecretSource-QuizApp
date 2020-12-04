@@ -1,0 +1,36 @@
+<div class="users">
+  <div class="users__title">
+    <h2>Users
+      <button (click)="refreshUsers()" class="btn small transparent" type="button">
+        <i class="fas fa-sync"></i>
+      </button>
+    </h2>
+  </div>
+
+  <div class="users__list">
+
+    <app-table-crud
+      [dataTable]="(users$ | async) || []"
+      [tableOptions]="tableOptions"
+      (onDelete)="onDelete($event)"
+      [disableEdit]=true>
+    </app-table-crud>
+
+    <app-modal [initialStatus]="deleteModal" (onClose)="closeOnDeleteModal()">
+      <h2>Are you sure to delete this question?</h2>
+      <div class="modal__confirm">
+        <button (click)="closeOnDeleteModal()" type="button" class="btn default">Cancel</button>
+        <button [disabled]="(loading$ | async)" (click)="deleteQuestion()" type="button" class="btn error">
+          <ng-container *ngIf="!(loading$ | async) else onLoading">
+            Yes, delete it.
+          </ng-container>
+          <ng-template #onLoading>
+            <i class="fas fa-spinner fa-pulse mr-1"></i>
+            loading
+          </ng-template>
+        </button>
+      </div>
+    </app-modal>
+
+  </div>
+</div>

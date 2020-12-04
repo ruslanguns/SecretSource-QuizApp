@@ -1,0 +1,39 @@
+@import 'src/theme/variables';
+
+.list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;  
+  &__title {
+    display: block;
+  }
+  
+  ul {
+    width: 100%;
+    list-style-type: none;
+    list-style-position: inside;
+    padding: 0;
+    border: 1px solid $border-color;
+
+    li {
+      padding: 0.5em;
+      border-bottom: 1px solid $border-color;
+      min-height: 1.3em;
+      height: auto;
+
+      &:hover {
+        background-color: $bg-color;
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+
+  &__no-data {
+    text-align: center;
+    margin: 102px 0; // Magic size
+  }
+}
