@@ -68,6 +68,7 @@ export class AuthService {
     this.store.set('currentUser', user);
     this.store.set('accessToken', accessToken);
     this.store.set('isAuthorized', true);
+
     localStorage.setItem('currentUser', JSON.stringify(user));
     localStorage.setItem('accessToken', accessToken);
   }
@@ -80,6 +81,8 @@ export class AuthService {
     this.store.set('users', []);
     this.store.set('answeredQuizzes', []);
     this.store.set('unansweredQuizzes', []);
+    this.store.set('selectedQuiz', null);
+
     localStorage.removeItem('currentUser');
     localStorage.removeItem('accessToken');
   }
