@@ -1,4 +1,5 @@
 import { IQuestion } from './question.interface';
+import { IQuizAnswered } from './quiz-answered.interface';
 import { IUser } from './user.interface';
 
 export interface IState {
@@ -8,4 +9,6 @@ export interface IState {
   isLoading: boolean;
   questions: IQuestion[];
   users: IUser[];
+  answeredQuizzes: IQuizAnswered[],
+  unansweredQuizzes: IQuestion[]
 }

@@ -112,15 +112,15 @@
       
     </div>
 
-    <button [disabled]="loading" class="btn success block mt-1" type="submit">
-      <ng-container *ngIf="!loading; else onLoading">
+    <button [disabled]="loading$ | async" class="btn success block mt-1" type="submit">
+      <ng-container *ngIf="!(loading$ | async); else onLoading">
         Submit
       </ng-container>
-
       <ng-template #onLoading>
         <i class="fas fa-spinner fa-pulse mr-1"></i>
         Loading
       </ng-template>
+
     </button>
     
   </form>

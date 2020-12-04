@@ -8,7 +8,9 @@ const initialState: IState = {
   isAuthorized: !!localStorage.getItem('accessToken'),
   isLoading: false,
   questions: [],
-  users: []
+  users: [],
+  answeredQuizzes: [],
+  unansweredQuizzes: [],
 }
 
 export class StoreService {

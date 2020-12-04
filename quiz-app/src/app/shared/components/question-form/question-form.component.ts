@@ -3,10 +3,11 @@ import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
-import { map, takeUntil, tap } from 'rxjs/operators';
+import { delay, map, takeUntil, tap } from 'rxjs/operators';
 import { minLengthArray } from '../../form-validations';
 import { IQuestion } from '../../interfaces';
 import {
+  LoadingService,
   QuestionsService,
   StoreService,
 } from 'src/app/core/services';
@@ -27,7 +28,7 @@ export class QuestionFormComponent implements OnDestroy {
   form: FormGroup;
   formSubmitted = false;
   isEdit = false;
-  loading = false;
+  loading$ = this.loadingService.loadingSub.pipe(delay(0));
   questionId = 0;
   questionSelected?: IQuestion;
   isFormValid?: boolean = true;
@@ -55,7 +56,8 @@ export class QuestionFormComponent implements OnDestroy {
     private questionService: QuestionsService,
     private toastr: ToastrService,
     private activatedRoute: ActivatedRoute,
-    private store: StoreService
+    private store: StoreService,
+    private loadingService: LoadingService
   ) {
 
     this.form = this.fb.group({
@@ -108,7 +110,6 @@ export class QuestionFormComponent implements OnDestroy {
     this.form.markAllAsTouched();
 
     if (this.form.valid) {
-      this.loading = true;
       const isValid = this.validateAtLeastOneTrulyAnswer();
       const questionForm = this.convertFormWithStatusAsBooleans();
 
@@ -128,11 +129,10 @@ export class QuestionFormComponent implements OnDestroy {
         (question) => (
           this.toastr.clear(),
           this.toastr.success(`Question created successfully`),
-          (this.loading = false),
           (this.resetFormOnSubmit && this.resetForm()),
           this.onSubmit.emit()
         ),
-        (error) => (this.toastr.error(error), (this.loading = false))
+        (error) => (this.toastr.error(error))
       );
   }
 
@@ -143,21 +143,19 @@ export class QuestionFormComponent implements OnDestroy {
         () => (
           this.toastr.clear(),
           this.toastr.success(`Question edited successfully`),
-          (this.loading = false),
           this.onSubmit.emit()
         ),
-        (error) => (this.toastr.error(error), (this.loading = false))
+        (error) => (this.toastr.error(error))
       );
   }
 
   private validateAtLeastOneTrulyAnswer() {
     let trulyAnswers = 0;
     for (const answer of this.form.value.answers) {
-      if (answer.isCorrect) trulyAnswers++;
+      answer.isCorrect && trulyAnswers++;
     }
     if (trulyAnswers === 0) {
       this.toastr.error('Should have at least one truly answer');
-      this.loading = false;
       return false;
     } else {
       return true;
