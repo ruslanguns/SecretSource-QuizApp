@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { combineLatest } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
 import { delay, map, tap } from 'rxjs/operators';
 import { LoadingService, QuizService, StoreService } from 'src/app/core/services';
 import { IQuestion, IQuizAnswered } from 'src/app/shared/interfaces';
@@ -13,31 +13,28 @@ import { IQuestion, IQuizAnswered } from 'src/app/shared/interfaces';
 })
 export class QuizzesListComponent {
   
-  answeredQuizzes$ = this.store.select<IQuizAnswered[]>('answeredQuizzes');
-  unansweredQuizzes$ = this.store.select<IQuestion[]>('unansweredQuizzes');
-  queryParamMap$ = this.activatedRoute.queryParamMap;
+  private queryParamMap$ = this.activatedRoute.queryParamMap;
+  private answeredQuizzes$ = this.quizService.getAnsweredQuizzes();
+  private unansweredQuizzes$ = this.quizService.getUnansweredQuizzes();
   
-  quizzesVM$ = combineLatest([
-    this.queryParamMap$,
+  filter$ = this.queryParamMap$.pipe(map(param => param.get('filter') === 'answered' ? 'answered' : 'unanswered'));
+  loading$ = this.loadingService.loadingSub.pipe(delay(0));
+
+  quizzesVM$: Observable<IQuestion[]|IQuizAnswered[]> = combineLatest([
+    this.filter$,
     this.answeredQuizzes$,
     this.unansweredQuizzes$,
   ]).pipe(
-    map(([param, answered, unanswered]) => {
-      return param.get('filter') === 'answered'
-        ? answered
-        : unanswered
+    map(([filter, answered, unanswered]) => {
+      return filter === 'answered'
+        ? (answered)
+        : (unanswered)
     }),
-  )
-  loading$ = this.loadingService.loadingSub.pipe(delay(0));
+  );
 
   constructor(
-    private store: StoreService,
     private quizService: QuizService,
     private activatedRoute: ActivatedRoute,
     private loadingService: LoadingService
-    ) {
-    this.quizService.getUnansweredQuizzes().subscribe();
-    this.quizService.getAnsweredQuizzes().subscribe();
-
-  }
+    ) {}
 }

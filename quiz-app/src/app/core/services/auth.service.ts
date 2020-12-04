@@ -76,6 +76,10 @@ export class AuthService {
     this.store.set('currentUser', undefined);
     this.store.set('accessToken', undefined);
     this.store.set('isAuthorized', false);
+    this.store.set('questions', []);
+    this.store.set('users', []);
+    this.store.set('answeredQuizzes', []);
+    this.store.set('unansweredQuizzes', []);
     localStorage.removeItem('currentUser');
     localStorage.removeItem('accessToken');
   }

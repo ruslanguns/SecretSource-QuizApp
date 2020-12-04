@@ -73,7 +73,7 @@
           No more quizzes yet
         </div>
       </ng-template>
-      <button routerLink="/questions" type="button" class="btn outline info block">
+      <button routerLink="/quizzes" [queryParams]="{filter: 'unanswered'}" type="button" class="btn outline info block">
         All unanswered quizzes
       </button>
     </div>
@@ -104,7 +104,7 @@
           No quizzes made, start your learning!
         </div>
       </ng-template>
-      <button routerLink="/questions" type="button" class="btn outline info block">
+      <button routerLink="/quizzes" [queryParams]="{filter: 'answered'}" type="button" class="btn outline info block">
         All answered quizzes
       </button>
     </div>

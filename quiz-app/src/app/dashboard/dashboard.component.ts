@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { delay, map, tap } from 'rxjs/operators';
-import { LoadingService, QuestionsService, QuizService, StoreService, UsersService } from '../core/services';
+import { LoadingService, QuestionsService, QuizService, UsersService } from '../core/services';
 import { Role } from '../shared/enums/role.enum';
 import { IQuestion, IQuizAnswered, IUser } from '../shared/interfaces';
 import { IQuizzesStats } from '../shared/interfaces/quizzes-stats.interface';
@@ -9,7 +9,8 @@ import { IQuizzesStats } from '../shared/interfaces/quizzes-stats.interface';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardComponent {
   Role = Role;

@@ -6,7 +6,6 @@ export interface IState {
   currentUser: IUser|undefined;
   accessToken: string|undefined;
   isAuthorized: boolean;
-  isLoading: boolean;
   questions: IQuestion[];
   users: IUser[];
   answeredQuizzes: IQuizAnswered[],
