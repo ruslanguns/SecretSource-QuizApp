@@ -1,0 +1,56 @@
+<h2>{{ (filter$ | async) | titlecase }} quizzes</h2>
+<app-loading *ngIf="loading$ | async"></app-loading>
+<div *ngIf="quizzesVM$ | async as quizzes">
+  <div *ngIf="!(loading$ | async)" class="table">
+    <table *ngIf="quizzes.length">
+      <thead>
+        <tr>
+          <th>Question</th>
+          <th>Published at</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let quiz of quizzes">
+          <td>{{ (quiz?.quiz?.question || quiz.question) | truncate:35 }}</td>
+          <td>{{ (quiz?.answeredAt || quiz?.createdAt) | date}}</td>
+          <td>
+            <ng-container *ngIf="quiz?.selectedAnswer; else unansweredQuiz">
+              <span
+                [class.success]="quiz?.selectedAnswer?.isCorrect"
+                [class.error]="!quiz?.selectedAnswer?.isCorrect"
+                class="badge">
+                {{ quiz?.selectedAnswer?.isCorrect ? 'Correct' : 'Incorrect'}}
+              </span>
+            </ng-container>
+            <ng-template #unansweredQuiz>
+              <span class="badge warning">Unanswered</span>
+            </ng-template>
+          </td>
+          <td>
+            <button (click)="onSelectedQuiz(quiz)" class="btn small default mr-1">Open</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <app-quiz-modal></app-quiz-modal>
+    
+  </div>
+  <ng-container *ngIf="!quizzes.length">
+    <h4 style="text-align: center;">
+      <span *ngIf="(filter$ | async) as filter">
+        <i
+          class="fas"
+          [class.fa-thumbs-up]="filter !== 'answered'"
+          [class.fa-star]="filter === 'answered'"></i>
+        {{ 
+          filter === 'answered'
+          ? 'There is no answered quiz yet, start your learning venture!'
+          : 'Looks like you already made all quizzes'
+        }}
+      </span>
+    </h4>
+  </ng-container>
+</div>

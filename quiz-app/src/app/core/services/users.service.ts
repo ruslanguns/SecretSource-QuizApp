@@ -36,7 +36,10 @@ export class UsersService {
     return this.http.get<IUser[]>(url)
       .pipe(
         take(1),
-        tap((users) => this.store.set('users', users)),
+        tap((users) => {
+          this.store.set('users', users);
+          this.toastr.info('Users refreshed');
+        }),
         catchError(this.handleError)
       )
   }
