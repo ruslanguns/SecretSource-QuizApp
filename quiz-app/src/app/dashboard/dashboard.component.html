@@ -50,8 +50,11 @@
         </div>
       </div>
     </ng-container>
-  </app-card> 
 
+    <!-- MODAL FOR PLAYING A QUIZ -->
+    <app-quiz-modal></app-quiz-modal>
+  </app-card> 
+  
   <!------------------------------------------------->
   <!--              LAST 5 UNANSWERED                -->
   <!------------------------------------------------->
@@ -62,9 +65,9 @@
         <h4>Last 5 unanswered</h4>
       </div>
       <ul *ngIf="unanswered.length; else NoUnansweredData">
-        <li *ngFor="let answer of unanswered" [title]="answer.question">
-          {{ answer.question | truncate:20 }}
-          <span class="badge info">{{ answer.createdAt | date }}
+        <li *ngFor="let quiz of unanswered" [title]="quiz.question" (click)="onSelectedQuiz(quiz)">
+          {{ quiz?.question | truncate:20 }}
+          <span class="badge info">{{ quiz?.createdAt | date }}
           </span>
         </li>
       </ul>
@@ -82,20 +85,20 @@
   <!------------------------------------------------->
   <!--              LAST 5 ANSWERED              -->
   <!------------------------------------------------->
-  <app-card *appUserRole="[ Role.Player ]" class="dashboard__unanswered">
+  <app-card *appUserRole="[ Role.Player ]" class="dashboard__unanswered" >
     <app-loading *ngIf="loading$ | async"></app-loading>
     <div class="list" *ngIf="(answeredQuizzes$ | async) as answered">
       <div class="list__title">
         <h4>Last 5 answered</h4>
       </div>
       <ul *ngIf="answered.length; else NoAnsweredData">
-        <li *ngFor="let answer of answered" [title]="answer.question.question">
-          {{ answer.question.question | truncate:20 }}
+        <li *ngFor="let answer of answered" [title]="answer?.quiz?.question" (click)="onSelectedQuiz(answer)" >
+          {{ answer?.quiz?.question| truncate:20 }}
           <span
-            [class.success]="answer.selectedAnswer.isCorrect"
-            [class.error]="!answer.selectedAnswer.isCorrect"
+            [class.success]="answer?.selectedAnswer?.isCorrect"
+            [class.error]="!answer?.selectedAnswer?.isCorrect"
             class="badge">
-            {{ answer.selectedAnswer.isCorrect ? 'Correct' : 'Incorrect' }}
+            {{ answer.selectedAnswer?.isCorrect ? 'Correct' : 'Incorrect' }}
           </span>
         </li>
       </ul>
@@ -120,7 +123,7 @@
         <h4>Last 5 questions created</h4>
       </div>
       <ul *ngIf="questions.length; else NoQuestionsData">
-        <li *ngFor="let question of questions" [title]="question.question">
+        <li *ngFor="let question of questions" [title]="question.question" [routerLink]="['questions', question.id]">
           {{ question.question | truncate:20 }} <span class="badge info">{{ question.status | isPublished }}</span>
         </li>
       </ul>

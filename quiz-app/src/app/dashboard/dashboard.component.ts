@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { delay, map, tap } from 'rxjs/operators';
-import { LoadingService, QuestionsService, QuizService, UsersService } from '../core/services';
+import { LoadingService, QuestionsService, QuizService, StoreService, UsersService } from '../core/services';
 import { Role } from '../shared/enums/role.enum';
-import { IQuestion, IQuizAnswered, IUser } from '../shared/interfaces';
+import { IQuestion, IQuiz, IUser } from '../shared/interfaces';
 import { IQuizzesStats } from '../shared/interfaces/quizzes-stats.interface';
 
 @Component({
@@ -12,7 +12,8 @@ import { IQuizzesStats } from '../shared/interfaces/quizzes-stats.interface';
   styleUrls: ['./dashboard.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnDestroy {
+  private onDestroy = new Subject<void>();
   Role = Role;
   questionFormModal = false;
 
@@ -26,12 +27,12 @@ export class DashboardComponent {
       map(users => users && users.sort((a: any, b: any) => (b.id - a.id))),
       map(users => users.slice(0, 5))
     );
-  answeredQuizzes$: Observable<IQuizAnswered[]> = this.quizService.getAnsweredQuizzes()
+  answeredQuizzes$: Observable<IQuiz[]> = this.quizService.getAnsweredQuizzes()
     .pipe(
       map(users => users && users.sort((a: any, b: any) => (b.id - a.id))),
       map(users => users.slice(0, 5))
     );
-  unansweredQuizzes$: Observable<IQuestion[]> = this.quizService.getUnansweredQuizzes()
+  unansweredQuizzes$: Observable<IQuiz[]> = this.quizService.getUnansweredQuizzes()
     .pipe(
       map(users => users && users.sort((a: any, b: any) => (b.id - a.id))),
       map(users => users.slice(0, 5))
@@ -42,7 +43,7 @@ export class DashboardComponent {
           let correct = 0;
           let incorrect = 0;
           for(const selectedAnswer of results) {
-            selectedAnswer.selectedAnswer.isCorrect
+            selectedAnswer.selectedAnswer?.isCorrect
               ? correct++
               : incorrect++
           }
@@ -57,8 +58,14 @@ export class DashboardComponent {
     private userservicce: UsersService,
     private questionService: QuestionsService,
     private quizService: QuizService,
-    private loadingService: LoadingService
-  ) {}
+    private loadingService: LoadingService,
+    private store: StoreService
+  ) { }
+
+  ngOnDestroy(): void {
+    this.onDestroy.next();
+    this.onDestroy.complete();
+  }
 
   openQuestionFormModal() {
     this.questionFormModal = true;
@@ -66,6 +73,10 @@ export class DashboardComponent {
 
   closeQuestionFormModal() {
     this.questionFormModal = false;
+  }
+
+  onSelectedQuiz(quiz: IQuestion|IQuiz) {
+    this.store.set('selectedQuiz', quiz);
   }
 
 }

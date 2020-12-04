@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://quizapp3.herokuapp.com'
+  apiUrl: 'http://localhost:4000'
 };
 
 /*

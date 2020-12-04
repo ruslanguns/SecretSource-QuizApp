@@ -13,6 +13,7 @@ import { UsePipeComponent } from './components/use-pipe/use-pipe.component';
 import { IsPublishedPipe } from './pipes/is-published.pipe';
 import { LoadingComponent } from './components/loading/loading.component';
 import { TruncatePipe } from './pipes/truncate.pipe';
+import { QuizModalComponent } from './components/quiz-modal/quiz-modal.component';
 
 
 const components = [
@@ -23,6 +24,7 @@ const components = [
   UsePipeComponent,
   TableCrudComponent,
   LoadingComponent,
+  QuizModalComponent,
   FormDirective,
   UserRoleDirective,
   AuthResourceDirective,

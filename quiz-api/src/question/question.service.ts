@@ -24,7 +24,7 @@ export class QuestionService {
 
     return await this.questionRepository
         .createQueryBuilder('question')
-        .where({ id: savedQuestion })
+        .where({ id: savedQuestion.id })
         .leftJoinAndSelect('question.answers', 'answers')
         .addSelect('answers.isCorrect')
         .getOne();
