@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
-import { QuizService, StoreService } from 'src/app/core/services';
+import { delay, tap } from 'rxjs/operators';
+import { LoadingService, QuizService, StoreService } from 'src/app/core/services';
 import { IAnswer, IQuiz } from '../../interfaces';
 
 @Component({
@@ -15,6 +15,7 @@ export class QuizModalComponent {
   isAnswered?: boolean;
   selectedAnswer?: IAnswer;
 
+  loading$ = this.loadingService.loadingSub.pipe(delay(0))
   selectedQuiz$: Observable<IQuiz> = this.store.select<IQuiz>('selectedQuiz')
     .pipe(
       tap(quiz => {
@@ -27,7 +28,8 @@ export class QuizModalComponent {
   constructor(
     private store: StoreService,
     private quizService: QuizService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private loadingService: LoadingService
   ) { }
 
   onSelectedAnswer(answer: IAnswer) {
