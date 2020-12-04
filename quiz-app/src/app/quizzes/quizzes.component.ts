@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-quizzes',
   template: `
     <app-card class="m-1">
-      <router-outlet></router-outlet>
+      quizzes works!
     </app-card>
   `,
   styles: [

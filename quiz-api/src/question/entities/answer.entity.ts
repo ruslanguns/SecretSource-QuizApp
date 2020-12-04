@@ -14,6 +14,6 @@ export class Answer {
   @Column({ type: 'text'})
   answer: string;
 
-  @Column({ name: 'is_correct', type: 'bool', default: false, select: false })
+  @Column({ name: 'is_correct', type: 'bool', default: false })
   isCorrect: boolean;
 }

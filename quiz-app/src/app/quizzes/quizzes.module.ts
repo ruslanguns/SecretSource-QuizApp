@@ -5,7 +5,7 @@ import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
-  declarations: [QuizzesRoutingModule.components,],
+  declarations: [QuizzesRoutingModule.components],
   imports: [
     SharedModule,
     QuizzesRoutingModule

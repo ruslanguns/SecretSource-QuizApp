@@ -12,13 +12,13 @@ export class Result {
   @JoinColumn({ name: 'user_id'})
   user: User;
   
-  @ManyToOne(() => Answer, { onDelete: 'CASCADE', eager: true })
+  @ManyToOne(() => Answer, { onDelete: 'CASCADE'})
   @JoinColumn({ name: 'selected_answer_id'})
   selectedAnswer: Answer;
 
-  @ManyToOne(() => Question, { onDelete: 'CASCADE', eager: true})
+  @ManyToOne(() => Question, { onDelete: 'CASCADE'})
   @JoinColumn({ name: 'question_id'})
-  quiz: Question;
+  question: Question;
  
   @CreateDateColumn({ name: 'answered_at', type: 'timestamp' })
   answeredAt: Date;

@@ -6,11 +6,9 @@ const initialState: IState = {
   currentUser: JSON.parse(localStorage.getItem('currentUser') as string),
   accessToken: localStorage.getItem('accessToken') || undefined,
   isAuthorized: !!localStorage.getItem('accessToken'),
+  isLoading: false,
   questions: [],
-  users: [],
-  answeredQuizzes: [],
-  unansweredQuizzes: [],
-  selectedQuiz: null
+  users: []
 }
 
 export class StoreService {

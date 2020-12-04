@@ -21,21 +21,11 @@ export class QuestionService {
     newAnswers.map((answer) => (answer.question = savedQuestion));
 
     await this.answerRepository.save(newAnswers);
-
-    return await this.questionRepository
-        .createQueryBuilder('question')
-        .where({ id: savedQuestion })
-        .leftJoinAndSelect('question.answers', 'answers')
-        .addSelect('answers.isCorrect')
-        .getOne();
+    return await this.questionRepository.findOne(savedQuestion.id);
   }
 
-  async getQuestions(): Promise<Question[]> {
-    return await this.questionRepository
-      .createQueryBuilder('question')
-        .leftJoinAndSelect('question.answers', 'answers')
-        .addSelect('answers.isCorrect')
-        .getMany();
+  async getQuestions() {
+    return await this.questionRepository.find();
   }
 
   async getQuestionById(id: number): Promise<Question> {
@@ -43,12 +33,7 @@ export class QuestionService {
     if (!question) {
       throw new NotFoundException('QUESTION WITH ID DOES NOT EXIST');
     }
-    return await this.questionRepository
-        .createQueryBuilder('question')
-        .where({ id })
-        .leftJoinAndSelect('question.answers', 'answers')
-        .addSelect('answers.isCorrect')
-        .getOne();
+    return question;
   }
 
   async getAnswerById(
@@ -59,13 +44,13 @@ export class QuestionService {
     if (!answer) {
       throw new NotFoundException('ANSWER WITH ID DOES NOT EXIST');
     }
-    return answer; // TODO: addSelect isCorrect
+    return answer;
   }
 
   async addAnswer(questionId: number, dto: CreateAnswerDTO) {
     const question = await this.getQuestionById(questionId);
     const answer = this.answerRepository.create({ ...dto, question });
-    return await this.answerRepository.save(answer); // TODO: addSelect isCorrect
+    return await this.answerRepository.save(answer);
   }
 
   async editQuestion(id: number, { answers, ...questionDto }: EditQuestionDTO): Promise<Question> {
@@ -118,14 +103,11 @@ export class QuestionService {
     } finally {
       
       await queryRunner.release();
-      return await this.questionRepository
-        .createQueryBuilder('question')
-        .where({ id })
-        .leftJoinAndSelect('question.answers', 'answers')
-        .addSelect('answers.isCorrect')
-        .getOne();
+      return await this.questionRepository.findOne(id);
     }
   }
+
+
 
   async editAnswer(id: number, dto: EditAnswerDTO) {
     const answer = await this.getAnswerById(id);

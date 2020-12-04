@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, Output, PipeTransform, ViewEncapsulation } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { delay, tap } from 'rxjs/operators';
-import { LoadingService } from 'src/app/core/services';
+import { tap } from 'rxjs/operators';
 
 export interface ITableData {
   [key: string]: any;
@@ -61,9 +60,9 @@ export class TableCrudComponent {
     return Object.keys(this.dataTable[0]);
   }
   @Input() tableOptions?: ITableOptions;
-  loading$ = this.loadingService.loadingSub.pipe(delay(0));
 
-  constructor(private loadingService: LoadingService) {}
+
+  constructor() {}
 
   onEditClick(row: any) {
     this.onEdit.emit(row);
