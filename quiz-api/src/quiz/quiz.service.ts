@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { getDifferenceBetweenTwoArrayOfObjects } from 'src/common/helpers';
 import { Question } from 'src/question/entities';
 import { QuestionService } from 'src/question/question.service';
 import { User } from 'src/user/entities';
@@ -35,14 +36,13 @@ export class QuizService {
     });
   }
 
-  async getUnansweredQuestions(user: User) {
-    const answered = await this.getAnsweredQuestions(user, {
-      loadRelationIds: { relations: ['question']}
-    });
-    const questionIds: number[] = [];
-    answered.map(({question}) => questionIds.push(Number(question)))
+  async getUnansweredQuestions(user: User, options?: FindManyOptions<Result>): Promise<Question[]> {
+    const questions = await getRepository<Question>(Question).find();
+    const answered = await this.getAnsweredQuestions(user);
+    const answeredQuestions: Question[] = []
+    
+    answered && answered.map(x => answeredQuestions.push(x.question));
 
-    return await getRepository<Question>(Question)
-      .find({ where: { id: Not(In(questionIds))}});
+    return questions.filter((x) => !!x.status && !answeredQuestions.some((y) => y.id === x.id));
   }
 }

@@ -1,13 +1,12 @@
-import { Component, EventEmitter, OnDestroy, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { combineLatest, Observable, Subject, Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
 import { map, takeUntil, tap } from 'rxjs/operators';
 import { minLengthArray } from '../../form-validations';
-import { IAnswer, IQuestion } from '../../interfaces';
+import { IQuestion } from '../../interfaces';
 import {
-  AnswersService,
   QuestionsService,
   StoreService,
 } from 'src/app/core/services';
@@ -19,52 +18,44 @@ import { QuestionCategories } from '../../enums/categories';
   styleUrls: ['./question-form.component.scss'],
 })
 export class QuestionFormComponent implements OnDestroy {
-
-  @Output() onSubmit: EventEmitter<void> = new EventEmitter();
+  
   private onDestroy = new Subject<void>();
+  @Output() onSubmit: EventEmitter<void> = new EventEmitter();
+  @Input() resetFormOnSubmit?: boolean;
 
   categories = QuestionCategories;
   form: FormGroup;
   formSubmitted = false;
   isEdit = false;
-  answersToRemove: IAnswer[] = [];
-  answersToAdd: IAnswer[] = [];
   loading = false;
   questionId = 0;
   questionSelected?: IQuestion;
+  isFormValid?: boolean = true;
   questionSelectedObs$ = this.store.select<IQuestion[]>('questions')
     .pipe(
-      map((questions) => {
-        if (questions.length) {
-          return questions.filter(
-            (question) => question.id === this.questionId
-          )[0];
-        }
-        return;
-      }),
+      map((questions) =>
+        questions.length && questions.filter((question) => question.id === this.questionId)[0]),
       tap((question) => {
         if (question) {
-          console.log(question);
           this.questionSelected = question;
           this.form.patchValue(question);
+          
           if (!this.answers.length) {
             for (const answer of question.answers) {
-              if (answer) this.addAnswer();
+              answer && this.addAnswer();
             }
             this.answers.patchValue(question.answers);
           }
         }
       })
     );
-  questionSelectedSubs?: Subscription;
 
   constructor(
     private fb: FormBuilder,
     private questionService: QuestionsService,
     private toastr: ToastrService,
     private activatedRoute: ActivatedRoute,
-    private store: StoreService,
-    private answerService: AnswersService,
+    private store: StoreService
   ) {
 
     this.form = this.fb.group({
@@ -84,7 +75,6 @@ export class QuestionFormComponent implements OnDestroy {
           (this.questionId = parseInt(id, 10)),
           this.questionSelectedObs$.pipe(takeUntil(this.onDestroy)).subscribe())
     );
-
   }
 
   ngOnDestroy(): void {
@@ -109,16 +99,7 @@ export class QuestionFormComponent implements OnDestroy {
   }
 
   removeAnswer(index: number) {
-    if (this.answers.length > 2) {
-      if (this.isEdit) {
-        const answer = this.answers.at(index).value;
-        // Add to answersToRemoveArray
-        answer.id !== 0 && this.answersToRemove.push(answer);
-      }
-      this.answers.removeAt(index);
-    } else {
-      this.toastr.info('You need to provide at least two answers');
-    }
+    this.answers.removeAt(index);
   }
 
   submitForm() {
@@ -128,13 +109,13 @@ export class QuestionFormComponent implements OnDestroy {
 
     if (this.form.valid) {
       this.loading = true;
-      this.validateAtLeastOneTrulyAnswer();
+      const isValid = this.validateAtLeastOneTrulyAnswer();
       const questionForm = this.convertFormWithStatusAsBooleans();
 
       if (this.isEdit && this.questionSelected) {
-        this.editQuestion(questionForm);
+        isValid && this.editQuestion(questionForm);
       } else {
-        this.createNewQuestion(questionForm);
+        isValid && this.createNewQuestion(questionForm);
       }
       this.formSubmitted = false;
     }
@@ -144,61 +125,27 @@ export class QuestionFormComponent implements OnDestroy {
     this.questionService.createQuestion(questionForm)
       .pipe(takeUntil(this.onDestroy))
       .subscribe(
-        () => (
+        (question) => (
           this.toastr.clear(),
           this.toastr.success(`Question created successfully`),
           (this.loading = false),
-          this.onSubmit.emit(),
-          this.resetForm()
+          (this.resetFormOnSubmit && this.resetForm()),
+          this.onSubmit.emit()
         ),
         (error) => (this.toastr.error(error), (this.loading = false))
       );
   }
 
   private editQuestion(questionForm: IQuestion) {
-    const { answers, ...question } = questionForm;
-    const answerToEditObsArray: Observable<IAnswer>[] = [];
-    const answersToRemoveObsArray: Observable<IAnswer>[] = [];
-    const answerToCreateObsArray: Observable<IQuestion>[] = [];
-
-    for(const answer of this.answersToRemove) {
-      // To remove
-      const answersObs = this.answerService.removeAnswer(answer.id);
-      answersToRemoveObsArray.push(answersObs);
-    }
-
-    for (const answer of answers) {
-      if (answer.id !== 0) {
-        // To edit
-        const answerObs = this.answerService.editAnswer(answer.id, answer);
-        answerToEditObsArray.push(answerObs);
-      } else {
-        // To create
-        const answerObs = this.questionService.addAnswerToQuestion(question.id, answer);
-        answerToCreateObsArray.push(answerObs);
-      }
-    }
-
-    combineLatest([
-      this.questionService.editQuestions(this.questionId, question),
-      ...answerToEditObsArray,
-      ...answersToRemoveObsArray,
-      ...answerToCreateObsArray,
-    ]).pipe(
-        takeUntil(this.onDestroy),
-        map(([_question, ..._answers]) => {
-          const { answers, ...questionEdited }: any = _question;
-          this.form.patchValue(questionEdited);
-          this.answers.patchValue(answers);
-        })
-      )
+    this.questionService.editQuestion(this.questionId, questionForm)
+      .pipe(takeUntil(this.onDestroy))
       .subscribe(
-        () => {
-          this.toastr.clear();
-          this.toastr.success(`Sucessfuly edited`);
-          this.loading = false;
-          this.onSubmit.emit();
-        },
+        () => (
+          this.toastr.clear(),
+          this.toastr.success(`Question edited successfully`),
+          (this.loading = false),
+          this.onSubmit.emit()
+        ),
         (error) => (this.toastr.error(error), (this.loading = false))
       );
   }
@@ -206,14 +153,14 @@ export class QuestionFormComponent implements OnDestroy {
   private validateAtLeastOneTrulyAnswer() {
     let trulyAnswers = 0;
     for (const answer of this.form.value.answers) {
-      if (answer.isCorrect) {
-        trulyAnswers++;
-      }
+      if (answer.isCorrect) trulyAnswers++;
     }
     if (trulyAnswers === 0) {
       this.toastr.error('Should have at least one truly answer');
       this.loading = false;
-      throw new Error('Should have at least one truly answer');
+      return false;
+    } else {
+      return true;
     }
   }
  
@@ -231,5 +178,4 @@ export class QuestionFormComponent implements OnDestroy {
       this.answers.removeAt(0);
     }
   }
-
 }

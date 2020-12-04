@@ -1,18 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { BehaviorSubject, Observable, Subject, Subscription, throwError } from 'rxjs';
-import { catchError, shareReplay, take, tap } from 'rxjs/operators';
-import { IAnswer, IQuestion } from 'src/app/shared/interfaces';
+import { Observable, throwError } from 'rxjs';
+import { catchError, take, tap } from 'rxjs/operators';
+import { IQuestion } from 'src/app/shared/interfaces';
 import { environment } from 'src/environments/environment';
 import { StoreService } from './store.service';
 
 @Injectable()
 export class QuestionsService {
   apiUrl = environment.apiUrl;
-  private loading = new BehaviorSubject(false);
-  loading$ = this.loading.asObservable();
-
+  
   constructor(
     private http: HttpClient,
     private store: StoreService,
@@ -24,8 +22,8 @@ export class QuestionsService {
     return this.http.post<IQuestion>(url, question).pipe(
       tap((newQuestion) => {
         const questions = this.store.value.questions;
-        questions.push(question);
-        this.store.set('questions', newQuestion);
+        questions.push(newQuestion);
+        this.store.set('questions', questions);
       }),
       catchError(this.handleError)
     );
@@ -33,14 +31,11 @@ export class QuestionsService {
 
   getQuestions(): Observable<IQuestion[]> {
     const url = `${this.apiUrl}/question`;
-    const questionsCached = this.store.value.questions.length;
-    
-    return !questionsCached
+    const questionsCached = this.store.value.questions;    
+    return !questionsCached.length
       ? this.http.get<IQuestion[]>(url).pipe(
           take(1),
-          tap((questions) => (
-            this.store.set('questions', questions)
-          )),
+          tap((questions) => (this.store.set('questions', questions))),
           catchError(this.handleError)
         )
       : this.store.select<IQuestion[]>('questions')
@@ -59,14 +54,18 @@ export class QuestionsService {
     )
   }
 
-  editQuestions(
-    id: number,
-    question: Partial<IQuestion>
-  ): Observable<IQuestion> {
+  editQuestion(id: number, question: Partial<IQuestion>): Observable<IQuestion> {
     const url = `${this.apiUrl}/question/${id}`;
-    return this.http
-      .put<IQuestion>(url, question)
-      .pipe(take(1), catchError(this.handleError));
+    return this.http.put<IQuestion>(url, question)
+      .pipe(
+        take(1),
+        tap(question => {
+          const questions = this.store.value.questions.filter(x => x.id !== question.id);
+          questions.push(question)
+          this.store.set('questions', questions);
+        }),
+        catchError(this.handleError)
+      );
   }
 
   deleteQuestion(id: number) {
@@ -79,13 +78,6 @@ export class QuestionsService {
       take(1),
       catchError(this.handleError)
     );
-  }
-
-  addAnswerToQuestion(questionId: number, answer: IAnswer) {
-    const url = `${this.apiUrl}/question/${questionId}/answer`;
-    return this.http
-      .post<IQuestion>(url, answer)
-      .pipe(take(1), catchError(this.handleError));
   }
 
   private handleError(err: any): Observable<never> {

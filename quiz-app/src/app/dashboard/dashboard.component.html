@@ -20,11 +20,11 @@
         </button>
       </div>
     </div>
+    <app-modal [initialStatus]="questionFormModal" (onClose)="closeQuestionFormModal()">
+      <h2>Create new question</h2>
+      <app-question-form [resetFormOnSubmit]="true" (onSubmit)="closeQuestionFormModal()"></app-question-form>
+    </app-modal>
   </app-card>
-  <app-modal [initialStatus]="questionFormModal" (onClose)="closeQuestionFormModal()">
-    <h2>Create new question</h2>
-    <app-question-form (onSubmit)="closeQuestionFormModal()"></app-question-form>
-  </app-modal>
 
   <!------------------------------------------------->
   <!--              SUMMARY                        -->
@@ -71,9 +71,10 @@
   <!--              LAST 5 UNANSWERED              -->
   <!------------------------------------------------->
   <app-card *appUserRole="[ Role.Player ]" class="dashboard__unanswered">
-    <h4>Last 5 unanswered</h4>
-
-    <div class="list">
+     <div class="list">
+      <div class="list__title">
+        <h4>Last 5 unanswered</h4>
+      </div>
       <ul>
         <li>Uno <span class="badge warning">Unanswered</span></li>
         <li>Dos <span class="badge warning">Unanswered</span></li>
@@ -88,35 +89,41 @@
   <!--              LAST 5 QUESTIONS CREATED              -->
   <!------------------------------------------------->
   <app-card *appUserRole="[ Role.Admin ]" class="dashboard__questions">
-    <h4>Last 5 questions created</h4>
-
-    <div class="list">
-      <ul>
-        <li>Uno <span class="badge info">Unpublished</span></li>
-        <li>Dos <span class="badge info">Unpublished</span></li>
-        <li>Tres <span class="badge info">Unpublished</span></li>
-        <li>Cuatro <span class="badge info">Unpublished</span></li>
-        <li>Cinco <span class="badge info">Unpublished</span></li>
+    <div class="list" *ngIf="(latestQuestions$ | async) as questions">
+      <div class="list__title">
+        <h4>Last 5 questions created</h4>
+      </div>
+      <ul *ngIf="questions.length; else NoQuestionsData">
+        <li *ngFor="let question of questions" [title]="question.question">
+          {{ question.question | truncate:20 }} <span class="badge info">{{ question.status | isPublished }}</span>
+        </li>
       </ul>
+      <ng-template #NoQuestionsData>
+        <div class="list__no-data">
+          No questions created, <a (click)="openQuestionFormModal()">add a new question</a>
+        </div>
+      </ng-template>
+      <button routerLink="/questions" type="button" class="btn outline info block">Open questions section</button>
     </div>
-    <button class="btn outline info block">See all questions</button>
   </app-card>
 
   <!------------------------------------------------->
   <!--              LAST 5 REGISTERED USERS              -->
   <!------------------------------------------------->
   <app-card *appUserRole="[ Role.Admin ]" class="dashboard__users">
-    <h4>Last 5 registered users</h4>
-
-    <div class="list">
-      <ul>
-        <li>Uno</li>
-        <li>Dos</li>
-        <li>Tres</li>
-        <li>Cuatro</li>
-        <li>Cinco</li>
+    <div class="list"  *ngIf="(latestUsers$ | async) as users">
+      <div class="list__title">
+        <h4>Last 5 registered users</h4>
+      </div>
+      <ul *ngIf="users.length; else OnLoadingUsers">
+        <li *ngFor="let user of users" [title]="user.username">
+          {{ user.username | truncate:20 }} <span class="badge success">{{ user.roles }}</span>
+        </li>
       </ul>
+      <ng-template #OnLoadingUsers>
+        <app-loading></app-loading>
+      </ng-template>
     </div>
-    <button class="btn outline info block">See all users</button>
+    <button routerLink="/users" type="button"  class="btn outline info block">Open users section</button>
   </app-card>
 </div>

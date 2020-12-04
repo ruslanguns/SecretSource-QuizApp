@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { EMPTY, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { QuestionsService } from 'src/app/core/services';
+import { QuestionsService, StoreService } from 'src/app/core/services';
 import { ITableOptions } from 'src/app/shared/components/table-crud/table-crud.component';
 import { IQuestion } from 'src/app/shared/interfaces';
 import { IsPublishedPipe, TruncatePipe } from 'src/app/shared/pipes';
@@ -17,7 +17,6 @@ import { IsPublishedPipe, TruncatePipe } from 'src/app/shared/pipes';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class QuestionsListComponent {
-  dataTable: IQuestion[] = [];
   tableOptions: ITableOptions = {
     question: {
       name: 'Question',
@@ -40,18 +39,19 @@ export class QuestionsListComponent {
     },
   };
 
-  questions$: Observable<IQuestion[]>;
-  loading: boolean = false;
+  questions$: Observable<IQuestion[]> = this.store.select('questions');
+  loading = true;
   deleteModal = false;
+  onDeletingProcess: boolean = false;
   selectedQuestion?: IQuestion;
 
   constructor(
     private questionService: QuestionsService,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    private store: StoreService
   ) {
-    this.loading = true;
-    this.questions$ = this.questionService.getQuestions();
+    this.questionService.getQuestions().subscribe();
     this.questions$.pipe(
       tap(() => this.loading = false),
       catchError((error) => {
@@ -62,7 +62,6 @@ export class QuestionsListComponent {
   }
 
   refreshQuestions() {
-    this.loading = true;
     this.questions$ = this.questionService.refreshQuestions();
   }
 
@@ -87,8 +86,12 @@ export class QuestionsListComponent {
 
   deleteQuestion() {
     if (this.selectedQuestion) {
-      this.questionService.deleteQuestion(this.selectedQuestion.id).subscribe();
+      this.onDeletingProcess = true;
+      this.questionService.deleteQuestion(this.selectedQuestion.id)
+        .subscribe(
+          () => (this.onDeletingProcess = false, this.closeOnDeleteModal()),
+          error => (this.toastr.error(error), (this.onDeletingProcess = false))
+        );
     }
-    this.closeOnDeleteModal();
   }
 }
