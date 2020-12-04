@@ -1,6 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { getDifferenceBetweenTwoArrayOfObjects } from 'src/common/helpers';
 import { Question } from 'src/question/entities';
 import { QuestionService } from 'src/question/question.service';
 import { User } from 'src/user/entities';
@@ -18,11 +17,11 @@ export class QuizService {
 
   async submitQuizAnswer(user: User, answerId: number) {
     const {question, ...selectedAnswer} = await this.questionService.getAnswerById(answerId, { relations: ['question']});
-    const alreadyResponded = await this.resultRepository.findOne({user, question})
+    const alreadyResponded = await this.resultRepository.findOne({user, quiz: question})
     if (alreadyResponded) {
       throw new BadRequestException(`THIS QUIZ ALREADY RESPONDED`);
     }
-    const result = this.resultRepository.create({user, selectedAnswer, question});
+    const result = this.resultRepository.create({user, selectedAnswer, quiz: question});
     return await this.resultRepository.save(result);
   }
 
@@ -31,7 +30,7 @@ export class QuizService {
       where: {
         user
       },
-      relations: ['question', 'selectedAnswer'],
+      relations: ['quiz', 'selectedAnswer'],
       ...options
     });
   }
@@ -41,7 +40,7 @@ export class QuizService {
     const answered = await this.getAnsweredQuestions(user);
     const answeredQuestions: Question[] = []
     
-    answered && answered.map(x => answeredQuestions.push(x.question));
+    answered && answered.map(x => answeredQuestions.push(x.quiz));
 
     return questions.filter((x) => !!x.status && !answeredQuestions.some((y) => y.id === x.id));
   }

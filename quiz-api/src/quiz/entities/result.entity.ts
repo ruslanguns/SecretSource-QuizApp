@@ -18,7 +18,7 @@ export class Result {
 
   @ManyToOne(() => Question, { onDelete: 'CASCADE'})
   @JoinColumn({ name: 'question_id'})
-  question: Question;
+  quiz: Question;
  
   @CreateDateColumn({ name: 'answered_at', type: 'timestamp' })
   answeredAt: Date;
