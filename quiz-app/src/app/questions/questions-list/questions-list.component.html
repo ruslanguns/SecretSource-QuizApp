@@ -15,30 +15,24 @@
 
 
   <div class="questions__list">
-
     <app-table-crud
-      *ngIf="questions$ | async as dataTable; else onLoading"
-      [dataTable]="dataTable"
+      [dataTable]="(questions$ | async) || []"
       [tableOptions]="tableOptions"
       (onEdit)="onEdit($event)"
       (onDelete)="onDelete($event)">
     </app-table-crud>
 
-    <ng-template #onLoading>
-      <app-loading></app-loading>
-    </ng-template>
-
     <app-modal [initialStatus]="deleteModal" (onClose)="closeOnDeleteModal()">
       <h2>Are you sure to delete this question?</h2>
       <div class="modal__confirm">
         <button (click)="closeOnDeleteModal()" type="button" class="btn default">Cancel</button>
-        <button [disabled]="onDeletingProcess" (click)="deleteQuestion()" type="button" class="btn error">
-          <ng-container *ngIf="!onDeletingProcess; else loadingDelete">
+        <button [disabled]="(loading$ | async)" (click)="deleteQuestion()" type="button" class="btn error">
+          <ng-container *ngIf="!(loading$ | async) else onLoading">
             Yes, delete it.
           </ng-container>
-          <ng-template #loadingDelete>
+          <ng-template #onLoading>
             <i class="fas fa-spinner fa-pulse mr-1"></i>
-            Loading
+            loading
           </ng-template>
         </button>
       </div>

@@ -1,6 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { getDifferenceBetweenTwoArrayOfObjects } from 'src/common/helpers';
 import { Question } from 'src/question/entities';
 import { QuestionService } from 'src/question/question.service';
 import { User } from 'src/user/entities';
@@ -16,32 +15,44 @@ export class QuizService {
     private readonly questionService: QuestionService
   ) {}
 
-  async submitQuizAnswer(user: User, answerId: number) {
+  async submitQuizAnswer(user: User, answerId: number): Promise<Result> {
     const {question, ...selectedAnswer} = await this.questionService.getAnswerById(answerId, { relations: ['question']});
-    const alreadyResponded = await this.resultRepository.findOne({user, question})
+    const alreadyResponded = await this.resultRepository.findOne({user, quiz: question})
     if (alreadyResponded) {
       throw new BadRequestException(`THIS QUIZ ALREADY RESPONDED`);
     }
-    const result = this.resultRepository.create({user, selectedAnswer, question});
-    return await this.resultRepository.save(result);
+    const newResult = this.resultRepository.create({user, selectedAnswer, quiz: question});
+    const result = await this.resultRepository.save(newResult);
+
+    return await this.resultRepository
+      .createQueryBuilder('result')
+        .where({ id: result.id })
+        .leftJoinAndSelect('result.quiz', 'quiz')
+        .leftJoinAndSelect('result.selectedAnswer', 'selectedAnswer')
+        .leftJoinAndSelect('quiz.answers', 'answers')
+        .addSelect('answers.isCorrect')
+        .addSelect('selectedAnswer.isCorrect')
+        .getOne();    
   }
 
-  async getAnsweredQuestions(user: User, options?: FindManyOptions<Result>) {
-    return await this.resultRepository.find({
-      where: {
-        user
-      },
-      relations: ['question', 'selectedAnswer'],
-      ...options
-    });
+  async getAnsweredQuestions(user: User) {
+    return await this.resultRepository
+      .createQueryBuilder('result')
+      .where({user})
+      .leftJoinAndSelect('result.quiz', 'quiz')
+      .leftJoinAndSelect('result.selectedAnswer', 'selectedAnswer')
+      .leftJoinAndSelect('quiz.answers', 'answers')
+      .addSelect('answers.isCorrect')
+      .addSelect('selectedAnswer.isCorrect')
+      .getMany()
   }
 
-  async getUnansweredQuestions(user: User, options?: FindManyOptions<Result>): Promise<Question[]> {
+  async getUnansweredQuestions(user: User): Promise<Question[]> {
     const questions = await getRepository<Question>(Question).find();
     const answered = await this.getAnsweredQuestions(user);
     const answeredQuestions: Question[] = []
     
-    answered && answered.map(x => answeredQuestions.push(x.question));
+    answered && answered.map(x => answeredQuestions.push(x.quiz));
 
     return questions.filter((x) => !!x.status && !answeredQuestions.some((y) => y.id === x.id));
   }

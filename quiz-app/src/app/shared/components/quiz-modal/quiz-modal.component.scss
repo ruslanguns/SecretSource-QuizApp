@@ -1,0 +1,75 @@
+@import 'src/theme/variables';
+
+h2,
+small {
+  margin: 0;
+  display: block;
+  text-align: center;
+}
+
+li {
+  text-align: center;
+
+  span {
+    text-transform: capitalize;
+    font-size: 0.7em;
+  }
+
+  strong {
+    color: $primary;
+    font-size: 1.2em;
+  }
+
+}
+
+.confirm {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  h3 {
+    text-align: center;
+    margin-bottom: 1em;
+  }
+
+  .confirm-actions {
+    display: flex;
+    button {
+      margin: 0.5em;
+    }
+  }
+}
+
+button {
+  display: block;
+  margin: 1em auto;
+  width: 85%;
+
+  &.quiz-btn {
+    padding: 1em 0;
+    &.isCorrect,
+    &.isIncorrect {
+      border-width: 1px !important;
+      border-style: dotted !important;
+
+      &:hover {
+        filter: none !important;
+        cursor: not-allowed;
+      }
+  }
+  
+  &.isCorrect {
+    border-color: rgb(111, 187, 111) !important;
+    background-color: rgb(149, 243, 149) !important;
+    color: green;
+  }
+  &.isIncorrect {
+    background-color: rgb(238, 156, 156) !important;
+    border-color: rgb(204, 133, 133) !important;
+    color: rgb(102, 44, 44) !important;
+  }
+
+  }
+
+
+}
