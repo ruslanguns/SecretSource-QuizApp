@@ -8,15 +8,15 @@ export class Result {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, { onDelete: 'CASCADE'})
   @JoinColumn({ name: 'user_id'})
   user: User;
   
-  @ManyToOne(() => Answer)
+  @ManyToOne(() => Answer, { onDelete: 'CASCADE'})
   @JoinColumn({ name: 'selected_answer_id'})
   selectedAnswer: Answer;
 
-  @ManyToOne(() => Question)
+  @ManyToOne(() => Question, { onDelete: 'CASCADE'})
   @JoinColumn({ name: 'question_id'})
   question: Question;
  
