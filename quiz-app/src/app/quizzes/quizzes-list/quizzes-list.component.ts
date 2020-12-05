@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { combineLatest, Observable, Subject } from 'rxjs';
-import { delay, map, takeUntil } from 'rxjs/operators';
+import { combineLatest, Observable } from 'rxjs';
+import { delay, map } from 'rxjs/operators';
 import { LoadingService, QuizService, StoreService } from 'src/app/core/services';
 import { IQuestion, IQuiz } from 'src/app/shared/interfaces';
 
@@ -11,12 +11,11 @@ import { IQuestion, IQuiz } from 'src/app/shared/interfaces';
   styleUrls: ['./quizzes-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class QuizzesListComponent implements OnDestroy {
+export class QuizzesListComponent {
   
   private queryParamMap$ = this.activatedRoute.queryParamMap;
   private answeredQuizzes$ = this.quizService.getAnsweredQuizzes();
   private unansweredQuizzes$ = this.quizService.getUnansweredQuizzes();
-  private onDestroy = new Subject<void>();
   
   filter$ = this.queryParamMap$.pipe(map(param => param.get('filter') === 'answered' ? 'answered' : 'unanswered'));
   loading$ = this.loadingService.loadingSub.pipe(delay(0));
@@ -24,12 +23,14 @@ export class QuizzesListComponent implements OnDestroy {
   quizzesVM$: Observable<IQuiz[]> = combineLatest([
     this.filter$,
     this.answeredQuizzes$,
+    this.store.select<IQuiz[]>('answeredQuizzes'),
     this.unansweredQuizzes$,
+    this.store.select<IQuiz[]>('unansweredQuizzes')
   ]).pipe(
-    map(([filter, answered, unanswered]) => {
+    map(([filter, fetchAnswers, answersStored, fetchUnanswered, unansweredStored]) => {
       return filter === 'answered'
-        ? (answered)
-        : (unanswered)
+        ? (answersStored)
+        : (unansweredStored)
     }),
   );
 
@@ -38,18 +39,7 @@ export class QuizzesListComponent implements OnDestroy {
     private activatedRoute: ActivatedRoute,
     private loadingService: LoadingService,
     private store: StoreService
-    ) {
-      this.quizService.getUnansweredQuizzes()
-        .pipe(takeUntil(this.onDestroy))
-        .subscribe();
-      this.quizService.getAnsweredQuizzes()
-        .pipe()
-        .subscribe();
-    }
-  ngOnDestroy(): void {
-    this.onDestroy.next();
-    this.onDestroy.complete();
-  }
+    ) { }
 
   onSelectedQuiz(quiz: IQuestion|IQuiz) {
     this.store.set('selectedQuiz', quiz);
