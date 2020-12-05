@@ -1,5 +1,7 @@
 # Secret Source QuizApp
 
+## Development has been finished
+
 A simple app so users can play answering questions.
 
 ## Demo server
@@ -19,12 +21,12 @@ I have deployed the back-end in Heroku in order to use it for review and testing
 - ✅ A player can, see and answers questions, but can't access to the admin's panel.
 - ✅ A player can register and sign in.
 - ✅ Questions must have the question and at least one correct answer.
-- ⬜ Should have status published/unpublished.
+- ✅ Should have status published/unpublished.
   
 ### Views
 
 - ✅ Register and login functionality - Only players can be registered.
-- ⬜ Landing page with the "published" questions.
+- ✅ Landing page with the "published" questions.
 - ✅ Admin panel to manage questions and players.
 
 ## Proposed technologies
@@ -45,8 +47,6 @@ I have curated some sketches for the application I want to do. Please checkout t
 
 ![APPLICATION MAP](_notes/assets/images/SecretSourceQuizAppApplicationMap.jpg)
 
-There are some sketch that have been made for the purpose of this project read more about in this [document](_notes/sketch.md)
-
 ## Tasks and estimations
 
 |No.   |Environment   |Detail   |Time   |Status   |
@@ -61,12 +61,11 @@ There are some sketch that have been made for the purpose of this project read m
 |8   |client   |Create the folder architecture and basic configuration   |1 hour   |**COMPLETED**   |
 |9   |client   |Added layout and business case customization   |4 hours   |**COMPLETED**    |
 |11   |client   |Create NotFoundPage Screen   |10 min   |**COMPLETED**    |
-|12   |client   |Add authentication to Angular App   |1 hour   |**COMPLETED**    |
+|12   |client   |Add authentication to Angular App   |2 hour   |**COMPLETED**    |
 |13   |client   |Add user registration page   |30 min   |**COMPLETED**    |
 |14   |client   |Create Player & Admin Side Screens   |2 hours   |**COMPLETED**   |
 |15   |client   |Add admin side CRUD functionality for questions/users from API   |8 hours   |**COMPLETED**   |
-|16   |client   |Add resuts and unanswered quizzes screens at player side   |15 min   |INCOMPLETE   |
-
+|16   |client   |Add resuts and unanswered quizzes screens at player side   |2 hours   |**COMPLETED**   |
 
 ## API Endpoints
 

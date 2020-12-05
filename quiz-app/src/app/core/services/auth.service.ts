@@ -34,16 +34,6 @@ export class AuthService {
       );
   }
 
-  profile(): Observable<IUser> {
-    const url = `${this.apiUrl}/auth/profile`;
-    return this.http.get<IUser>(url)
-      .pipe(
-        take(1),
-        tap((user) => this.store.set('currentUser', user)),
-        catchError(this.handleError)
-      );
-  }
-
   logout(): void {
     this.removeUserSession();
   }
