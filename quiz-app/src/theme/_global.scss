@@ -1,0 +1,22 @@
+@import './variables';
+@import './plugins';
+@import './components/components';
+@import './fonts/fonts';
+@import './helpers/helpers';
+
+body {
+  background-color: $bg-color;
+  font-family: $primary-font;
+  font-size: 1em;
+  color: $font-color;
+}
+
+a {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media all and (max-width: $x-large) {}
+
+@media all and (max-width: $x-small) {}

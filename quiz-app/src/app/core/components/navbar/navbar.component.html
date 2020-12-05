@@ -1,5 +1,8 @@
 <header>
-  <div (click)="onToggleMenu()" class="menu-toggle">
+  <div
+    *appAuthResource
+    (click)="onToggleMenu()"
+    class="menu-toggle">
 
     <ng-container *ngIf="!isSidenavOpen; else isClosed">
       <i class="fas fa-bars"></i>
@@ -12,11 +15,16 @@
   </div>
 
   <div class="menu-brand" (click)="goToDashboard()">
-    {{ title }}
+    <h3>{{ title }}</h3>
   </div>
 
-  <div class="menu-logout" (click)="logout()">
+  <div
+    *appAuthResource
+    class="menu-logout"
+    (click)="logout()">
+
     <i class="fas fa-sign-out-alt"></i>
+    
   </div>
 
 </header>

@@ -1,0 +1,83 @@
+<app-modal [initialStatus]="!!(selectedQuiz$ | async)" (onClose)="onClose()">
+
+  <ng-container *ngIf="selectedQuiz$ | async as selectedQuiz">
+
+    <!-------------------------------------------------->
+    <!---                WHEN IS ANSWERED            --->
+    <!-------------------------------------------------->
+    <ng-container *ngIf="isAnswered; else isUnanswered">
+      <h2>{{ selectedQuiz?.quiz?.question }}</h2>
+      <br>
+      <small>Answered at: {{ selectedQuiz?.answeredAt | date }}</small>
+      <div class="mt-3">
+        <button
+          *ngFor="let answer of selectedQuiz?.quiz?.answers"
+          [class.isCorrect]="selectedQuiz?.selectedAnswer?.id === answer.id && selectedQuiz?.selectedAnswer?.isCorrect"
+          [class.isIncorrect]="selectedQuiz?.selectedAnswer?.id === answer.id && !selectedQuiz?.selectedAnswer?.isCorrect"
+          class="btn quiz-btn" disabled>
+          {{ answer.answer }}
+          
+          <ng-container *ngIf="selectedQuiz?.selectedAnswer?.id === answer.id && selectedQuiz?.selectedAnswer?.isCorrect">
+            <i class="fas fa-check-double"></i>
+          </ng-container>
+          <ng-container *ngIf="selectedQuiz?.selectedAnswer?.id === answer.id && !selectedQuiz?.selectedAnswer?.isCorrect">
+            <i class="far fa-times-circle"></i>
+          </ng-container>
+          
+        </button>
+      </div>
+    </ng-container>
+
+    <!-------------------------------------------------->
+    <!---               WHEN IS UNANSWERED           --->
+    <!-------------------------------------------------->
+    <ng-template #isUnanswered>
+      <h2>{{ selectedQuiz?.question }}</h2> <br>
+      <small>Created at: {{ selectedQuiz?.createdAt | date }}</small>
+
+      <!-- PRE SELECTION -->
+      <ng-container *ngIf="selectedAnswer; else NoAnswerSelected">
+        <div class="list">
+          <ul>
+            <li>
+              <strong>{{ selectedAnswer?.answer }}</strong>
+              <br>
+              <span>{{'Answer selected' | uppercase }}</span>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="confirm">
+          <h3>Are you sure?</h3>
+          <div class="confirm-actions mb-2">
+            <button (click)="undoAnswerSelected()" class="btn outline dark">Back</button>
+            <button [disabled]="(loading$ | async)" (click)="submitQuiz(selectedAnswer)" class="btn success">
+              <ng-container *ngIf="!(loading$ | async) else onLoading">
+                Yes I am sure.
+              </ng-container>
+              <ng-template #onLoading>
+                <i class="fas fa-spinner fa-pulse mr-1"></i>
+                loading
+              </ng-template>
+            </button>
+          </div>
+          <small>DISCLAIMER: You only have one opportunity to answer this quiz, this result would affect your final score. Be sure before selecting your answer.</small>
+        </div>
+      </ng-container>
+      
+      <!--  PLAY TIME  -->
+      <ng-template #NoAnswerSelected>
+        <div class="mt-3">
+          <button 
+            *ngFor="let answer of selectedQuiz?.answers"
+            (click)="onSelectedAnswer(answer)"
+            class="btn quiz-btn primary">
+            {{ answer.answer }}
+          </button>
+        </div>
+      </ng-template>
+
+    </ng-template>
+  </ng-container>
+
+</app-modal>

@@ -3,9 +3,9 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-users',
   template: `
-    <p>
-      users works!
-    </p>
+    <app-card class="m-1">
+      <router-outlet></router-outlet>
+    </app-card>
   `,
   styles: [
   ]

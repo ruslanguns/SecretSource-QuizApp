@@ -1,0 +1,72 @@
+.answers {
+  &__add-btn {
+    margin-bottom: 1em;
+    small{
+      margin-left: 2em;
+    }
+  }
+
+  &__answer-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    label {
+      display: grid;
+      grid-template-columns: 80% 12% 8%;
+      grid-template-areas: 
+        "l l l"
+        "t c db";
+      align-items: center;
+
+      .answer-item__label {
+        grid-area: l;
+      }
+      .answer-item__answer {
+        grid-area: t;
+      }
+      .answer-item__checkbox {
+        grid-area: c;
+        justify-self: center;
+
+        input.is-correct {
+          font-size: 110%;
+          transform: scale(1.5);
+        }
+      }
+      .answer-item__delete {
+        grid-area: db;
+        button {
+          font-size: 1em;
+        }
+
+      }
+
+      @media (max-width: 905px) {
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-areas: 
+        "l c db"
+        "t t t";
+
+      }
+    }
+  }
+}
+
+@media all and (max-width: 480px ) {
+  .answers__add-btn {
+    button,
+    small {
+      margin-left: auto;
+      margin-right: auto;
+      text-align: left;
+      display: block;
+    }
+    small{
+      text-align: center;
+      margin-top: 1em;
+      margin-left: 0em;
+      font-size: 0.8em;
+    }
+  }
+}

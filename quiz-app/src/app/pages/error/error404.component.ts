@@ -1,20 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-page404',
   template: `
-    <p>
-      This page does not exist!
-    </p>
+    <div class="error-page">
+      <app-card>
+        <h2>Page not found</h2>
+        <button
+          type="button"
+          (click)="goToLastPage()"
+          class="btn info">
+          Go back
+        </button>
+      </app-card>
+    </div>
   `,
   styles: [
   ]
 })
-export class Error404Component implements OnInit {
+export class Error404Component {
 
-  constructor() { }
+  constructor(
+    private location: Location
+  ) { }
 
-  ngOnInit(): void {
+  goToLastPage() {
+    this.location.back();
   }
 
 }

@@ -1,78 +1,140 @@
-@import 'src/theme/theme';
+@import "src/theme/variables";
 
-.container{
+app-card {
+  margin: 3px;
+}
+
+app-modal {
+  h2 {
+    margin-top: 0;
+  }
+}
+
+.dashboard {
+  h4 {
+    margin: 0;
+  }
 
   display: grid;
-  grid-gap: 1.5em;
-  max-width: 97%;
-  margin: auto;
-  margin-top: 1.5em;
-  grid-template-columns: 1fr 1fr;
+  margin: 1em auto;
+  grid-template-columns: repeat(2, 1fr);
   grid-template-areas:
+    "actions actions"
+    "questions users"
     "stats stats"
     "answered unanswered";
-  transition: all 2s;
+  transition: width 2s;
   box-sizing: border-box;
-  
-  .stats {
-    grid-area: stats;
-    text-align: center;
 
-    .stats__title {
-      width: 100%;
+  &__quick-actions {
+    grid-area: actions;
+
+    .quick-actions__title {
+      text-align: center;
     }
 
-    .stats_hits {
+    .quick-actions__buttons {
+      margin-top: 1em;
       display: flex;
       flex-direction: row;
       justify-content: space-around;
+      flex-wrap: wrap;
+      text-align: center;
+
+      button {
+        border: none;
+        max-width: 85%;
+        margin: 5px;
+        width: 220px;
+        height: 70px;
+        max-width: 80%;
+
+      }
+    }
+  }
+
+  &__stats {
+    grid-area: stats;
+    text-align: center;
+
+    .stats_hits {
+      margin-top: 1em;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-around;
       align-items: center;
-      
+
       &:nth-child(1n) {
-        margin-top: 2em;
-        .hits__correct, .hits__incorrect {
-          width: 120px;
-          height: 120px;
+        .hits__correct,
+        .hits__incorrect {
+          height: 100px;
+          min-width: 100px;
           background-color: $bg-color;
-          border: 1px solid $font-color;
-          outline: 1px solid $font-color;
           outline-offset: 10px;
+          margin: 10px;
           display: flex;
           justify-content: center;
           align-items: center;
-          font-family: 'roboto';
+          font-family: "roboto";
+          font-size: 1.2em;
 
-          h1{
+          h1 {
             display: block;
           }
-      }
+        }
+        .hits__correct{
+          border: 1px dashed $success;
+          outline: 1px dashed $success;
+        }
+        .hits__incorrect{
+          border: 1px dashed $error;
+          outline: 1px dashed $error;
+        }
+
       }
     }
-    
-    
   }
-  
-  .answered {
+
+  &__answered {
     grid-area: answered;
   }
-  
-  .unanswered {
+
+  &__unanswered {
     grid-area: unanswered;
   }
 
+  &__questions {
+    grid-area: questions;
+  }
+
+  &__users {
+    grid-area: users;
+  }
+
+  h4 {
+    text-align: center;
+  }
+  li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  
 }
-
-
 
 @media all and (max-width: $x-large) {}
 @media all and (max-width: $x-medium) {
-  .container{
+  .dashboard {
     grid-template-areas:
+      "actions actions"
+      "questions questions"
+      "users users"
       "stats stats"
-      "answered answered"
-      "unanswered unanswered";
+      "unanswered unanswered"
+      "answered answered";
   }
 }
 @media all and (max-width: $x-small) {
-
 }

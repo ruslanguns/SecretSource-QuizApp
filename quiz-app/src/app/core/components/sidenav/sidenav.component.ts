@@ -1,9 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Router } from '@angular/router';
+import { Role } from 'src/app/shared/enums/role.enum';
+import { AuthService } from '../../services';
 
-export interface IMenuItems {
-  title: string;
-  url: string;
-}
 
 @Component({
   selector: 'app-sidenav',
@@ -14,23 +13,27 @@ export class SidenavComponent {
   
   @Input() show: boolean = false;
   @Output() toggleMenu: EventEmitter<boolean> = new EventEmitter();
+  Role = Role;
 
-  menuItems: IMenuItems[] = [
-    {
-      title: '',
-      url: ''
-    }
-  ];
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   toggleSidenav() {
     this.show = !this.show;
   }
 
-  onBackgroundClick() {
+  emitToggle() {
     if (this.show) {
       this.toggleSidenav();
       this.toggleMenu.emit(this.show);
     }
+  }
+
+  logout() {
+    this.router.navigate(['/auth/login']);
+    this.authService.logout();
   }
 
 }

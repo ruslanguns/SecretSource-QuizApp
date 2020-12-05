@@ -1,0 +1,128 @@
+.btn {
+  padding: 0.8em;
+  outline: none;
+  color: white;
+  border: none;
+
+  &.success {
+    background-color: $success;
+  }
+  &.warning {
+    background-color: $warning;
+  }
+  &.error {
+    background-color: $error;
+  }
+  &.info {
+    background-color: $info;
+  }
+  &.primary {
+    background-color: $primary;
+  }
+  &.default {
+    background-color: $default;
+  }
+  &.transparent {
+    background-color: transparent;
+    color: $font-color
+  }
+  &.outline {
+    border-width: 1px;
+    border-style: solid;
+    transition: background-color 0.3s;
+    
+    &.success {
+      background-color: transparent;
+      border-color: $success;
+      color: $success;
+
+      &:hover {
+        background-color: $success;
+        color: white;
+      }
+    }
+    &.warning {
+      background-color: transparent;
+      border-color: $warning;
+      color: $warning;
+
+      &:hover {
+        background-color: $warning;
+        color: white;
+      }
+    }
+    &.error {
+      background-color: transparent;
+      border-color: $error;
+      color: $error;
+
+      &:hover {
+        background-color: $error;
+        color: white;
+      }
+    }
+    &.info {
+      background-color: transparent;
+      border-color: $info;
+      color: $info;
+
+      &:hover {
+        background-color: $info;
+        color: white;
+      }
+    }
+    &.primary {
+      background-color: transparent;
+      border-color: $primary;
+      color: $primary;
+
+      &:hover {
+        background-color: $primary;
+        color: white;
+      }
+    }
+    &.default {
+      background-color: transparent;
+      border-color: $default;
+      color: $default;
+
+      &:hover {
+        background-color: $default;
+        color: white;
+      }
+    }
+    &.dark {
+      background-color: transparent;
+      border-color: $font-color;
+      color: $font-color;
+
+      &:hover {
+        background-color: $default;
+        color: white;
+      }
+    }
+    &.transparent {
+      background-color: transparent;
+      color: $font-color
+    }
+  }
+  &.block {
+    width: 100%;
+  }
+  &.small {
+    padding: 0.6em;
+    font-size: 0.7em;
+  }
+  &:disabled {
+    background-color: lightgray;
+    &:hover {
+      cursor: no-drop;
+      filter: none;
+    }
+  }
+  &:focus,
+  &:hover {
+    cursor: pointer;
+    filter: brightness(1.1);
+  }
+}

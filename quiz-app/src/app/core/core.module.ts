@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AuthRoutingModule } from '../auth/auth-routing.module';
-import { AuthService } from './services';
+import { AuthService, LoadingService, QuestionsService, QuizService, StoreService, UsersService } from './services';
 import { LayoutComponent } from './components/layout/layout.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { SharedModule } from '../shared/shared.module';
+import interceptors from './interceptors';
 
 const components = [
   LayoutComponent,
@@ -20,9 +21,18 @@ const components = [
   ],
   imports: [
     SharedModule,
-    AuthRoutingModule
+    AuthRoutingModule,
+    HttpClientModule
   ],
-  providers: [AuthService],
+  providers: [
+    AuthService,
+    StoreService,
+    QuestionsService,
+    UsersService,
+    QuizService,
+    LoadingService,
+    interceptors,
+  ],
   exports: [
     ...components
   ]

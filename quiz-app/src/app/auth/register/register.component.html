@@ -1,1 +1,116 @@
-<p>register works!</p>
+<div class="auth">
+
+  <app-card>
+    <div class="auth__title">
+      Sign Up
+    </div>
+    <div class="auth__form">
+      <form focusInvalidInput [formGroup]="form" novalidate (ngSubmit)="onSubmit()">
+          <label>Username
+            <input
+              formControlName="username"
+              type="text"
+              [class.invalid]="(
+                (form.get('username')?.touched
+                || form.get('username')?.dirty)
+                && !form.get('username')?.valid
+              )">
+            <small 
+              *ngIf="(
+                (form.get('username')?.touched
+                || form.get('username')?.dirty)
+                && !form.get('username')?.valid
+              )"
+              class="text-error">
+              Username is required
+            </small>
+          </label>
+        
+          <ng-container formGroupName="passwordGroup">
+            <label>Password
+              <input
+                formControlName="password"
+                type="password"
+                [class.invalid]="(
+                  (form.get('passwordGroup.password')?.touched
+                  || form.get('passwordGroup.password')?.dirty)
+                  && !form.get('passwordGroup.password')?.valid
+                )">
+              <small 
+                *ngIf="(
+                  (form.get('passwordGroup.password')?.touched
+                  || form.get('passwordGroup.password')?.dirty)
+                  && !form.get('passwordGroup.password')?.valid
+                )"
+                class="text-error">
+                
+                <ng-container *ngIf="form.get('passwordGroup.password')?.errors?.required">
+                  Password is required
+                </ng-container>
+  
+                <ng-container
+                  *ngIf="(
+                    form.get('passwordGroup.password')?.errors?.minlength
+                    || form.get('password')?.errors?.maxlength
+                  )">
+                  Password should contain minimum 4 chracters
+                </ng-container>
+  
+              </small>
+            </label>
+  
+            <label>Confirm password
+              <input
+                formControlName="confirmPassword"
+                type="password"
+                [class.invalid]="(
+                      ( form.get('passwordGroup.confirmPassword')?.errors
+                      && ( form.get('passwordGroup.confirmPassword')?.touched
+                        || form.get('passwordGroup.confirmPassword')?.dirty
+                      ) || form.get('passwordGroup')?.errors)
+                    )">
+              
+              <small 
+                *ngIf="(
+                  ( form.get('passwordGroup.confirmPassword')?.errors
+                  && ( form.get('passwordGroup.confirmPassword')?.touched
+                    || form.get('passwordGroup.confirmPassword')?.dirty
+                  ) || form.get('passwordGroup')?.errors)
+                )"
+                class="text-error">
+                <ng-container *ngIf="form.get('passwordGroup.confirmPassword')?.errors?.required">
+                  Confirm password field is required
+                </ng-container>
+                <ng-container
+                  *ngIf="(
+                    form.get('passwordGroup')?.errors?.match
+                    && !form.get('passwordGroup.confirmPassword')?.errors?.required
+                  )">
+                  Please make sure your passwords match
+                </ng-container>
+              </small>
+
+            </label>
+          </ng-container>
+          
+          <button [disabled]="loading" class="btn success block" type="submit">
+            <ng-container *ngIf="!loading; else onLoading">
+              Register
+            </ng-container>
+  
+            <ng-template #onLoading>
+              <i class="fas fa-spinner fa-pulse mr-1"></i>
+              Loading
+            </ng-template>
+  
+          </button>
+      </form>
+    </div>
+    <div class="auth__info">
+      <p>
+        Already have an account? <a routerLink="/auth/login">Sign In</a>
+      </p>
+    </div>
+  </app-card>
+
+</div>
