@@ -51,6 +51,7 @@ export class QuizModalComponent {
   }
   
   onClose() {
+    this.undoAnswerSelected()
     this.store.set('selectedQuiz', null);
   }
 }
